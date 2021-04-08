@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+<div>ID : {{tag.id_tag}}</div>
+<div>Name : {{tag.name}}</div>
+<a href="{{base_url('tag/' ~ tag.id_tag ~'/edit')}}">Edit </a>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+{{ errors }}
+{% if(success ==1) %}
+<p> La modification a été effectuée </p>
+{% endif %}
+{{ form_open(base_url('tag/edit'))}}
+<div>Editer Tag : {{tag.name}}</div>
+<input name="tag_name" value="" type="text">
+<input name="tag_id" value="{{tag.id_tag}}" type="hidden">
+<button type="submit"> edit </button>
+{{ form_close() }} 
+{% endblock %}

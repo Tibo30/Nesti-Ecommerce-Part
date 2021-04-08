@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+{{ form_open(base_url('tag/create'))}}
+<div>Créer Tag : </div>
+<input name="tag_name" value="" type="text">
+<button type="submit"> create </button>
+{{ form_close() }} 
+
+{% endblock %}

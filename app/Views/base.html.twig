@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="style.css"/>
+    <title>
+    {% block title %} {% endblock %} - My Webpage
+    </title>
+    {% endblock %}
+</head>
+
+<body>
+{% block nav %}
+<ul>
+<li><a href="{{base_url('home')}}">Home</a></li>
+<li><a href="{{base_url('tags')}}">Lire Tous</a></li>
+{# <li><a href="{{base_url('tag/1')}}">Lire 1</a></li>
+<li><a href="{{base_url('tag/1/edit')}}">Editer 1</a></li> #}
+<li><a href="{{base_url('tag/create')}}">Créer</a></li>
+<li><a href="{{base_url('tag/search')}}">Rechercher</a></li>
+</ul>
+{% endblock %}
+
+<div id="content">{% block content %}{% endblock %}</div>
+<div id="footer">
+{% block footer %}
+    &copy; Copyright 2011 by <a href="#">Jolivet Thibault</a>
+    {% endblock %}
+    </div>
+
+<script type="text/javascript"> 
+const ROOT = "{{base_url()}}";
+</script>
+<script src="{{urlJS('app.js')}}" type="text/javascript"> </script>
+</body>
+</html>

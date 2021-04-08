@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+{{ form_open(base_url('tags'))}}
+<ul id="recipe_tag--list" data-id="1">
+
+{% for tag in tags %}
+        <li><a href="{{base_url('tag/' ~ tag.id_tag)}}">{{tag.name}} </a>
+        <button href="{{base_url('tag/' ~ tag.id_tag ~'/delete')}}" class="recipe_tag--remove" data-id="{{ tag.id_tag }}">X </button></li>
+    {% endfor %}
+</ul>
+{{ form_close() }} 
+{% endblock %}
