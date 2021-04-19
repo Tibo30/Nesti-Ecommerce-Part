@@ -11,7 +11,9 @@ class Pages extends BaseController
 
     public function home()
     {
-        return $this->twig->render("pages/home");
+        $data["base_dir"]=__DIR__;
+        $data["loc"]="Home";
+        return $this->twig->render("pages/home", $data);
     }
 
     public function about()
