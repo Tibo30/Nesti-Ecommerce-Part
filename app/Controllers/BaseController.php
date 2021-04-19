@@ -49,6 +49,8 @@ class BaseController extends Controller
 			'debug'=>true,
 			'functions' => ['urlJS'],
 		]);
+
+		
 	}
 
 	// public function renderTemplate(string $page,array $data = [])
