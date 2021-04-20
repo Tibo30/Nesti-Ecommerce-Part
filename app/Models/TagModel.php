@@ -30,12 +30,14 @@ class TagModel extends Model
      * @param int $id_recipe
      * @return bool 
      */
-    public function removeTag(int $id_tag, int $id_recipe): bool {
+    public function removeTag(int $id_tag, int $id_recipe): bool
+    {
         $builder = $this->db->table('tag');
         $verdict = ($builder->delete([
-                    'id_tag' => $id_tag
-                ]) != false);
+            'id_tag' => $id_tag
+        ]) != false);
         return $verdict;
     }
 
+    
 }
