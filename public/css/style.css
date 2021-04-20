@@ -1,77 +1,173 @@
 @font-face {
     font-family: "Russo_One";
     src: url("../assets/fonts/RussoOne-Regular.ttf") format("truetype");
-  }
-  
-  @font-face {
-    font-family: "Roboto";
-    src: url("../assets/fonts/Roboto-Regular.ttf") format("truetype");
-  }
-
-  :root{
-    /* --primaryColor:;
-    --secondaryColor:; */
-    --navText:#7c7c7d;
-    --navBackground:#f8f9fa;
-  }
-
-  body{
-      font-family: "Roboto" !important;
-  }
-
-/*-------------------------------- NAV ------------------------------ */
-.navbar{
-    font-family: "Russo_One" !important;
-    background-color: var(--navBackground);
-    
 }
 
-.fridge-svg{
+@font-face {
+    font-family: "Roboto";
+    src: url("../assets/fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+.font-25 {
+    font-size: 25px;
+}
+
+:root {
+    --primaryColor: #f8f9fa;
+    --secondaryColor: #7c7c7d;
+    --primaryTextColor: #7c7c7d;
+    --secondaryTextColor: #f8f9fa;
+    --fontTitle: "Russo_One";
+}
+
+body {
+    font-family: "Roboto" !important;
+    height: 100%;
+}
+
+html {
+    height: 100%;
+}
+
+/*-------------------------------- NAV ------------------------------ */
+
+.navbar {
+    font-family: "Russo_One" !important;
+    background-color: var(--primaryColor);
+    border-bottom: 1px solid var(--primaryTextColor);
+}
+
+/* .fridge-svg{
     width: 16px;
     height: 16px;
     font-weight: 900px;
-}
+} */
 
-.navbar-brand img{
+.navbar-brand img {
     width: 150px;
     height: 50px;
 }
 
-.search-nav{
-background-color: transparent;
-border: none;
+.search-nav {
+    background-color: transparent;
+    border: none;
 }
 
-.active{
+.navbar .active {
     font-weight: bolder !important;
     color: black !important;
 }
 
-.nav-link{
-    color: var(--navText);
+.nav-link {
+    color: var(--primaryTextColor);
 }
 
-.search-input{
+.search-input {
     width: 90% !important;
     padding-left: 30px;
 }
 
-.search-form{
+.search-form {
     width: 50%;
     position: relative;
 }
 
-.search-form button{
+.search-form button {
     position: absolute;
     left: 0;
 }
 
-.login-logo i::before{
+.login-logo i::before {
     width: 30px;
     height: 30px;
 }
 
+/* ------------------------- Footer ----------------------------- */
 
+#footer {
+    border: 1px solid var(--primaryTextColor);
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--primaryColor);
+}
 
+/* -------------------------- Home ----------------------------- */
 
+.last-visited {
+    border: 1px solid black;
+    margin: 5rem auto;
+    margin-top: 5rem;
+    width: 70%;
+    padding: 2rem;
+    box-shadow: 0 0 5px #666;
+    border-radius: 5px;
+}
 
+.last-visited-title {
+    font-family: var(--fontTitle);
+    margin-bottom: 1rem;
+    font-size: 25px;
+}
+
+.last-visited-recipes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.last-visited-recipe {
+    position: relative;
+}
+
+.last-visited-recipe div {
+    position: absolute;
+    top: 5%;
+    width: 100%;
+    text-align: center;
+    color: var(--secondaryTextColor);
+    font-size: 20px;
+}
+
+.last-visited-recipe img {
+    width: 200px;
+    border-radius: 5px;
+    transition: 0.5s all ease-in-out;
+}
+
+.last-visited-recipe img:hover {
+    transform: scale(1.1);
+}
+
+.tag-propositions {
+    width: 90%;
+    margin: auto;
+    margin-bottom: 5rem;
+}
+
+.tag-proposition-recipes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.tag-proposition-title {
+    font-family: var(--fontTitle);
+    font-size: 20px;
+    margin-bottom: 2rem;
+}
+
+.tag-proposition-recipe {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tag-proposition-recipe img {
+    width: 300px;
+    border-radius: 5px;
+    transition: 0.5s all ease-in-out;
+}
