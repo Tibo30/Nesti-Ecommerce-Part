@@ -30,11 +30,18 @@ class RecipeModel extends Model
         return $query->getResult();
     }
 
-    public function findRecipe($name){
+    public function findRecipe($name)
+    {
         $builder = $this->db->table('recipes');
-        $builder->like("recipe_name",$name);
+        $builder->like("recipe_name", $name);
         $query = $builder->get();
 
+        return $query->getResult();
+    }
+
+    public function getOneRecipebyTag(String $data)
+    {
+        $query = $this->db->query('SELECT * FROM recipes r JOIN tagged td ON r.id_recipes=td.id_recipes JOIN tag t ON td.id_tag=t.id_tag WHERE t.name="' . $data . '"');
         return $query->getResult();
     }
 
