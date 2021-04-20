@@ -46,7 +46,7 @@ $routes->post('/tag/create','TagsController::createATag');
 
 $routes->get('/tag/search', 'TagsController::searchTag');
 $routes->get('tags', 'TagsController::index');
-$routes->get('home', 'Pages::home');
+$routes->get('home', 'HomeController::home');
 $routes->get('about', 'Pages::about');
 
 $routes->get('/api',"ApiController::index");
