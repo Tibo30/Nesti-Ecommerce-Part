@@ -94,7 +94,7 @@ html {
 /* -------------------------- Home ----------------------------- */
 
 .last-visited {
-    border: 1px solid black;
+    border: 1px solid var(--primaryTextColor);
     margin: 5rem auto;
     margin-top: 5rem;
     width: 70%;
@@ -157,6 +157,7 @@ html {
     font-family: var(--fontTitle);
     font-size: 20px;
     margin-bottom: 2rem;
+    text-transform: capitalize;
 }
 
 .tag-proposition-recipe {
@@ -170,4 +171,88 @@ html {
     width: 300px;
     border-radius: 5px;
     transition: 0.5s all ease-in-out;
+}
+
+.tag-propositions .card-img-top {
+    background-size: cover;
+    background-position: center;
+    width: 200px;
+    height: 200px;
+}
+
+/* -------------------------- Recipes ----------------------------- */
+
+.recipes-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 90%;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.recipes-tags{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    margin-top: 2rem;
+}
+
+.recipes-tags h5{
+    margin-right: 4rem;
+}
+
+.tags-recipes{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.recipe-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    border: 1px solid var(--primaryTextColor);
+    border-radius: 5%;
+    margin-bottom: 3rem;
+    box-shadow: 0 0 5px #666;
+}
+
+.recipe-card .recipe-card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.recipe-card .recipe-img{
+    width: 200px;
+    height: 200px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 10px #666;
+}
+
+.recipe-card .recipe-btn-see{
+    cursor: pointer; 
+    color: var(--primaryTextColor);
+    background-color: var(--primaryColor);
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid var(--primaryTextColor);
+    padding: 0.375rem 0.375rem;
+    border-radius: 0.25rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.recipe-card .recipe-card-title{
+    color: var(--primaryTextColor);
+    text-transform: capitalize;
 }
