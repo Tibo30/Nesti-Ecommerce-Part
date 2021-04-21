@@ -11,7 +11,7 @@ class RecipeModel extends Model
     protected $table = 'recipes'; // nom de la table
     protected $primaryKey = 'id_recipes';
     protected $allowedFields = ['recipe_name', 'difficulty', 'number_of_people', 'state', 'time', 'id_pictures', 'id_chief']; // Nom des colonnes autorisées
-    protected $returnType = 'App\Entities\Recipe'; // Type de retour
+    protected $returnType = Recipe::class; // Type de retour
     protected $useTimestamps = false; // Utilisation du timestamps
     protected $validationRules = [];
     protected $validationMessages = [];
