@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Entities\Tag;
 
 class TagModel extends Model
 {
@@ -10,7 +11,7 @@ class TagModel extends Model
     protected $table = 'tag'; // nom de la table
     protected $primaryKey = 'id_tag';
     protected $allowedFields = ['id_tag', 'name']; // Nom des colonnes autorisées
-    protected $returnType = 'App\Entities\Tag'; // Type de retour
+    protected $returnType = Tag::class; // Type de retour
     protected $useTimestamps = false; // Utilisation du timestamps
     protected $validationRules = [
         'name' => 'required|alpha_numeric_space|min_length[3]',
