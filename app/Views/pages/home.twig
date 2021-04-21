@@ -1,7 +1,6 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-{{test}}
 	<div class="last-visited">
 		<div class="last-visited-title">
 			Last visits
@@ -35,11 +34,15 @@
 
 
 		<div class="tag-proposition-recipes">
+			{% set index = 0 %}
 			{% for tag in tags %}
 				<div class="tag-proposition-recipe">
 					<div class="tag-proposition-title">{{tag.name}}</div>
-					<a href="{{base_url('tag/' ~ tag.id_tag)}}"><img class="card-img-top" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap"></a>
+					<a href="{{base_url('tag/' ~ tag.id_tag)}}">
+					<div class="card-img-top" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{pictures[index]}}");'></a> </div>
+					{# <img class="card-img-top" src="https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{pictures[index]}}" alt="Card image cap"></a> #}
 				</div>
+				{% set index = (index + 1) %}
 			{% endfor %}
 			
 
@@ -47,3 +50,4 @@
 	</div>
 
 {% endblock %}
+
