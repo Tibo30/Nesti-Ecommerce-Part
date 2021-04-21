@@ -48,6 +48,7 @@ $routes->get('/tag/search', 'TagsController::searchTag');
 $routes->get('tags', 'TagsController::index');
 $routes->get('home', 'HomeController::home');
 $routes->get('about', 'Pages::about');
+$routes->get('recipes', 'RecipeController::recipes');
 
 $routes->get('/api',"ApiController::index");
 $routes->get('/api/recipes',"ApiController::recipes");
