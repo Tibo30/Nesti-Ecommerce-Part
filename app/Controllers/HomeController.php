@@ -22,23 +22,34 @@ class HomeController extends BaseController
 		shuffle($tags);
 		$tagsSliced=array_slice($tags,0,4);
 		
+		$tag_pictures=[];
 		$index=0;
 		foreach ($tagsSliced as $tag){
 			$recipe= $recipeModel -> getOneRecipebyTag($tag->name);
-			var_dump($recipe);
 			if ($recipe!=null){
 				$picture = $pictureModel ->find($recipe[0]->id_pictures);
+				// print_r($picture);
+				// if($index==0 || $index==1 ){
+				// 	print_r($picture);
+				// 	print_r($picture->name);
+				// }
+				
 				if ($picture!=null){
-					$data["tags"][$index]["picture"]=$picture[0]->name.".".$picture[0]->extension;
+					$tag_pictures[$index]=$picture->name.".".$picture->extension;
+				} else {
+					$tag_pictures[$index]="null";
 				}
 			}			
 			$index++;
 		}
+		// var_dump($tag_pictures);
+
+		$data["pictures"]=$tag_pictures;
 		$data["tags"] = $tagsSliced;
         $data["base_dir"]=__DIR__;
         $data["loc"]="Home";
 		
-		var_dump($tagsSliced);
+		// var_dump($tagsSliced);
 		$recipe= $recipeModel -> getOneRecipebyTag("easy");
 		$data["recipe"]=$recipe;
 		
