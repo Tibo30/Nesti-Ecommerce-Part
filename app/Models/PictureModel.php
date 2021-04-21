@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Entities\Picture;
 
 class PictureModel extends Model
 {
@@ -10,7 +11,7 @@ class PictureModel extends Model
     protected $table = 'pictures'; // nom de la table
     protected $primaryKey = 'id_pictures';
     protected $allowedFields = ['id_pictures', 'name', 'extension']; // Nom des colonnes autorisées
-    protected $returnType = 'App\Entities\Picture'; // Type de retour
+    protected $returnType = Picture::class; // Type de retour
     protected $useTimestamps = false; // Utilisation du timestamps
     protected $validationRules = [
         'name' => 'required|alpha_numeric_space|min_length[3]',
