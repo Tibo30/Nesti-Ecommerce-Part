@@ -34,6 +34,8 @@ $routes->setAutoRoute(true);
 
 // $routes->match(['get', 'post'], 'form', 'FormController::index');
 //$routes->match(['get', 'post'], '/tag/(:num)/edit', 'TagsController::updateTag');
+
+
 $routes->post('/tag/edit','TagsController::updateTag');
 $routes->get('/tag/(:num)/edit', 'TagsController::editTag/$1');
 
@@ -48,7 +50,11 @@ $routes->get('/tag/search', 'TagsController::searchTag');
 $routes->get('tags', 'TagsController::index');
 $routes->get('home', 'HomeController::home');
 $routes->get('about', 'Pages::about');
+
+$routes->post('/recipes/tagged', 'AjaxController::recipesTagged');
 $routes->get('recipes', 'RecipeController::recipes');
+
+// $routes->get('/recipes/tagged', 'RecipeController::recipesTagged');
 
 $routes->get('/api',"ApiController::index");
 $routes->get('/api/recipes',"ApiController::recipes");
