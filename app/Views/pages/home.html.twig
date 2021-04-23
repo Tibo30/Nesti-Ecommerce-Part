@@ -38,14 +38,13 @@
 				<div class="tag-proposition-recipe">
 					<div class="tag-proposition-title">{{tag.name}}</div>
 					<a href="{{base_url('tag/' ~ tag.id_tag)}}">
-					{{tag.getOnRecipe()}}
-					<div class="card-img-top" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{tag.getOneRecipe().getPicture().name~'.'~tag.getOneRecipe().getPicture().extension}}");'></a> </div>
+						<div class="card-img-top" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{tag.getOneRecipe().getPicture().name~"."~tag.getonerecipe().getpicture().extension}}");'></a>
+					</div>
 				</div>
 			{% endfor %}
-			
+
 
 		</div>
 	</div>
 
 {% endblock %}
-
