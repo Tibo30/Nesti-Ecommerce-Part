@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use App\Entities\Recipe;
+use App\Entities\Paragraph;
 
 class ParagraphModel extends Model
 {
@@ -11,7 +11,7 @@ class ParagraphModel extends Model
     protected $table = 'paragraph'; // nom de la table
     protected $primaryKey = 'id_paragraph';
     protected $allowedFields = ['content','order_paragraph','creation_date','id_recipes']; // Nom des colonnes autorisées
-    protected $returnType = 'App\Entities\Paragraph'; // Type de retour
+    protected $returnType = Paragraph::class; // Type de retour
     protected $useTimestamps = false; // Utilisation du timestamps
     protected $validationRules = [];
     protected $validationMessages = [];
