@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	<div class="last-visited">
+		<div class="last-visited-title">
+			Last visits
+		</div>
+		<div class="last-visited-recipes">
+			<div class="last-visited-recipe">
+				<img class="card-img-top" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap">
+				<div>Crepes</div>
+			</div>
+			<div class="last-visited-recipe">
+				<img class="card-img-top" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap">
+				<div>Crepes</div>
+			</div>
+			<div class="last-visited-recipe">
+				<img class="card-img-top" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap">
+				<div>Crepes</div>
+			</div>
+			<div class="last-visited-recipe">
+				<img class="card-img-top" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap">
+				<div>Crepes</div>
+			</div>
+			<div class="last-visited-recipe">
+				<img class="card-img-top" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap">
+				<div>Crepes</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="tag-propositions">
+
+
+		<div class="tag-proposition-recipes">
+			{% for tag in tags %}
+				<div class="tag-proposition-recipe">
+					<div class="tag-proposition-title">{{tag.name}}</div>
+					<a href="{{base_url('tag/' ~ tag.id_tag)}}">
+					{{tag.getOnRecipe()}}
+					<div class="card-img-top" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{tag.getOneRecipe().getPicture().name~'.'~tag.getOneRecipe().getPicture().extension}}");'></a> </div>
+				</div>
+			{% endfor %}
+			
+
+		</div>
+	</div>
+
+{% endblock %}
+
