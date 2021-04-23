@@ -23,6 +23,7 @@
 body {
     font-family: "Roboto" !important;
     height: 100%;
+    color: var(--primaryTextColor) !important;
 }
 
 html {
@@ -32,7 +33,7 @@ html {
 /*-------------------------------- NAV ------------------------------ */
 
 .navbar {
-    font-family: "Russo_One" !important;
+    font-family: var(--fontTitle) !important;
     background-color: var(--primaryColor);
     border-bottom: 1px solid var(--primaryTextColor);
 }
@@ -182,6 +183,12 @@ html {
 
 /* -------------------------- Recipes ----------------------------- */
 
+.all-recipes {
+    width: 90%;
+    margin: auto;
+    margin-bottom: 5rem;
+}
+
 .recipes-cards {
     display: flex;
     flex-direction: row;
@@ -192,7 +199,7 @@ html {
     padding: 0 2rem;
 }
 
-.recipes-tags{
+.recipes-tags {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -200,11 +207,11 @@ html {
     margin-top: 2rem;
 }
 
-.recipes-tags h5{
+.recipes-tags h5 {
     margin-right: 4rem;
 }
 
-.tags-recipes{
+.tags-recipes {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -223,14 +230,16 @@ html {
     box-shadow: 0 0 5px #666;
 }
 
-.recipe-card .recipe-card-body{
+.recipe-card .recipe-card-body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.recipe-card .recipe-img{
+.recipe-card .recipe-img {
+    background-size: cover;
+    background-position: center;
     width: 200px;
     height: 200px;
     margin-top: 2rem;
@@ -238,8 +247,8 @@ html {
     box-shadow: 0 0 10px #666;
 }
 
-.recipe-card .recipe-btn-see{
-    cursor: pointer; 
+.recipe-card .recipe-btn-see {
+    cursor: pointer;
     color: var(--primaryTextColor);
     background-color: var(--primaryColor);
     display: inline-block;
@@ -252,7 +261,288 @@ html {
     margin-bottom: 2rem;
 }
 
-.recipe-card .recipe-card-title{
+.recipe-card .recipe-card-title {
     color: var(--primaryTextColor);
     text-transform: capitalize;
+}
+
+/* -------------------------- Recipes ----------------------------- */
+
+.recipeDetails {
+    width: 90%;
+    margin: 3rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.recipeDetails .underLink {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+}
+
+.recipeDetails .underLink a {
+    font-family: var(--fontTitle);
+    color: var(--primaryTextColor) !important;
+}
+
+.recipeDetails .underLink a:hover {
+    text-decoration: none;
+}
+
+.recipeDetails .recipeTitle {
+    font-size: 30px;
+    margin-bottom: 2rem;
+    font-family: var(--fontTitle);
+}
+
+.recipeDetails .grade {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 200px;
+    margin-bottom: 1rem;
+}
+
+.recipeDetails .recipe-picture {
+    background-size: cover;
+    background-position: center;
+    width: 400px;
+    height: 300px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 10px #666;
+}
+
+.recipeDetails .recipe-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 300px;
+}
+
+.recipeDetails .recipe-info-element {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.recipeDetails .recipe-info-element i {
+    margin-right: 10px;
+}
+
+.recipeDetails .recipe-ingredients {
+    display: flex;
+    flex-direction: column;
+}
+
+.recipeDetails .recipe-ingredients-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 1rem 3rem;
+    border: 1px solid var(--secondaryColor);
+    width: 400px;
+    margin: 2rem auto;
+}
+
+.recipeDetails .recipe-list-ingredient {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    width: 400px;
+}
+
+.recipeDetails .recipe-ingredient {
+    text-align: center;
+    text-align: justify;
+    width: 50%;
+    margin-bottom: 1rem;
+}
+
+.recipeDetails .recipe-list-ingredient :nth-child(2n) {
+    text-align: right !important;
+}
+
+.recipeDetails .recipe-steps-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 1rem 3rem;
+    border: 1px solid var(--secondaryColor);
+    width: 400px;
+    margin: 2rem auto 3rem auto;
+}
+
+.recipeDetails .recipe-list-steps {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.recipeDetails .recipe-step {
+    width: 100%;
+}
+
+.recipeDetails .recipe-step-order {
+    margin-bottom: 1rem;
+    font-family: var(--fontTitle);
+}
+
+.recipeDetails .recipe-step-content {
+    margin-bottom: 1rem;
+}
+
+.recipeDetails .recipe-grade {
+    width: 400px;
+    text-align: left;
+}
+
+.recipe-grade .recipe-stars {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+
+.recipe-stars span {
+    font-size: 30px;
+}
+
+.recipe-stars span:hover {
+    cursor: pointer;
+}
+
+.recipe-stars>span:hover:before, .recipe-stars>span:hover~span:before {
+    content: "\2605";
+    position: absolute;
+    color: #bd8a0c;
+}
+
+.recipeDetails .recipe-comments {
+    width: 400px;
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recipeDetails .recipe-comments-title {
+    margin-bottom: 1rem;
+    align-self: flex-start;
+}
+
+.recipeDetails .recipe-comments-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin: auto;
+}
+
+.recipeDetails .recipe-comment, .recipeDetails .recipe-comment-hidden {
+    width: 170px;
+    border: 1px solid var(--secondaryColor);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 2rem;
+    margin-bottom: 1rem;
+}
+
+.recipeDetails .recipe-comment-user {
+    font-family: var(--fontTitle);
+    margin-bottom: 5px;
+}
+
+.recipeDetails .recipe-comment-userGrade {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.recipeDetails .recipe-comment-userGrade i {
+    color: #bd8a0c;
+}
+
+.recipeDetails .recipe-comment-grade {
+    font-size: 10px;
+    margin-left: 5px;
+}
+
+.recipeDetails .recipe-comment-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.recipeDetails .recipe-comment-content {
+    text-align: left;
+    font-size: 12px;
+}
+
+.recipeDetails .recipe-comment-date {
+    font-size: 10px;
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+.recipeDetails .see-all-comments {
+    align-self: center;
+    cursor: pointer;
+    font-family: var(--fontTitle);
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.recipeDetails .write-comments {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+}
+
+.recipeDetails .write-comments-title {
+    align-self: flex-start;
+    cursor: pointer;
+    font-family: var(--fontTitle);
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.recipeDetails .write-comments button {
+    cursor: pointer;
+    color: var(--primaryTextColor);
+    background-color: var(--primaryColor);
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid var(--primaryTextColor);
+    padding: 0.375rem 0.375rem;
+    border-radius: 0.25rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.recipeDetails .write-comments .form-send-comment{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
