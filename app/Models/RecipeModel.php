@@ -39,9 +39,15 @@ class RecipeModel extends Model
         return $query->getResult();
     }
 
-    public function getOneRecipebyTag(String $data)
+    public function getRecipesbyTag(String $data)
     {
-        $query = $this->db->query('SELECT * FROM recipes r JOIN tagged td ON r.id_recipes=td.id_recipes JOIN tag t ON td.id_tag=t.id_tag WHERE t.name="' . $data . '"');
+        $query = $this->db->query('SELECT r.* FROM recipes r JOIN tagged td ON r.id_recipes=td.id_recipes JOIN tag t ON td.id_tag=t.id_tag WHERE t.name="' . $data . '"');
+        return $query->getResult();
+    }
+
+    public function getRecipesbyTags(Array $tags)
+    { 
+        $query = $this->db->query('SELECT DISTINCT r.* FROM recipes r JOIN tagged td ON r.id_recipes=td.id_recipes JOIN tag t ON td.id_tag=t.id_tag WHERE t.name IN ("' . implode('","', $tags) . '")');
         return $query->getResult();
     }
 
