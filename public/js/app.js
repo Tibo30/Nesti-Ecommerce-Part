@@ -4,14 +4,16 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log('Ready');
-    
+
     /** ---- Initialisation ---- **/
     const btns = document.querySelectorAll(".recipe_tag--remove");
     const ul = document.querySelector("#recipe_tag--list");
     const id = ul.getAttribute('data-id');
     const csrf = document.querySelector('input[name="csrf_nesti"]');
-    
-    
+
+    console.log(csrf);
+
+
     /** ---- Event ----**/
     btns.forEach(function (elt) {
         elt.addEventListener('click', function (event) {
@@ -29,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
+    
 
     /**
      * Requete Ajax pour supprimer un tag d'une recette
@@ -36,18 +39,21 @@ document.addEventListener("DOMContentLoaded", function () {
      * @param {int} id_tag
      * @returns mixed
      */
-    async function deleteTag( id_recipe, id_tag) {
+    async function deleteTag(id_recipe, id_tag) {
         // Requete
         var myHeaders = new Headers();
-        
-        
+
+
 
         let formData = new FormData();
         formData.append('id_recipe', id_recipe);
         formData.append('id_tag', id_tag);
         formData.append(csrf.name, csrf.value);
 
-        var myInit = {method: 'POST',
+        console.log(formData)
+
+        var myInit = {
+            method: 'POST',
             headers: myHeaders,
             mode: 'cors',
             cache: 'default',
@@ -66,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     }
+
 
 
 });
