@@ -9,19 +9,20 @@
 			</h5>
 			<div class="tags-recipes">
 				{% for tag in tags %}
+					{{ form_open(base_url('recipes'))}}
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-						<label class="form-check-label" for="inlineCheckbox1">{{tag.name}}</label>
+						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="{{tag.name |capitalize }}">
+						<label class="form-check-label" for="inlineCheckbox1">{{tag.name |capitalize}}</label>
 					</div>
+					{{ form_close() }}
 				{% endfor %}
 			</div>
 		</div>
 
 		<div class="recipes-cards">
-			{% set index = 0 %}
 			{% for recipe in recipes %}
 				<div class="recipe-card">
-					<img class="recipe-img" src="https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{pictures[index]}}" alt="Card image cap">
+					<img class="recipe-img" src="https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture().name~'.'~recipe.getPicture().extension }}" alt="Card image cap">
 					<div class="recipe-card-body">
 						<h5 class="recipe-card-title">{{recipe.recipe_name}}</h5>
 						<a href="">
@@ -29,11 +30,91 @@
 						</a>
 					</div>
 				</div>
-				{% set index = (index + 1) %}
 			{% endfor %}
 
 
 		</div>
 	</div>
 
+{% endblock %}
+
+
+{% block script %}
+	<script>
+		const ROOT2 = "{{ base_url() }}";
+		const csrf = document.querySelector('input[name="csrf_nesti"]');
+		console.log(csrf);
+
+var checkboxes = document.querySelectorAll(".form-check-input"); // get all the checkboxes
+
+var tagsChecked = [];
+
+// at the begining, all the checkboxes are unchecked
+
+// Add event listener on checkboxes
+checkboxes.forEach((element, index) => element.addEventListener('click', (function (e) {
+if (e.target.checked == true) { // check the value to true or false in the list according to the "checked" value (bool)
+tagsChecked.push(e.target.value);
+} else {
+tagsChecked.splice(tagsChecked.indexOf(e.target.value), 1)
+}
+
+recipeTagged(tagsChecked).then((response) => {
+                if (response) {
+                    if (response.success && response.csrf_token) {
+
+						recipesCards = document.querySelector(".recipes-cards");
+						recipesCards.innerHTML="";
+						recipesCards.innerHTML= response.html;
+					
+						console.log(response.recipes)
+                        // Raffraichissement du CSRF
+                        csrf.setAttribute('value', response.csrf_token);
+						
+                    }
+                }
+            });
+})))
+
+
+/**
+     * Requete Ajax pour récupérer les recettes en fonction des tags choisis
+     * @param array tagsChecked
+     * @returns mixed
+     */
+async function recipeTagged(tagsChecked) {
+console.log(csrf);
+
+var myHeaders = new Headers();
+
+let formData = new FormData();
+
+formData.append('tags', JSON.stringify(tagsChecked));
+formData.append(csrf.name, csrf.value);
+
+console.log(formData);
+
+var myInit = {
+method: 'POST',
+headers: myHeaders,
+mode: 'cors',
+cache: 'default',
+body: formData
+};
+
+let response = await fetch(ROOT2 + '/recipes/tagged', myInit);
+console.log(response);
+try {
+if (response.ok) {
+return await response.json();
+} else {
+return false;
+}
+} catch (e) {
+console.error(e.message);
+}
+
+
+}
+	</script>
 {% endblock %}
