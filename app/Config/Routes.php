@@ -53,6 +53,7 @@ $routes->get('about', 'Pages::about');
 
 $routes->post('/recipes/tagged', 'AjaxController::recipesTagged');
 $routes->get('recipes', 'RecipeController::recipes');
+$routes->get('recipe/(:num)', 'RecipeController::recipe/$1');
 
 // $routes->get('/recipes/tagged', 'RecipeController::recipesTagged');
 
