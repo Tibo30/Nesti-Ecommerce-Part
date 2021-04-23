@@ -4,7 +4,6 @@ use CodeIgniter\Entity;
 use App\Models\TagModel;
 use App\Models\PictureModel;
 
-
 class Recipe extends Entity
 {
 
@@ -20,5 +19,5 @@ class Recipe extends Entity
         $picture = $pictureModel -> find($this->id_pictures);
         return $picture;
     }
-   
+
 }
