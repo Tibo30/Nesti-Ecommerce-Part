@@ -49,7 +49,7 @@
 								Suggestions</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link {{loc=="Recipes" ? "active" : ""}}' href="{{base_url('recipes')}}">
+							<a class='nav-link {{(loc=="Recipes" or loc=="Recipe") ? "active" : ""}}' href="{{base_url('recipes')}}">
 								<i class="fas fa-clipboard-list mr-2"></i>
 								Recipes</a>
 						</li>
