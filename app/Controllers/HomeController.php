@@ -19,40 +19,16 @@ class HomeController extends BaseController
 		$recipeModel = new RecipeModel();
 		$pictureModel= new PictureModel();
 		$tags = $tagModel -> findAll();
+		// print_r($tags[0]);
 		shuffle($tags);
 		$tagsSliced=array_slice($tags,0,4);
 		
-		$tag_pictures=[];
-		$index=0;
-		foreach ($tagsSliced as $tag){
-			$recipe= $recipeModel -> getOneRecipebyTag($tag->name);
-			if ($recipe!=null){
-				$picture = $pictureModel ->find($recipe[0]->id_pictures);
-				// print_r($picture);
-				// if($index==0 || $index==1 ){
-				// 	print_r($picture);
-				// 	print_r($picture->name);
-				// }
-				
-				if ($picture!=null){
-					$tag_pictures[$index]=$picture->name.".".$picture->extension;
-				} else {
-					$tag_pictures[$index]="null";
-				}
-			}			
-			$index++;
-		}
-		// var_dump($tag_pictures);
-
-		$data["pictures"]=$tag_pictures;
+		$tags[0]->getOneRecipe();
+		
 		$data["tags"] = $tagsSliced;
         $data["base_dir"]=__DIR__;
         $data["loc"]="Home";
 		
-		// var_dump($tagsSliced);
-		$recipe= $recipeModel -> getOneRecipebyTag("easy");
-		$data["recipe"]=$recipe;
-		
-        return $this->twig->render("pages/home", $data);
+        return $this->twig->render("pages/home.html", $data);
     }
 }
