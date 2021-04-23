@@ -23,7 +23,7 @@ class HomeController extends BaseController
 		shuffle($tags);
 		$tagsSliced=array_slice($tags,0,4);
 		
-		$tags[0]->getOneRecipe();
+		// $tags[0]->getOneRecipe();
 		
 		$data["tags"] = $tagsSliced;
         $data["base_dir"]=__DIR__;
