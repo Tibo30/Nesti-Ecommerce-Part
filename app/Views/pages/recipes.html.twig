@@ -11,8 +11,8 @@
 				{% for tag in tags %}
 					{{ form_open(base_url('recipes'))}}
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="{{tag.name |capitalize }}">
-						<label class="form-check-label" for="inlineCheckbox1">{{tag.name |capitalize}}</label>
+						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="{{tag.name |capitalize }}" {{tag.name == tagChosen ? "checked" : ""}}>
+						<label class="form-check-label" for="inlineCheckbox1">{{tag.name}}</label>
 					</div>
 					{{ form_close() }}
 				{% endfor %}
@@ -41,14 +41,15 @@
 const csrf = document.querySelector('input[name="csrf_nesti"]');
 console.log(csrf);
 
+// at the begining, all the checkboxes are unchecked unless the user comes from a click on a tag in Home page
+var tagsChecked = []
+
 var checkboxes = document.querySelectorAll(".form-check-input"); // get all the checkboxes
 
-var tagsChecked = [];
-
-// at the begining, all the checkboxes are unchecked
+checkboxes.forEach(element => element.checked ? tagsChecked.push(element.value) : ""); // if the user comes from a click on a tag in Home page, we had the tag to the list
 
 // Add event listener on checkboxes
-checkboxes.forEach((element, index) => element.addEventListener('click', (function (e) {
+checkboxes.forEach((element, index) => element.addEventListener('change', (function (e) {
 if (e.target.checked == true) { // check the value to true or false in the list according to the "checked" value (bool)
 tagsChecked.push(e.target.value);
 } else {
