@@ -54,6 +54,10 @@ $routes->get('about', 'Pages::about');
 $routes->post('/recipes/tagged', 'AjaxController::recipesTagged');
 $routes->get('recipes', 'RecipeController::recipes');
 $routes->get('recipe/(:num)', 'RecipeController::recipe/$1');
+$routes->get('recipes/(:any)', 'RecipeController::recipesByTag/$1');
+
+$routes->get('login', 'LoginController::login');
+$routes->get('register', 'LoginController::register');
 
 // $routes->get('/recipes/tagged', 'RecipeController::recipesTagged');
 
