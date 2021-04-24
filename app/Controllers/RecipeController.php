@@ -16,11 +16,13 @@ use App\Entities\Paragraph;
 
 class RecipeController extends BaseController
 {
+    /**
+     * Get all recipes and tags
+     */
     public function recipes()
     {
         helper('form');
         $model = new RecipeModel();
-        $pictureModel = new PictureModel();
         $tagModel = new TagModel();
         $tags = $tagModel->findAll();
         $recipes = $model->findAll();
@@ -31,42 +33,70 @@ class RecipeController extends BaseController
         return $this->twig->render("pages/recipes.html", $data);
     }
 
+    /**
+     * Get all the recipes according to a tag (selected in the home page)
+     */
+    public function recipesByTag($tag)
+    {
+        helper('form');
+        $tag=str_replace('_', ' ', $tag);
+        $model = new RecipeModel();
+        $tagModel = new TagModel();
+        $tags = $tagModel->findAll();
+        $recipes = $model->getRecipesbyTag($tag); // get all the recipes for a tag. Return an array of object
+        $recipesObject = [];
+        foreach ($recipes as $recipe) {
+            $recipesObject[] = new Recipe(get_object_vars($recipe)); // change the array of object to array of recipe object
+        }
+        $data["loc"] = "Recipes";
+        $data["recipes"] = $recipesObject;
+        $data["tags"] = $tags;
+        $data["tagChosen"] = $tag;
+        return $this->twig->render("pages/recipes.html", $data);
+    }
+
+
+    /**
+     * Get the recipe information
+     */
     public function recipe($idRecipe)
     {
         helper('form');
+
         $model = new RecipeModel();
         $gradeModel = new GradeModel();
         $recipeIngredientModel = new RecipeIngredientModel();
         $paragraphModel = new ParagraphModel();
         $commentModel = new CommentModel();
-        $recipe = $model->find($idRecipe);
-        $grades = $gradeModel -> where('id_recipes',$idRecipe) ->findAll();
+        $recipe = $model->find($idRecipe); // get the recipe object
+        $grades = $gradeModel->where('id_recipes', $idRecipe)->findAll(); // get all the grades for a recipe
+        
+        // calcul the average grade
         $totalGrades = 0;
-        foreach($grades as $grade){
-            $totalGrades+=$grade->grade;
+        foreach ($grades as $grade) {
+            $totalGrades += $grade->grade;
         }
-
         $averageGrade = null;
-        if (count($grades)>0){
-            $averageGrade = $totalGrades/count($grades);
+        if (count($grades) > 0) {
+            $averageGrade = $totalGrades / count($grades);
         }
 
-        $listRecipesIng = $recipeIngredientModel -> getRecipeIngredients($idRecipe);
+        $listRecipesIng = $recipeIngredientModel->getRecipeIngredients($idRecipe); // get all the recipe ingredients for a recipe. Return array of object
         $recipesIngObjects = [];
-        foreach($listRecipesIng as $ingredient){
-            $recipesIngObject= new RecipeIngredient(get_object_vars($ingredient));
-            $recipesIngObjects[]=$recipesIngObject;
+        foreach ($listRecipesIng as $ingredient) {
+            $recipesIngObject = new RecipeIngredient(get_object_vars($ingredient)); // change the array of object to array of recipe ingredient object
+            $recipesIngObjects[] = $recipesIngObject;
         }
 
-        $listParagraphs = $paragraphModel -> getParagraphs($idRecipe);
+        $listParagraphs = $paragraphModel->getParagraphs($idRecipe); // get all the steps for a recipe. Return an array of object
         $listParagraphsObject = [];
-        foreach($listParagraphs as $paragraph){
-            $paragraphsObject= new Paragraph(get_object_vars($paragraph));
-            $listParagraphsObject[]=$paragraphsObject;
+        foreach ($listParagraphs as $paragraph) {
+            $paragraphsObject = new Paragraph(get_object_vars($paragraph)); // change the array of object to array paragraph of object
+            $listParagraphsObject[] = $paragraphsObject;
         }
 
-        $listComments = $commentModel->where("id_recipes",$idRecipe) -> findAll();
-       
+        $listComments = $commentModel->where("id_recipes", $idRecipe)->findAll(); // get all the comments for a recipe
+
         $data["loc"] = "Recipe";
         $data["recipe"] = $recipe;
         $data["recipeIngredients"] = $recipesIngObjects;
@@ -75,5 +105,4 @@ class RecipeController extends BaseController
         $data["grade"] = $averageGrade;
         return $this->twig->render("pages/recipe.html", $data);
     }
-
 }
