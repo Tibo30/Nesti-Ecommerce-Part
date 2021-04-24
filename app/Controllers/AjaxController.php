@@ -12,7 +12,7 @@ class AjaxController extends BaseController
 {
 
     /**
-     * Recu depuis une requete Ajax
+     * Get all the recipes according to the tags selected (ajax request)
      * @return void
      */
     public function recipesTagged()
@@ -22,30 +22,30 @@ class AjaxController extends BaseController
 
         $model = new RecipeModel();
 
-        $tags = json_decode($this->request->getPost('tags'));
+        $tags = json_decode($this->request->getPost('tags')); // get the tags from the post
 
-        // rafraichissement du token CSRF
+        // refresh CSRF token
         $data['csrf_token'] = csrf_hash();
 
+
         if (count($tags)>0){
-            $recipes = $model->getRecipesbyTags($tags);
+            $recipes = $model->getRecipesbyTags($tags); // method that get all the recipes from tags selected. Return an array of object
         } else {
-            $recipes = $model->findAll();
+            $recipes = $model->findAll(); // if there is no tag selected, we display all the recipes. Return an array of recipe object
         }
-        
         
         $html="";
         foreach($recipes as $recipe){
             if (count($tags)>0){
-                $recipeObject = new Recipe(get_object_vars($recipe));
+                $recipeObject = new Recipe(get_object_vars($recipe)); // change the array of object to array of recipe object.
             } else {
                 $recipeObject=$recipe;
             }
             $picture = $recipeObject->getPicture();
             $html.='<div class="recipe-card">'.
             '<img class="recipe-img" src="https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/'.$picture->name.".".$picture->extension .'" alt="Card image cap">'.
-            '<div class="recipe-card-body"><h5 class="recipe-card-title">'.$recipeObject->recipe_name.'</h5><a href=""><button class="recipe-btn-see">See Recipe</button>'.
-            '</a></div></div>';
+            '<div class="recipe-card-body"><h5 class="recipe-card-title">'.$recipeObject->recipe_name.'</h5><a href="'.base_url("/recipe/".$recipeObject->id_recipes).'"><button class="recipe-btn-see">See Recipe</button>'.
+            '</a></div></div>'; // we prepare the updated html (cards)
         }
 
         $data["recipes"]=$recipes;
