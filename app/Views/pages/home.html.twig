@@ -37,14 +37,15 @@
 			{% for tag in tags %}
 				<div class="tag-proposition-recipe">
 					<div class="tag-proposition-title">{{tag.name}}</div>
-					<a href="{{base_url('tag/' ~ tag.id_tag)}}">
-						<div class="card-img-top" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{tag.getOneRecipe().getPicture().name~"."~tag.getonerecipe().getpicture().extension}}");'></a>
-					</div>
+					<a href="{{base_url('recipes/'~(tag.name|replace({" ":"_"})))}}">
+						{% if tag.getOneRecipe() is not null %}
+							<div class="card-img-top" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{tag.getOneRecipe().getPicture().name~"."~tag.getonerecipe().getpicture().extension}}");'></div>
+						{% endif %}
+					</a>
 				</div>
 			{% endfor %}
 
 
 		</div>
 	</div>
-
 {% endblock %}
