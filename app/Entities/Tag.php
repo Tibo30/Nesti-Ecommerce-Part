@@ -15,7 +15,12 @@ class Tag extends Entity
         $recipeModel = new RecipeModel();
         $recipes = $recipeModel->getRecipesbyTag($this->name);
         shuffle($recipes);
-        $recipe = new Recipe(get_object_vars($recipes[0]));
+        if (count($recipes)>0){
+            $recipe = new Recipe(get_object_vars($recipes[0]));
+        } else {
+            $recipe=null;
+        }
+        
         return $recipe;
     }
 }
