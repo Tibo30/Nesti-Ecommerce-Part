@@ -9,7 +9,7 @@
 			</h5>
 			<div class="tags-recipes">
 				{% for tag in tags %}
-					{{ form_open(base_url('recipes'))}}
+					{{ form_open(base_url())}}
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="{{tag.name |capitalize }}" {{tag.name == tagChosen ? "checked" : ""}}>
 						<label class="form-check-label" for="inlineCheckbox1">{{tag.name}}</label>
@@ -39,14 +39,14 @@
 <script>
 	const ROOT2 = "{{ base_url() }}";
 const csrf = document.querySelector('input[name="csrf_nesti"]');
-console.log(csrf);
 
 // at the begining, all the checkboxes are unchecked unless the user comes from a click on a tag in Home page
 var tagsChecked = []
 
 var checkboxes = document.querySelectorAll(".form-check-input"); // get all the checkboxes
 
-checkboxes.forEach(element => element.checked ? tagsChecked.push(element.value) : ""); // if the user comes from a click on a tag in Home page, we had the tag to the list
+checkboxes.forEach(element => element.checked ? tagsChecked.push(element.value) : "");
+// if the user comes from a click on a tag in Home page, we had the tag to the list
 
 // Add event listener on checkboxes
 checkboxes.forEach((element, index) => element.addEventListener('change', (function (e) {
@@ -54,15 +54,13 @@ if (e.target.checked == true) { // check the value to true or false in the list 
 tagsChecked.push(e.target.value);
 } else {
 tagsChecked.splice(tagsChecked.indexOf(e.target.value), 1)
-} recipeTagged(tagsChecked).then((response) => {
+} recipesTagged(tagsChecked).then((response) => {
 if (response) {
 if (response.success && response.csrf_token) {
 
 recipesCards = document.querySelector(".recipes-cards");
 recipesCards.innerHTML = "";
 recipesCards.innerHTML = response.html;
-
-console.log(response.recipes)
 // Raffraichissement du CSRF
 csrf.setAttribute('value', response.csrf_token);
 
@@ -73,12 +71,11 @@ csrf.setAttribute('value', response.csrf_token);
 
 
 /**
-     * Requete Ajax pour récupérer les recettes en fonction des tags choisis
+     * Ajax request to get the recipes according to the tags checked
      * @param array tagsChecked
      * @returns mixed
      */
-async function recipeTagged(tagsChecked) {
-console.log(csrf);
+async function recipesTagged(tagsChecked) {
 
 var myHeaders = new Headers();
 
@@ -86,8 +83,6 @@ let formData = new FormData();
 
 formData.append('tags', JSON.stringify(tagsChecked));
 formData.append(csrf.name, csrf.value);
-
-console.log(formData);
 
 var myInit = {
 method: 'POST',
@@ -98,7 +93,6 @@ body: formData
 };
 
 let response = await fetch(ROOT2 + '/recipes/tagged', myInit);
-console.log(response);
 try {
 if (response.ok) {
 return await response.json();
