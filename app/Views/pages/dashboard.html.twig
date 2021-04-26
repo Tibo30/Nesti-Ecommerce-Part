@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+{% block content %}
+	<div class="dashboard">
+		<div class="welcome-message">Welcome</div>
+		<div class="welcome-name">{{session.lastname}} {{session.firstname}}</div>
+        <a href="{{base_url('disconnect')}}"><div class="disconnect-btn"> Disconnect </div></a>
+	</div>
+    
+{% endblock %}
