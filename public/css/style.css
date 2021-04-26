@@ -269,7 +269,7 @@ html {
     text-transform: capitalize;
 }
 
-/* -------------------------- Recipes ----------------------------- */
+/* -------------------------- Recipe ----------------------------- */
 
 .recipeDetails {
     width: 90%;
@@ -633,4 +633,33 @@ html {
 
 .register-form .register-form-right, .register-form .register-form-left{
     width: 400px
+}
+
+/* -------------------------- Dashboard ------------------------------ */
+
+.dashboard{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5rem;
+    position: relative;
+}
+
+.welcome-message{
+    font-family: var(--fontTitle);
+    font-size: 50px;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+}
+
+.welcome-name{
+    font-size: 30px;
+}
+
+.disconnect-btn{
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
