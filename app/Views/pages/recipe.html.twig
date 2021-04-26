@@ -32,8 +32,8 @@
 					{% set copyGrade = (copyGrade - 1) %}
 				</span>
 			{% endfor %}
-			<div>
-				{{grade}}/5
+			<div class="grade-value">
+				{{grade|round(1, 'ceil')}}/5
 			</div>
 		</div>
 
@@ -87,8 +87,8 @@
 			How do you rate this recipe ?
 		</div>
 		<div class="recipe-stars">
-			{% for i in range(1,5) %}
-				<span data-value={{i}} class="fa-stack" style="width:1em">
+			{% for i in range(0,4) %}
+				<span data-value={{5-i}} class="fa-stack grade-given" style="width:1em">
 					&#9734
 				</span>
 			{% endfor %}
@@ -149,11 +149,14 @@
 					<div class="write-comments-title">
 						Write a comment
 					</div>
+					<div class="form-send-comment" hidden>
+						{{ form_open(base_url())}}
 
-					<form class="form-send-comment" hidden>
 						<textarea class="write-comment-area" rows="5" max-length="50" style="resize: none;"></textarea>
 						<button type="submit">Send comment</button>
-					</form>
+
+						{{ form_close() }}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -164,6 +167,7 @@
 {% block script %}
 	<script>
 		allComments = document.querySelector(".see-all-comments");
+const csrf = document.querySelector('input[name="csrf_nesti"]');
 
 if (allComments != null) {
 allComments.addEventListener('click', (function (e) {
@@ -183,9 +187,76 @@ writeComment = document.querySelector(".write-comments-title");
 
 if (writeComment != null) {
 writeComment.addEventListener('click', (function (e) {
-document.querySelector(".form-send-comment").hidden=false
+document.querySelector(".form-send-comment").hidden = false
 }))
 }
 
+grades = document.querySelectorAll(".grade-given");
+// Add event listener on stars
+grades.forEach((element, index) => element.addEventListener('click', (function (e) {
+var log = "{{ session.logged }}";
+if (log == "yes") {
+var grade = element.getAttribute("data-value");
+addGrade(grade).then((response) => {
+if (response) {
+if (response.success && response.csrf_token) {
+
+alert("You gave a " + grade + " /5 to this recipe");
+document.querySelector(".grade-value").innerHTML=Math.round(response.averageGrade * 10) / 10+"/5";
+
+} else {
+alert(response.error);
+}
+// Raffraichissement du CSRF
+
+csrf.setAttribute('value', response.csrf_token);
+}
+});
+} else {
+window.location = ROOT + "/login";
+}
+
+})))
+
+/**
+     * Ajax request to add a grade
+     * @param array tagsChecked
+     * @returns mixed
+     */
+async function addGrade(grade) { // console.log(csrf);
+
+
+var myHeaders = new Headers();
+
+let formData = new FormData();
+
+formData.append('grade', grade);
+formData.append('id_recipe', "{{ recipe.id_recipes }}");
+formData.append('id_user', "{{ session.id }}");
+
+formData.append(csrf.name, csrf.value);
+
+
+var myInit = {
+method: 'POST',
+headers: myHeaders,
+mode: 'cors',
+cache: 'default',
+body: formData
+};
+
+let response = await fetch(ROOT + '/recipe/addgrade', myInit);
+try {
+if (response.ok) {
+return await response.json();
+} else {
+return false;
+}
+} catch (e) {
+console.error(e.message);
+}
+
+
+}
 	</script>
 {% endblock %}
