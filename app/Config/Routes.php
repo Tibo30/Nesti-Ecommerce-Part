@@ -54,10 +54,14 @@ $routes->get('about', 'Pages::about');
 $routes->post('/recipes/tagged', 'AjaxController::recipesTagged');
 $routes->get('recipes', 'RecipeController::recipes');
 $routes->get('recipe/(:num)', 'RecipeController::recipe/$1');
+$routes->post('recipe/addgrade', 'AjaxController::addgrade');
 $routes->get('recipes/(:any)', 'RecipeController::recipesByTag/$1');
 
 $routes->get('login', 'LoginController::login');
+$routes->post('dashboard', 'ConnectionController::checkLogin');
+$routes->get('dashboard', 'ConnectionController::index');
 $routes->get('register', 'LoginController::register');
+$routes->get('disconnect', 'ConnectionController::disconnect');
 
 // $routes->get('/recipes/tagged', 'RecipeController::recipesTagged');
 
