@@ -20,6 +20,7 @@ use Psr\Log\LoggerInterface;
 
 class BaseController extends Controller
 {
+	
 	/**
 	 * An array of helpers to be loaded automatically upon
 	 * class instantiation. These helpers will be available
@@ -44,37 +45,36 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
-		// E.g.: $this->session = \Config\Services::session();
+		$this->session = \Config\Services::session();
 		$this->twig = new \Kenjis\CI4Twig\Twig([
-			'debug'=>true,
+			'debug' => true,
 			'functions' => ['urlJS'],
 		]);
-
-		
+		$this->twig->addGlobal("session", $this->session);
 	}
 
 	// public function renderTemplate(string $page,array $data = [])
-    // {
-    //     if ( ! is_file(APPPATH.'/Views/'.$page.'.php'))
-    // {
-    //     // Whoops, we don't have a page for that!
-    //     throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
-    // }
+	// {
+	//     if ( ! is_file(APPPATH.'/Views/'.$page.'.php'))
+	// {
+	//     // Whoops, we don't have a page for that!
+	//     throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
+	// }
 
-    // $i = strrpos($page,"/");
-    // $title = str_replace('-',' ', substr($page, $i +1));
-    // $data['title'] = ucwords($title);
-	
-    // // echo view('templates/header', $data);
+	// $i = strrpos($page,"/");
+	// $title = str_replace('-',' ', substr($page, $i +1));
+	// $data['title'] = ucwords($title);
+
+	// // echo view('templates/header', $data);
 	// $this->twig->display('templates/header', $data);
-    // // echo view(''.$page, $data);
+	// // echo view(''.$page, $data);
 	// // $data2['test']='<h1>Balise Test</h1>';
 	// // $this->twig->display('test',$data2);
 	// $this->twig->display(''.$page,$data);
-    // // echo view('templates/footer', $data);
+	// // echo view('templates/footer', $data);
 	// $this->twig->display('templates/footer', $data);
-    // }
+	// }
 
-	
+
 
 }
