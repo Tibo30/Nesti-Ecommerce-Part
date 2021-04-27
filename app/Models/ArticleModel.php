@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+use App\Entities\Article;
+
+class ArticleModel extends Model
+{
+
+    protected $table = 'articles'; // nom de la table
+    protected $primaryKey = 'id_articles';
+    protected $allowedFields = ['id_articles','quantity_per_unit','state','creation_date','update_date','id_unit_measures','id_products','id_pictures','user_article_name']; // Nom des colonnes autorisées
+    protected $returnType = Article::class; // Type de retour
+    protected $useTimestamps = false; // Utilisation du timestamps
+    protected $skipValidation  = true;
+
+    
+}
