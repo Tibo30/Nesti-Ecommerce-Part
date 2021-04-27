@@ -141,7 +141,7 @@
 					{% set index=index+1 %}
 				{% endfor %}
 				{% if comments|length >0 %}
-					<div class="see-all-comments" data-hidden="false">
+					<div class="see-all-comments" data-hidden="true">
 						See all comments
 					</div>
 				{% endif %}
@@ -150,11 +150,10 @@
 						Write a comment
 					</div>
 					<div class="form-send-comment" hidden>
-						{{ form_open(base_url())}}
-
-						<textarea class="write-comment-area" rows="5" max-length="50" style="resize: none;"></textarea>
-						<button type="submit">Send comment</button>
-
+						{{ form_open(base_url(),{class:"form-write-comment"})}}
+						<textarea lang="en" class="write-comment-title" rows="1" max-length="50" style="resize: none;" name="title" placeholder="Title" required></textarea>
+						<textarea class="write-comment-area" rows="5" max-length="50" style="resize: none;" name="comment" placeholder="Write your comment here !" required></textarea>
+						<button type="submit" class="btn-send-comment">Send comment</button>
 						{{ form_close() }}
 					</div>
 				</div>
@@ -166,53 +165,50 @@
 
 {% block script %}
 	<script>
-		allComments = document.querySelector(".see-all-comments");
+	
 const csrf = document.querySelector('input[name="csrf_nesti"]');
 
+allComments = document.querySelector(".see-all-comments"); // get the button to display all comments
+
 if (allComments != null) {
-allComments.addEventListener('click', (function (e) {
-if (allComments.getAttribute("data-hidden") == "false") {
-document.querySelector(".recipe-comment-hidden").hidden = false;
-allComments.setAttribute("data-hidden", "true");
+allComments.addEventListener('click', (function (e) { //add event listener
+
+if (allComments.getAttribute("data-hidden") == "true") { // display all comments
+var hiddenComments = document.querySelectorAll(".recipe-comment-hidden");
+hiddenComments.forEach(element => element.hidden = false)
+allComments.setAttribute("data-hidden", "false");
 allComments.innerHTML = "Hide comments";
-} else if (allComments.getAttribute("data-hidden") == "true") {
-document.querySelector(".recipe-comment-hidden").hidden = true;
-allComments.setAttribute("data-hidden", "false")
+} else if (allComments.getAttribute("data-hidden") == "false") { // hide other comments
+var hiddenComments = document.querySelectorAll(".recipe-comment-hidden");
+hiddenComments.forEach(element => element.hidden = true)
+allComments.setAttribute("data-hidden", "true")
 allComments.innerHTML = "See all comments";
 }
 }))
 }
 
-writeComment = document.querySelector(".write-comments-title");
+grades = document.querySelectorAll(".grade-given"); // get the grade stars
 
-if (writeComment != null) {
-writeComment.addEventListener('click', (function (e) {
-document.querySelector(".form-send-comment").hidden = false
-}))
-}
-
-grades = document.querySelectorAll(".grade-given");
-// Add event listener on stars
-grades.forEach((element, index) => element.addEventListener('click', (function (e) {
+grades.forEach((element, index) => element.addEventListener('click', (function (e) {// Add event listener on stars
 var log = "{{ session.logged }}";
-if (log == "yes") {
-var grade = element.getAttribute("data-value");
+if (log == "yes") { // if the user is logged in
+var grade = element.getAttribute("data-value"); // get the value of the grade
 addGrade(grade).then((response) => {
 if (response) {
 if (response.success && response.csrf_token) {
 
 alert("You gave a " + grade + " /5 to this recipe");
-document.querySelector(".grade-value").innerHTML=Math.round(response.averageGrade * 10) / 10+"/5";
+document.querySelector(".grade-value").innerHTML = Math.round(response.averageGrade * 10) / 10 + "/5";
 
 } else {
 alert(response.error);
 }
-// Raffraichissement du CSRF
+// Refresh CSRF
 
 csrf.setAttribute('value', response.csrf_token);
 }
 });
-} else {
+} else { // if the user is not logged in => go to login page
 window.location = ROOT + "/login";
 }
 
@@ -223,7 +219,7 @@ window.location = ROOT + "/login";
      * @param array tagsChecked
      * @returns mixed
      */
-async function addGrade(grade) { // console.log(csrf);
+async function addGrade(grade) { 
 
 
 var myHeaders = new Headers();
@@ -256,7 +252,87 @@ return false;
 console.error(e.message);
 }
 
+}
+
+
+writeComment = document.querySelector(".write-comments-title");
+
+if (writeComment != null) {
+writeComment.addEventListener('click', (function (e) {
+var log = "{{ session.logged }}";
+if (log == "yes") { // if the user is logged in
+document.querySelector(".form-send-comment").hidden = false
+} else { // if the user is not logged in => go to login page
+window.location = ROOT + "/login";
+}
+}))
+}
+
+formComment = document.querySelector(".form-write-comment");
+
+if (formComment != null) {
+formComment.addEventListener('submit', (function (e) {
+event.preventDefault();
+var log = "{{ session.logged }}";
+if (log == "yes") { // if the user is logged in
+addComment(this).then((response) => {
+if (response) {
+if (response.success && response.csrf_token) {
+
+alert("Your comment has been sent ! It has to been accepted by a moderator.");
+
+} else {
+alert(response.error);
+}
+// Refresh CSRF
+csrf.setAttribute('value', response.csrf_token);
+}
+});
+
+} else { // if the user is not logged in => go to login page
+window.location = ROOT + "/login";
+}
+}))
+}
+
+/**
+     * Ajax request to add a comment
+     * @param {form} obj
+     * @returns mixed
+     */
+async function addComment(obj) { 
+
+
+var myHeaders = new Headers();
+
+let formData = new FormData(obj);
+
+formData.append('id_recipe', "{{ recipe.id_recipes }}");
+formData.append('id_user', "{{ session.id }}");
+
+formData.append(csrf.name, csrf.value);
+
+
+var myInit = {
+method: 'POST',
+headers: myHeaders,
+mode: 'cors',
+cache: 'default',
+body: formData
+};
+
+let response = await fetch(ROOT + '/recipe/addcomment', myInit);
+try {
+if (response.ok) {
+return await response.json();
+} else {
+return false;
+}
+} catch (e) {
+console.error(e.message);
+}
 
 }
+
 	</script>
 {% endblock %}
