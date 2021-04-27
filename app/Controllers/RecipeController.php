@@ -95,7 +95,7 @@ class RecipeController extends BaseController
             $listParagraphsObject[] = $paragraphsObject;
         }
 
-        $listComments = $commentModel->where("id_recipes", $idRecipe)->findAll(); // get all the comments for a recipe
+        $listComments = $commentModel->where("id_recipes", $idRecipe)->where("state","a")->findAll(); // get all the accepted comments for a recipe
 
         $data["loc"] = "Recipe";
         $data["recipe"] = $recipe;
