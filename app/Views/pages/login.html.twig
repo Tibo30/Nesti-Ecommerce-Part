@@ -7,17 +7,21 @@
 		<div class="form-group">
 			<label for="login-email-username">Email address</label>
 			<input type="text" class="form-control" id="login-email-username" name="emailUsername" aria-describedby="emailHelp" placeholder="Enter Email/Username">
-			<span class="text-danger" id="errorEmailUsername">{{errorMessages["emailUsername"]}}</span>
 		</div>
+		<span class="text-danger" id="errorEmailUsername">{{errorMessages["emailUsername"]}}</span>
 		<div class="form-group">
 			<label for="login-password">Password</label>
 			<input type="password" class="form-control" id="login-password" name="password" placeholder="Password">
-			<span class="text-danger" id="errorEmailUsername">{{errorMessages["password"]}}</span>
 		</div>
-        <div class="login-no-account"> 
-        <p>Don't have an account ? Register &nbsp; </p>
-        <a href="{{base_url('register')}}" class="login-here"><p> here !</p></a>
-        </div>
+		<span class="text-danger" id="errorEmailUsername">{{errorMessages["password"]}}</span>
+		<div class="login-no-account">
+			<p>Don't have an account ? Register &nbsp;
+			</p>
+			<a href="{{base_url('register')}}" class="login-here">
+				<p>
+					here !</p>
+			</a>
+		</div>
 		<button type="submit" class="btn-login">Log In</button>
 	</div>
 	{{ form_close() }}
