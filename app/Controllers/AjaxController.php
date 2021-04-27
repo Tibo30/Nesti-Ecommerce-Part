@@ -6,9 +6,11 @@ use App\Models\TagModel;
 use App\Models\RecipeModel;
 use App\Models\PictureModel;
 use App\Models\GradeModel;
+use App\Models\CommentModel;
 
 use App\Entities\Recipe;
 use App\Entities\Grade;
+use App\Entities\Comment;
 
 class AjaxController extends BaseController
 {
@@ -91,19 +93,6 @@ class AjaxController extends BaseController
             $error = $e->getMessage();
         }
 
-
-        // $s = $gradeModel->save($gradeObject);
-        // var_dump($gradeModel->db->error());
-        // // 7. On traite les erreurs éventuelles
-        // if ($s === false) {
-        //     // les données enregistrées dans flasData ne sont concervés
-        //     // que pour la prochaine page, puis elles seront détruites.            
-        //     $this->session->setFlashdata('errors', $gradeModel->db->error());
-        //     // dd($this->session->getFlashdata('errors'));
-        // } else {
-        //     $this->session->setFlashdata('success', true);
-        // }
-
         if ($error == "") {
             $grades = $gradeModel->where('id_recipes', $idRecipe)->findAll(); // get all the grades for a recipe
 
@@ -121,12 +110,66 @@ class AjaxController extends BaseController
             $data['success'] = true;
         } else {
             $errorMessage = $error;
-            if ($error == "Duplicate entry '3-251' for key 'PRIMARY'") {
+            if ($error == "Duplicate entry '"+$idUser+"-"+$idRecipe+"' for key 'PRIMARY'") {
                 $errorMessage = "You already gave a grade to this recipe !";
             }
             $data["error"] = $errorMessage;
         }
 
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        die;
+    }
+
+    /**
+     * Add comment to a recipe (ajax request)
+     * @return void
+     */
+    public function addcomment()
+    {
+        $data = [];
+        $data['success'] = false;
+
+        $commentModel = new CommentModel();
+        // filter_input(INPUT_POST, "id_recipe", FILTER_SANITIZE_STRING);
+        $title = $this->request->getPost('title'); // get the title from the post
+        $comment = $this->request->getPost('comment'); // get the comment from the post
+        $idRecipe = $this->request->getPost('id_recipe'); // get the id recipe from the post
+        $idUser = $this->request->getPost('id_user'); // get the id user from the post
+
+        // refresh CSRF token
+        $data['csrf_token'] = csrf_hash();
+
+        $commentObject = new Comment();
+        $commentObject->fill([
+            'id_users' => $idUser,
+            'id_recipes' => $idRecipe,
+            'comment_content' => $comment,
+            'comment_title' => $title
+        ]);
+
+        $check = $commentModel->where('id_users',$idUser)->where('id_recipes',$idRecipe)->find(); // check if the user already wrote a comment for the recipe
+        $error = "";
+        if (count($check)==0){
+            try {
+                $s = $commentModel->save($commentObject);
+            } catch (\Exception $e) {
+                $error = $e->getMessage();
+            }
+    
+            if ($error == "") {
+                $data['success'] = true;
+            } else {
+                $errorMessage = $error;
+                if ($error == "Duplicate entry '"+$idUser+"-"+$idRecipe+"' for key 'PRIMARY'") {
+                    $errorMessage = "You already wrote a comment to this recipe !";
+                }
+                $data["error"] = $errorMessage;
+            }
+        } else {
+            $data["error"] = "You already wrote a comment for this recipe !";
+        }
+        
         header('Content-Type: application/json');
         echo json_encode($data);
         die;
