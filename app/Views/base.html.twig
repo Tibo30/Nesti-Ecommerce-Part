@@ -38,24 +38,27 @@
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item">
 							<a class='nav-link {{loc=="Home" ? "active" : ""}}' href="{{base_url('home')}}">
-								<i class="fas fa-home mr-2"></i>
+							<img class=" filter-green fas logo-svg" src="{{base_url('/assets/pictures/home.svg')}}" width="50" height="50" alt="">
+								{# <i class="fas fa-home mr-2"></i> #}
 								Home</a>
 						</li>
 						<li class="nav-item">
 							<a
 								class='nav-link {{loc=="Suggestion" ? "active" : ""}}' href="#">
-								{# <i><img class="fas fridge-svg" src="{{base_url('/assets/pictures/fridge.svg')}}" width="50" height="50" alt=""></i> #}
-								<i class="fas fa-utensils mr-2"></i>
+							<img class="fas logo-svg" src="{{base_url('/assets/pictures/fridge.svg')}}" width="50" height="50" alt="">
+								{# <i class="fas fa-utensils mr-2"></i> #}
 								Suggestions</a>
 						</li>
 						<li class="nav-item">
 							<a class='nav-link {{(loc=="Recipes" or loc=="Recipe") ? "active" : ""}}' href="{{base_url('recipes')}}">
-								<i class="fas fa-clipboard-list mr-2"></i>
+							<img class="fas logo-svg" src="{{base_url('/assets/pictures/hat.svg')}}" width="50" height="50" alt="">
+								{# <i class="fas fa-clipboard-list mr-2"></i> #}
 								Recipes</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link {{loc=="Market" ? "active" : ""}}' href="#">
-								<i class="fas fa-euro-sign mr-2"></i>
+							<a class='nav-link {{loc=="Market" ? "active" : ""}}' href="{{base_url('market')}}">
+							<img class="fas logo-svg" src="{{base_url('/assets/pictures/market.svg')}}" width="50" height="50" alt="">
+								{# <i class="fas fa-euro-sign mr-2"></i> #}
 								Market</a>
 						</li>
 					</ul>
@@ -67,8 +70,9 @@
 					</form>
 					<a class='cart-logo nav-link {{loc=="Panier" ? "active" : ""}}' href="{{base_url('panier')}}">
 						<i class="fas fa-shopping-cart mr-2 fa-3x"></i>
+						{# <i class="fab fa-opencart mr-2 fa-3x"></i> #}
 					</a>
-					<a class='login-logo nav-link {{(loc=="Login" or loc=="Register") ? "active" : ""}}' href="{{base_url('dashboard')}}">
+					<a class='login-logo nav-link {{(loc=="Login" or loc=="Register" or loc=="Dashboard") ? "active" : ""}}' href="{{base_url('dashboard')}}">
 						<i class="fas fa-user-circle mr-2 fa-3x"></i>
 					</a>
 				</div>
