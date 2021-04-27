@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+	<div class="all-articles">
+		
+
+		<h1 class="articles-title-selection"></h1>
+
+		<div class="articles-cards">
+			{% for article in articles %}
+				<div class="article-card">
+					<div class="article-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture().name~"."~article.getPicture().extension }}");'></a>
+				</div>
+				<div class="article-card-body">
+					<h5 class="article-card-title">{{article.quantity_per_unit~" "~article.getUnitMeasure().name~" of "~article.getIngredient().product_name}}</h5>
+					<a href="{{ base_url('/article/'~article.id_articles) }}">
+						<button class="article-btn-see">See Article</button>
+					</a>
+				</div>
+			</div>
+		{% endfor %}
+
+
+	</div>
+</div>{% endblock %}{% block script %}
+<script>
+
+</script>{% endblock %}
