@@ -19,6 +19,8 @@
 			</div>
 		</div>
 
+		<h1 class="recipes-title-selection"></h1>
+
 		<div class="recipes-cards">
 			{% for recipe in recipes %}
 				<div class="recipe-card">
@@ -47,6 +49,11 @@ var checkboxes = document.querySelectorAll(".form-check-input"); // get all the 
 
 checkboxes.forEach(element => element.checked ? tagsChecked.push(element.value) : "");
 // if the user comes from a click on a tag in Home page, we had the tag to the list
+if (tagsChecked.length > 0) {
+document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection for " + tagsChecked.join(" & ") + " recipes";
+} else {
+document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection of recipes";	
+}
 
 // Add event listener on checkboxes
 checkboxes.forEach((element, index) => element.addEventListener('change', (function (e) {
@@ -61,6 +68,12 @@ if (response.success && response.csrf_token) {
 recipesCards = document.querySelector(".recipes-cards");
 recipesCards.innerHTML = "";
 recipesCards.innerHTML = response.html;
+if (tagsChecked.length > 0) {
+document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection for " + tagsChecked.join(" & ") + " recipes";
+} else {
+document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection of recipes";	
+}
+
 // Raffraichissement du CSRF
 csrf.setAttribute('value', response.csrf_token);
 
