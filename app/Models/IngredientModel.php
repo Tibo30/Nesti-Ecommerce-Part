@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use App\Entities\RecipeIngredient;
+use App\Entities\Ingredient;
 
 class IngredientModel extends Model
 {
@@ -11,7 +11,7 @@ class IngredientModel extends Model
     protected $table = 'products'; // nom de la table
     protected $primaryKey = 'id_products';
     protected $allowedFields = ['id_products', 'product_name']; // Nom des colonnes autorisées
-    protected $returnType = RecipeIngredient::class; // Type de retour
+    protected $returnType = Ingredient::class; // Type de retour
     protected $useTimestamps = false; // Utilisation du timestamps
     protected $skipValidation  = true;
 
