@@ -34,9 +34,8 @@
 				</div>
 			</div>
 		{% endfor %}
-
-
 	</div>
+
 </div>{% endblock %}{% block script %}
 <script>
 	const ROOT2 = "{{ base_url() }}";
@@ -52,7 +51,7 @@ checkboxes.forEach(element => element.checked ? tagsChecked.push(element.value) 
 if (tagsChecked.length > 0) {
 document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection for " + tagsChecked.join(" & ") + " recipes";
 } else {
-document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection of recipes";	
+document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection of recipes";
 }
 
 // Add event listener on checkboxes
@@ -71,7 +70,7 @@ recipesCards.innerHTML = response.html;
 if (tagsChecked.length > 0) {
 document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection for " + tagsChecked.join(" & ") + " recipes";
 } else {
-document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection of recipes";	
+document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection of recipes";
 }
 
 // Raffraichissement du CSRF
