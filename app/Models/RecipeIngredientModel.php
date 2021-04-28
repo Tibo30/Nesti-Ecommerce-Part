@@ -17,7 +17,6 @@ class RecipeIngredientModel extends Model
 
     public function getRecipeIngredients($idRecipe){
         $builder = $this->db->table('recipe_ingredients');
-        $builder->select('recipe_ingredients.quantity, recipe_ingredients.order_ingredient, recipe_ingredients.id_unit_measures, recipe_ingredients.id_recipes, recipe_ingredients.id_ingredients');
         $builder->select('recipe_ingredients.*');
         $builder->join('ingredients', 'ingredients.id_ingredients = recipe_ingredients.id_ingredients');
         $builder->join('products', 'ingredients.id_ingredients = products.id_products');
