@@ -5,12 +5,18 @@
 		<div class="welcome-message">Welcome</div>
 		<div class="welcome-name">{{session.lastname}}
 			{{session.firstname}}</div>
-		<a href="{{base_url('disconnect')}}">
-			<div class="disconnect-btn">
-				Disconnect
+		<a class="disconnect-btn" href="{{base_url('disconnect')}}">
+			<div>
+				Log Out
 			</div>
+			<img class="fas logo-svg" src="{{base_url('/assets/pictures/logout.svg')}}" alt="">
 		</a>
-
+		{% if "chief" in session.roles or "admin" in session.roles or "modo" in session.roles %}
+			<a class="link-admin" href="https://jolivet.needemand.com/realisations/nesti-admin/" target="_blank">
+				<img class="fas logo-svg" src="{{base_url('/assets/pictures/arrow.svg')}}" alt="">
+				<div>To Admin Website</div>
+			</a>
+		{% endif %}
 	</div>
 
 {% endblock %}
