@@ -81,11 +81,10 @@ class RecipeController extends BaseController
             $averageGrade = $totalGrades / count($grades);
         }
 
-        $listRecipesIng = $recipeIngredientModel->getRecipeIngredients($idRecipe); // get all the recipe ingredients for a recipe. Return array of object
+        $listRecipesIng = $recipeIngredientModel->where('id_recipes',$idRecipe)->findAll(); // get all the recipe ingredients for a recipe. Return array of object
         $recipesIngObjects = [];
         foreach ($listRecipesIng as $ingredient) {
-            $recipesIngObject = new RecipeIngredient(get_object_vars($ingredient)); // change the array of object to array of recipe ingredient object
-            $recipesIngObjects[] = $recipesIngObject;
+            $recipesIngObjects[] = $ingredient;
         }
 
         $listParagraphs = $paragraphModel->getParagraphs($idRecipe); // get all the steps for a recipe. Return an array of object
