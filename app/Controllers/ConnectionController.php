@@ -49,12 +49,27 @@ class ConnectionController extends BaseController
 
         if ($isVerified && $activeUserId != 0) {
             if ($activUser->state == "a") {
+                $roles=[];
+                $userModel = new UserModel();
+                $chief = $userModel->isChief($activUser->id_users);
+                $modo = $userModel->isModerator($activUser->id_users);
+                $admin = $userModel->isAdmin($activUser->id_users);
 
-                var_dump($activUser->id_users);
+                if (count($chief)>0 && $chief[0]->role_state=="a" ){
+                    $roles[]="chief";
+                }
+                if (count($modo)>0 && $modo[0]->role_state=="a" ){
+                    $roles[]="modo";
+                }
+                if (count($admin)>0 && $admin[0]->role_state=="a" ){
+                    $roles[]="admin";
+                }
+                               
                 $dataSession = [
                     'lastname' => $activUser->lastname,
                     'firstname' => $activUser->firstname,
                     'id' => $activUser->id_users,
+                    'roles' => $roles,
                     'logged' => "yes",
                     'logged_in' => true
                 ];
