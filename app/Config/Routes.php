@@ -59,6 +59,7 @@ $routes->post('recipe/addcomment', 'AjaxController::addcomment');
 $routes->get('recipes/(:any)', 'RecipeController::recipesByTag/$1');
 
 $routes->get('market', 'ArticleController::articles');
+$routes->get('article/(:num)', 'ArticleController::article/$1');
 
 $routes->get('login', 'LoginController::login');
 $routes->post('dashboard', 'ConnectionController::checkLogin');
