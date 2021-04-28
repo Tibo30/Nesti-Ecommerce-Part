@@ -28,7 +28,7 @@
 		{% block nav %}
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<a class="navbar-brand" href="{{base_url('home')}}">
-					<img src="{{base_url('/assets/pictures/logo2.png')}}" width="50" height="50" alt="">
+					<img src="{{base_url('/assets/pictures/logo2.png')}}" alt="">
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -38,26 +38,26 @@
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item">
 							<a class='nav-link {{loc=="Home" ? "active" : ""}}' href="{{base_url('home')}}">
-							<img class=" filter-green fas logo-svg" src="{{base_url('/assets/pictures/home.svg')}}" width="50" height="50" alt="">
+							<img class=" filter-green fas logo-svg" src="{{base_url('/assets/pictures/home.svg')}}" alt="">
 								{# <i class="fas fa-home mr-2"></i> #}
 								Home</a>
 						</li>
 						<li class="nav-item">
 							<a
 								class='nav-link {{loc=="Suggestion" ? "active" : ""}}' href="#">
-							<img class="fas logo-svg" src="{{base_url('/assets/pictures/fridge.svg')}}" width="50" height="50" alt="">
+							<img class="fas logo-svg" src="{{base_url('/assets/pictures/fridge.svg')}}" alt="">
 								{# <i class="fas fa-utensils mr-2"></i> #}
 								Suggestions</a>
 						</li>
 						<li class="nav-item">
 							<a class='nav-link {{(loc=="Recipes" or loc=="Recipe") ? "active" : ""}}' href="{{base_url('recipes')}}">
-							<img class="fas logo-svg" src="{{base_url('/assets/pictures/hat.svg')}}" width="50" height="50" alt="">
+							<img class="fas logo-svg" src="{{base_url('/assets/pictures/hat.svg')}}" alt="">
 								{# <i class="fas fa-clipboard-list mr-2"></i> #}
 								Recipes</a>
 						</li>
 						<li class="nav-item">
 							<a class='nav-link {{loc=="Market" ? "active" : ""}}' href="{{base_url('market')}}">
-							<img class="fas logo-svg" src="{{base_url('/assets/pictures/market.svg')}}" width="50" height="50" alt="">
+							<img class="fas logo-svg" src="{{base_url('/assets/pictures/market.svg')}}" alt="">
 								{# <i class="fas fa-euro-sign mr-2"></i> #}
 								Market</a>
 						</li>
