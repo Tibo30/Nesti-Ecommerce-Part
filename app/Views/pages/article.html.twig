@@ -1,0 +1,98 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+	<div class="articleDetails">
+		<div class="underLink">
+			<a href="{{ base_url('/market')}}">
+				<p>Articles</p>
+			</a>
+			<p>
+				&nbsp >
+				{{article.getName() | capitalize}}
+			</p>
+		</div>
+
+		<h1 class="articleTitle">
+			{{article.getIngredient().product_name | capitalize}}
+		</h1>
+		<div class="article-picture-add-cart">
+			<div class="article-picture" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture().name~"."~article.getpicture().extension }}");'></a>
+		</div>
+		<div class="add-article-cart">
+
+			{{ form_open(base_url(),{class:"form-add-article"})}}
+
+			<label for="inputQuantity">Quantity</label>
+			<select id="inputQuantity" class="form-control" name="quantity">
+				<option selected>1</option>
+				{% for i in range(2,10) %}
+					<option>{{i}}</option>
+				{% endfor %}
+			</select>
+			<button type="submit" class="btn-add-article">Add to cart</button>
+
+			{{ form_close() }}
+
+		</div>
+
+	</div>
+
+	<div class="article-number-recipes">
+		There
+		{{recipes | length ==1 ? "is" : "are"}}
+		{{recipes | length}}
+		{{recipes | length ==1 ? "recipe" : "recipes"}}
+		for this ingredient
+	</div>
+
+	<div class="recipes-cards">
+		{% set index=0 %}
+		{% for recipe in recipes %}
+			{% if index <4 %}
+				<div class="recipe-card">
+				{% else %}
+					<div class="recipe-card-hidden" hidden>
+					{% endif %}
+					<div class="recipe-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture().name~"."~recipe.getPicture().extension }}");'></a>
+				</div>
+				<div class="recipe-card-body">
+					<h5 class="recipe-card-title">{{recipe.recipe_name}}</h5>
+					<a href="{{ base_url('/recipe/'~recipe.id_recipes) }}">
+						<button class="recipe-btn-see">See Recipe</button>
+					</a>
+				</div>
+			</div>
+			{% set index=index+1 %}
+		{% endfor %}
+		{% if recipes|length >4 %}
+			<div class="see-all-recipes" data-hidden="true">
+				See more
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+{% block script %}
+	<script>
+
+
+		allRecipes = document.querySelector(".see-all-recipes"); // get the button to display all recipes
+
+if (allRecipes != null) {
+allRecipes.addEventListener('click', (function (e) { // add event listener
+
+if (allRecipes.getAttribute("data-hidden") == "true") { // display all recipes
+var hiddenRecipes = document.querySelectorAll(".recipe-card-hidden");
+hiddenRecipes.forEach(element => element.hidden = false)
+allRecipes.setAttribute("data-hidden", "false");
+allRecipes.innerHTML = "Hide recipes";
+} else if (allRecipes.getAttribute("data-hidden") == "false") { // hide other recipes
+var hiddenRecipes = document.querySelectorAll(".recipe-card-hidden");
+hiddenRecipes.forEach(element => element.hidden = true)
+allRecipes.setAttribute("data-hidden", "true")
+allRecipes.innerHTML = "See more";
+}
+}))
+}
+	</script>
+{% endblock %}
