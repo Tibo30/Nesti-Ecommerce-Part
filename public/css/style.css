@@ -762,10 +762,14 @@ button:hover {
 }
 
 .disconnect-btn {
-    cursor: pointer;
     position: absolute;
-    top: 0;
+    top: 1rem;
     right: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--primaryTextColor) !important;
+    font-family: var(--fontTitle);
 }
 
 .dashboard-logo {
@@ -776,9 +780,18 @@ button:hover {
     margin-top: 3rem;
 }
 
-/* ------------------------------- Articles ------------------------------- */
+.link-admin {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--primaryTextColor) !important;
+    font-family: var(--fontTitle);
+}
 
-/* -------------------------- Recipes ----------------------------- */
+/* ------------------------------- Articles ------------------------------- */
 
 .all-articles {
     width: 90%;
@@ -866,6 +879,156 @@ button:hover {
 }
 
 .article-card .article-card-title {
+    color: var(--primaryTextColor);
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+}
+
+.article-card .article-out-of-stock {
+    color: red;
+}
+
+/* ---------------------------- Article ---------------------- */
+
+.articleDetails {
+    width: 90%;
+    margin: 3rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.articleDetails .underLink {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+}
+
+.articleDetails .underLink a {
+    font-family: var(--fontTitle);
+    color: var(--primaryTextColor) !important;
+}
+
+.articleDetails .underLink a:hover {
+    text-decoration: none;
+}
+
+.articleDetails .articleTitle {
+    font-size: 30px;
+    margin-bottom: 2rem;
+    font-family: var(--fontTitle);
+}
+
+.article-picture-add-cart {
+    position: relative;
+}
+
+.articleDetails .article-picture {
+    background-size: cover;
+    background-position: center;
+    width: 400px;
+    height: 300px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 10px #666;
+}
+
+.articleDetails label {
+    margin-bottom: 1rem;
+}
+
+.articleDetails .btn-add-article {
+    cursor: pointer;
+    color: var(--primaryTextColor);
+    background-color: var(--primaryColor);
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid var(--primaryTextColor);
+    padding: 0.375rem 2rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.articleDetails .form-add-article {
+    position: absolute;
+    top: 50%;
+    right: -25rem;
+}
+
+.articleDetails .article-number-recipes {
+    font-family: var(--fontTitle);
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.articleDetails .recipes-cards {
+    width: 800px;
+    padding: 0;
+}
+
+.articleDetails .see-all-recipes {
+    align-self: center;
+    cursor: pointer;
+    font-family: var(--fontTitle);
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.articleDetails .recipe-card, .articleDetails .recipe-card-hidden {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    border: 1px solid var(--primaryTextColor);
+    border-radius: 5%;
+    margin-bottom: 3rem;
+    box-shadow: 0 0 5px #666;
+    transition: 0.5s all ease-in-out;
+}
+
+.articleDetails .recipe-card:hover {
+    transform: scale(1.1);
+}
+
+.articleDetails .recipe-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.articleDetails .recipe-img {
+    background-size: cover;
+    background-position: center;
+    width: 200px;
+    height: 200px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 10px #666;
+}
+
+.articleDetails .recipe-btn-see {
+    cursor: pointer;
+    color: var(--primaryTextColor);
+    background-color: var(--primaryColor);
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid var(--primaryTextColor);
+    padding: 0.375rem 0.375rem;
+    border-radius: 0.25rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.articleDetails .recipe-card-title {
     color: var(--primaryTextColor);
     text-transform: capitalize;
 }
