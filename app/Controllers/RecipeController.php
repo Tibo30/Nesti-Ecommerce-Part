@@ -64,22 +64,11 @@ class RecipeController extends BaseController
         helper('form');
 
         $model = new RecipeModel();
-        $gradeModel = new GradeModel();
         $recipeIngredientModel = new RecipeIngredientModel();
         $paragraphModel = new ParagraphModel();
         $commentModel = new CommentModel();
         $recipe = $model->find($idRecipe); // get the recipe object
-        $grades = $gradeModel->where('id_recipes', $idRecipe)->findAll(); // get all the grades for a recipe
         
-        // calcul the average grade
-        $totalGrades = 0;
-        foreach ($grades as $grade) {
-            $totalGrades += $grade->grade;
-        }
-        $averageGrade = null;
-        if (count($grades) > 0) {
-            $averageGrade = $totalGrades / count($grades);
-        }
 
         $listRecipesIng = $recipeIngredientModel->where('id_recipes',$idRecipe)->findAll(); // get all the recipe ingredients for a recipe. Return array of object
         $recipesIngObjects = [];
@@ -101,7 +90,6 @@ class RecipeController extends BaseController
         $data["recipeIngredients"] = $recipesIngObjects;
         $data["paragraphs"] = $listParagraphsObject;
         $data["comments"] = $listComments;
-        $data["grade"] = $averageGrade;
         return $this->twig->render("pages/recipe.html", $data);
     }
 }
