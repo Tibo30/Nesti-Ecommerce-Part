@@ -38,23 +38,64 @@ class AjaxController extends BaseController
             $recipes = $model->findAll(); // if there is no tag selected, we display all the recipes. Return an array of recipe object
         }
 
+        usort($recipes, function ($r1, $r2) { // sort the array ASC according to the product name of the article
+            return $r1->recipe_name <=> $r2->recipe_name;
+        });
+
         $html = "";
-        foreach ($recipes as $recipe) {
+        $index = 0;
+        $numberPage = ceil((count($recipes) / 8));
+        $pagination = "";
+
+        foreach ($recipes as $recipe) { // update html recipes
             if (count($tags) > 0) {
                 $recipeObject = new Recipe(get_object_vars($recipe)); // change the array of object to array of recipe object.
             } else {
                 $recipeObject = $recipe;
             }
+            $averageGrade = $recipeObject->getAverageGrade();
+            $copyAverageGrade=$averageGrade;
             $picture = $recipeObject->getPicture();
-            $html .= '<div class="recipe-card">' .
+            $html .= '<div class="recipe-card" data-number="' . $index . '" ' . ($index > 7 ? 'hidden' : '') . '>' .
                 '<img class="recipe-img" src="https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/' . $picture->name . "." . $picture->extension . '" alt="Card image cap">' .
-                '<div class="recipe-card-body"><h5 class="recipe-card-title">' . $recipeObject->recipe_name . '</h5><a href="' . base_url("/recipe/" . $recipeObject->id_recipes) . '"><button class="recipe-btn-see">See Recipe</button>' .
+                '<div class="recipe-card-body"><h5 class="recipe-card-title">' . $recipeObject->recipe_name . '</h5>'.
+                '<div class="recipes-card-grade"><div class="recipes-grade-stars">';
+
+            for ($i=1;$i<=5;$i++){
+                $html .='<span class="fa-stack" style="width:1em"><i class="far fa-star fa-stack-1x"></i>';
+                if($copyAverageGrade>0){
+                    if($copyAverageGrade>=1){
+                        $html.='<i class="fas fa-star fa-stack-1x"></i>';
+                    }else{
+                        $html.='<i class="fas fa-star-half fa-stack-1x"></i>';
+                    }
+                }
+                $html.='</span>';
+                $copyAverageGrade--;
+            }
+                $html.='</div><div class="recipes-grade-value">';
+            if ($recipeObject->getGrades()>0){
+                $html.=(ceil($averageGrade*10)/10).'/5 on '.$recipeObject->getGrades().' view';
+            } else {
+                $html.='0 view';
+            }
+            $html.='</div></div>'.'<a href="' . base_url("/recipe/" . $recipeObject->id_recipes) . '"><button class="recipe-btn-see">See Recipe</button>' .
                 '</a></div></div>'; // we prepare the updated html (cards)
+            $index++;
+        }
+
+        if (intval($numberPage) > 1) { //update pagination part html
+            $pagination .= '<button id="btn_prev" class="btn-pagination" onclick="prevPage()">Prev</button>';
+            for ($i = 1; $i <= intval($numberPage); $i++) {
+                $pagination .= '<button id="btn_page" class="btn-pagination" onclick="goPage(' . $i . ')">' . $i . '</button>';
+            }
+            $pagination .= '<button id="btn_next" class="btn-pagination" onclick="nextPage()">Next</button>';
         }
 
         $data["recipes"] = $recipes;
         $data['success'] = true;
         $data["html"] = $html;
+        $data["pagination"] = $pagination;
 
         header('Content-Type: application/json');
         echo json_encode($data);
@@ -110,7 +151,7 @@ class AjaxController extends BaseController
             $data['success'] = true;
         } else {
             $errorMessage = $error;
-            if ($error == "Duplicate entry '"+$idUser+"-"+$idRecipe+"' for key 'PRIMARY'") {
+            if ($error == "Duplicate entry '" + $idUser + "-" + $idRecipe + "' for key 'PRIMARY'") {
                 $errorMessage = "You already gave a grade to this recipe !";
             }
             $data["error"] = $errorMessage;
@@ -148,20 +189,20 @@ class AjaxController extends BaseController
             'comment_title' => $title
         ]);
 
-        $check = $commentModel->where('id_users',$idUser)->where('id_recipes',$idRecipe)->find(); // check if the user already wrote a comment for the recipe
+        $check = $commentModel->where('id_users', $idUser)->where('id_recipes', $idRecipe)->find(); // check if the user already wrote a comment for the recipe
         $error = "";
-        if (count($check)==0){
+        if (count($check) == 0) {
             try {
                 $s = $commentModel->save($commentObject);
             } catch (\Exception $e) {
                 $error = $e->getMessage();
             }
-    
+
             if ($error == "") {
                 $data['success'] = true;
             } else {
                 $errorMessage = $error;
-                if ($error == "Duplicate entry '"+$idUser+"-"+$idRecipe+"' for key 'PRIMARY'") {
+                if ($error == "Duplicate entry '" + $idUser + "-" + $idRecipe + "' for key 'PRIMARY'") {
                     $errorMessage = "You already wrote a comment to this recipe !";
                 }
                 $data["error"] = $errorMessage;
@@ -169,7 +210,7 @@ class AjaxController extends BaseController
         } else {
             $data["error"] = "You already wrote a comment for this recipe !";
         }
-        
+
         header('Content-Type: application/json');
         echo json_encode($data);
         die;
