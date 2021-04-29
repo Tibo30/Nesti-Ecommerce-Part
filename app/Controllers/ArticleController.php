@@ -28,7 +28,6 @@ class ArticleController extends BaseController
         usort($articles, function ($r1, $r2) { // sort the array ASC according to the product name of the article
             return $r1->getIngredient()->product_name <=> $r2->getIngredient()->product_name;
         });
-
         $data["loc"] = "Articles";
         $data["articles"] = $articles;
         return $this->twig->render("pages/articles.html", $data);
