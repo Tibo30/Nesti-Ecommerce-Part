@@ -20,20 +20,36 @@
 			<div class="article-picture" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture().name~"."~article.getpicture().extension }}");'></a>
 		</div>
 		<div class="add-article-cart">
+			{% if article.getStock()>0 %}
+				<div class="form-add-article">
+					<div class="article-price">{{article.getLastPrice()}}
+						€</div>
+					<div class="in-stock-information">
+						In stock
+					</div>
+					{{ form_open(base_url(),{class:"form-add-article-cart"} )}}
 
-			{{ form_open(base_url(),{class:"form-add-article"})}}
+					<label for="inputQuantity">Quantity</label>
+					<select id="inputQuantity" class="form-control" name="quantity">
+						<option selected>1</option>
+						{% for i in range(2,10) %}
+							<option>{{i}}</option>
+						{% endfor %}
+					</select>
+					<button type="submit" class="btn-add-article">Add to cart</button>
 
-			<label for="inputQuantity">Quantity</label>
-			<select id="inputQuantity" class="form-control" name="quantity">
-				<option selected>1</option>
-				{% for i in range(2,10) %}
-					<option>{{i}}</option>
-				{% endfor %}
-			</select>
-			<button type="submit" class="btn-add-article">Add to cart</button>
+					{{ form_close() }}
 
-			{{ form_close() }}
-
+				</div>
+			{% else %}
+				<div class="form-add-article-out-of-stock">
+					<div class="article-price">{{article.getLastPrice()}}
+						€</div>
+					<div class="out-of-stock-information">
+						Currently Out of stock !
+					</div>
+				</div>
+			{% endif %}
 		</div>
 
 	</div>
@@ -43,7 +59,7 @@
 		{{recipes | length ==1 ? "is" : "are"}}
 		{{recipes | length}}
 		{{recipes | length ==1 ? "recipe" : "recipes"}}
-		for this ingredient
+		with this ingredient
 	</div>
 
 	<div class="recipes-cards">
@@ -71,6 +87,24 @@
 			</div>
 		{% endif %}
 	</div>
+	<div class="open-modal-cart" data-toggle="modal" type="button" data-target="#modal-go-to-car" hidden></div>
+	<div class="modal fade" id="modal-go-to-car" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title article-title-modal">The article has been successfully added to your cart ! </h5>
+					<button type="button" class="close" id="close-modal-go-to-carts" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body article-body-modal"> Would you like to go to your cart or keep looking ?</div>
+				<div class="modal-footer">
+					<a href="{{ base_url('/cart/') }}"><button class="btn-confirm-go-to-cart"> <i class="fas fa-shopping-cart mr-2 fa-1x"></i> Go to Cart Page</button></a>
+					<button class="btn-keep-looking" data-dismiss="modal"><img class="fas logo-svg" src="{{base_url('/assets/pictures/market.svg')}}" alt="">Keep looking</button>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 {% block script %}
 	<script>
@@ -91,6 +125,59 @@ var hiddenRecipes = document.querySelectorAll(".recipe-card-hidden");
 hiddenRecipes.forEach(element => element.hidden = true)
 allRecipes.setAttribute("data-hidden", "true")
 allRecipes.innerHTML = "See more";
+}
+}))
+}
+
+
+formAddArticle = document.querySelector(".form-add-article-cart");
+
+if (formAddArticle != null) {
+formAddArticle.addEventListener('submit', (function (e) {
+event.preventDefault();
+// localStorage.clear();
+
+var log = "{{ session.logged }}";
+if (log == "yes") { // if the user is logged in
+var quantity = document.querySelector("#inputQuantity").value;
+console.log(quantity);
+var idArticle = {{ article.id_article }};
+var element = {
+"id_article": idArticle,
+"quantity": quantity
+};
+
+var oldCart = []
+
+if (JSON.parse(localStorage.getItem("cart")) != null) { // in the case where the cart isn't empty, we save its value
+oldCart = [JSON.parse(localStorage.getItem("cart"))].flat()
+console.log(oldCart);
+}
+if (oldCart.length == 0) { // if the cart is empty
+const firstCart = element
+localStorage.setItem("cart", JSON.stringify(firstCart))
+} else { // if the cart has at least one element
+const idList = oldCart.map(el => {
+return el.id_article
+}); // return the id of each element
+if (idList.indexOf(element.id_article) != -1) { // in the case where the article is already in the cart, we add the quantity
+const finalcart = oldCart.map(el => {
+if (el.id_article === element.id_article) {
+el.quantity = parseInt(el.quantity) + parseInt(element.quantity);
+}
+return el
+})
+localStorage.setItem("cart", JSON.stringify(finalcart));
+} else { // case where the item isn't already in the cart
+const newCart = oldCart.concat(element).flat()
+localStorage.setItem("cart", JSON.stringify(newCart))
+}
+}
+
+document.querySelector(".open-modal-cart").click();
+
+} else { // if the user is not logged in => go to login page
+window.location = ROOT + "/login";
 }
 }))
 }
