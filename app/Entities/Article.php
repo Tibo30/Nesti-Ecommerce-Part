@@ -1,31 +1,37 @@
 <?php
+
 namespace App\Entities;
+
 use CodeIgniter\Entity;
 use App\Models\PictureModel;
 use App\Models\UnitMeasureModel;
 use App\Models\IngredientModel;
 use App\Models\LotModel;
+use App\Models\ArticleModel;
 use App\Models\OrderLineModel;
 
 class Article extends Entity
 {
 
-    public function getPicture(){
+    public function getPicture()
+    {
 
         $pictureModel = new PictureModel();
-        $picture = $pictureModel -> find($this->id_pictures);
+        $picture = $pictureModel->find($this->id_pictures);
         return $picture;
     }
 
-    public function getUnitMeasure(){
+    public function getUnitMeasure()
+    {
         $unitModel = new UnitMeasureModel();
-        $unit = $unitModel -> find($this->id_unit_measures);
+        $unit = $unitModel->find($this->id_unit_measures);
         return $unit;
     }
 
-    public function getIngredient(){
+    public function getIngredient()
+    {
         $ingModel = new IngredientModel();
-        $ing = $ingModel -> find($this->id_products);
+        $ing = $ingModel->find($this->id_products);
         return $ing;
     }
 
@@ -33,24 +39,36 @@ class Article extends Entity
     {
         $lotModel = new LotModel();
         $orderLineModel = new OrderLineModel();
-        $orderLines = $orderLineModel->where("id_article",$this->id_article)->findAll(); // get all the order lines for an article
-        $lots = $lotModel->where("id_article",$this->id_article)->findAll(); // get all the lots for an article
+        $orderLines = $orderLineModel->where("id_article", $this->id_article)->findAll(); // get all the order lines for an article
+        $lots = $lotModel->where("id_article", $this->id_article)->findAll(); // get all the lots for an article
         $quantityOrdered = 0;
-        $quantityBought=0;
+        $quantityBought = 0;
         foreach ($orderLines as $orderLine) {
             $quantityOrdered += $orderLine->quantity_ordered;
         }
-        foreach($lots as $lot){
+        foreach ($lots as $lot) {
             $quantityBought += $lot->bought_quantity;
         }
-        $stock=$quantityBought-$quantityOrdered;
+        $stock = $quantityBought - $quantityOrdered;
         return $stock;
     }
 
-    public function getName(){
-        $name=$this->quantity_per_unit." ".$this->getUnitMeasure()->name." of ".$this->getIngredient()->product_name;
+    public function getName()
+    {
+        $name = $this->quantity_per_unit . " " . $this->getUnitMeasure()->name . " of " . $this->getIngredient()->product_name;
 
         return $name;
     }
 
+    public function getLastPrice()
+    {
+
+        $price = "";
+        $articleModel = new ArticleModel();
+        $priceObject = $articleModel->getLastPrice($this->id_article);
+        if (count($priceObject) > 0) {
+            $price = $priceObject[0]->price;
+        }
+        return floatval($price);
+    }
 }
