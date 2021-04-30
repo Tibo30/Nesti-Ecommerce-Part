@@ -8,8 +8,9 @@
 		<h1 class="articles-title-selection"> Market Place</h1>
 
 		<div class="articles-cards">
+		{% set index=0 %}
 			{% for article in articles %}
-				<div class="article-card {{article.getStock()<=0? 'article-card-out-of-stock' : ''}}">
+				<div class="article-card {{article.getStock()<=0? 'article-card-out-of-stock' : ''}}" data-number={{index}} {{ index > 7 ? 'hidden' : ''}}>
 					<div class="article-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture().name~"."~article.getPicture().extension }}");'></a>
 				</div>
 				<div class="article-card-body">
@@ -23,11 +24,80 @@
 					</a>
 				</div>
 			</div>
+			{% set index=index+1 %}
 		{% endfor %}
+	</div>
+	{% set numberPage=(articles | length /8) | round(0,'ceil') %}
 
+	<div class="btn-pagination-articles">
+		{% if numberPage>1 %}
+			<button id="btn_prev" class="btn-pagination" onclick="prevPage()">Prev</button>
 
+			{% for index in 1..numberPage %}
+				<button id="btn_page" class="btn-pagination" onclick="goPage({{index}})">{{index}}</button>
+
+			{% endfor %}
+			<button id="btn_next" class="btn-pagination" onclick="nextPage()">Next</button>
+		{% endif %}
 	</div>
 </div>{% endblock %}{% block script %}
 <script>
+
+var current_page = 1;
+var card_per_page = 8;
+var numPage = {{ (articles | length /8) | round(0,'ceil') }};
+
+var recipeCards = document.querySelectorAll(".article-card");
+
+function goPage(pageNumber) {
+current_page = pageNumber;
+changePage(pageNumber);
+}
+
+
+function prevPage() {
+if (current_page > 1) {
+current_page--;
+changePage(current_page);
+}
+}
+
+function nextPage() {
+if (current_page < numPages()) {
+current_page++;
+changePage(current_page);
+}
+}
+
+function changePage(page) {
+var btn_next = document.getElementById("btn_next");
+var btn_prev = document.getElementById("btn_prev");
+var page_span = document.getElementById("page");
+
+// Validate page
+if (page < 1) {
+page = 1;
+}
+
+if (page > numPages()) {
+page = numPages();
+}
+
+recipeCards.forEach(function (element) {
+
+if (element.getAttribute("data-number") >= ((page - 1) * card_per_page) && element.getAttribute("data-number") <= ((page * card_per_page) - 1)) {
+element.hidden = false;
+} else {
+element.hidden = true;
+}
+
+scroll(0, 0)
+
+})
+}
+
+function numPages() {
+return numPage;
+}
 
 </script>{% endblock %}
