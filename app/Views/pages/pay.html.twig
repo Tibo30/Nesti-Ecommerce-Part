@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<div onclick="emptyBasket()">Empty basket</div>
+	<div class="cart-page">
+		<a class="return-button-cart" onclick="rtn()">&#129136; Return</a>
+		<div class="div-title-cart">
+			<div class="title-cart">Cart</div>
+		</div>
+		<div class="cart-elements"></div>
+
+		<div class="total">
+			<div>TOTAL HT :
+			</div>
+			<div class="cart-total-articles"></div>
+		</div>
+		<div class="btn-valid-cart">
+			<Link to="/valider-le-panier">
+				<Button class="cart-validation">Confirm cart and pay</Button>
+			</Link>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block script %}
+	<script>
+
+	</script>
+{% endblock %}
