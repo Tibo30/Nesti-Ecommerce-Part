@@ -14,7 +14,7 @@
 		</div>
 
 		<h1 class="articleTitle">
-			{{article.getIngredient().product_name | capitalize}}
+			{{article.getName() | capitalize}}
 		</h1>
 		<div class="article-picture-add-cart">
 			<div class="article-picture" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture().name~"."~article.getpicture().extension }}");'></a>
@@ -92,15 +92,36 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title article-title-modal">The article has been successfully added to your cart ! </h5>
+					<h5 class="modal-title article-title-modal">The article has been successfully added to your cart !
+					</h5>
 					<button type="button" class="close" id="close-modal-go-to-carts" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body article-body-modal"> Would you like to go to your cart or keep looking ?</div>
+				<div class="modal-body article-body-modal">
+					<div class="article-resume-article">
+						<div class="article-body-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture().name~"."~article.getpicture().extension }}");'></div>
+						<div class="article-body-info">
+							<h1 class="article-body-title">
+								{{article.getIngredient().product_name | capitalize}}
+							</h1>
+							<div class="article-body-price">{{article.getLastPrice()}}
+								€/u</div>
+							<div class="article-body-quantity"></div>
+						</div>
+					</div>
+
+					<div class="article-body-text">Would you like to go to your cart or keep looking ?</div>
+
+				</div>
+
 				<div class="modal-footer">
-					<a href="{{ base_url('/cart/') }}"><button class="btn-confirm-go-to-cart"> <i class="fas fa-shopping-cart mr-2 fa-1x"></i> Go to Cart Page</button></a>
 					<button class="btn-keep-looking" data-dismiss="modal"><img class="fas logo-svg" src="{{base_url('/assets/pictures/market.svg')}}" alt="">Keep looking</button>
+					<a href="{{ base_url('/cart/') }}">
+						<button class="btn-confirm-go-to-cart">
+							<i class="fas fa-shopping-cart mr-2 fa-1x"></i>
+							Go to Cart Page</button>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -109,8 +130,8 @@
 {% block script %}
 	<script>
 
-
-		allRecipes = document.querySelector(".see-all-recipes"); // get the button to display all recipes
+		const csrf = document.querySelector('input[name="csrf_nesti"]');
+allRecipes = document.querySelector(".see-all-recipes"); // get the button to display all recipes
 
 if (allRecipes != null) {
 allRecipes.addEventListener('click', (function (e) { // add event listener
@@ -140,18 +161,22 @@ event.preventDefault();
 var log = "{{ session.logged }}";
 if (log == "yes") { // if the user is logged in
 var quantity = document.querySelector("#inputQuantity").value;
-console.log(quantity);
 var idArticle = {{ article.id_article }};
+var picture = "{{article.getPicture().name~"."~article.getpicture().extension }}";
+var name = "{{article.getName()}}";
+var price = {{article.getLastPrice()}};
 var element = {
 "id_article": idArticle,
-"quantity": quantity
+"quantity": quantity,
+"picture": picture,
+"name":name,
+"price":price
 };
 
 var oldCart = []
 
 if (JSON.parse(localStorage.getItem("cart")) != null) { // in the case where the cart isn't empty, we save its value
-oldCart = [JSON.parse(localStorage.getItem("cart"))].flat()
-console.log(oldCart);
+oldCart = [JSON.parse(localStorage.getItem("cart"))].flat();
 }
 if (oldCart.length == 0) { // if the cart is empty
 const firstCart = element
@@ -165,7 +190,7 @@ const finalcart = oldCart.map(el => {
 if (el.id_article === element.id_article) {
 el.quantity = parseInt(el.quantity) + parseInt(element.quantity);
 }
-return el
+return el;
 })
 localStorage.setItem("cart", JSON.stringify(finalcart));
 } else { // case where the item isn't already in the cart
@@ -176,10 +201,21 @@ localStorage.setItem("cart", JSON.stringify(newCart))
 
 document.querySelector(".open-modal-cart").click();
 
+var cart = [JSON.parse(localStorage.getItem("cart"))].flat();
+var elementAdded = null;
+cart.map(el => {
+if (el.id_article == idArticle) {
+elementAdded = el;
+}
+});
+document.querySelector(".article-body-quantity").innerHTML = "Quantity : " + elementAdded.quantity;
+
+
 } else { // if the user is not logged in => go to login page
 window.location = ROOT + "/login";
 }
 }))
 }
+
 	</script>
 {% endblock %}
