@@ -151,9 +151,11 @@ class AjaxController extends BaseController
             $data['success'] = true;
         } else {
             $errorMessage = $error;
-            if ($error == "Duplicate entry '" + $idUser + "-" + $idRecipe + "' for key 'PRIMARY'") {
+            if ($error == ("Duplicate entry '". $idUser . "-" . $idRecipe . "' for key 'PRIMARY'")) {
                 $errorMessage = "You already gave a grade to this recipe !";
             }
+           
+           
             $data["error"] = $errorMessage;
         }
 
