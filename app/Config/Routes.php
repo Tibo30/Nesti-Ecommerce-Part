@@ -67,6 +67,9 @@ $routes->get('dashboard', 'ConnectionController::index');
 $routes->get('register', 'LoginController::register');
 $routes->get('disconnect', 'ConnectionController::disconnect');
 
+$routes->get('cart', 'CartController::cart');
+$routes->get('pay', 'CartController::pay');
+
 // $routes->get('/recipes/tagged', 'RecipeController::recipesTagged');
 
 $routes->get('/api',"ApiController::index");
