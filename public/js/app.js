@@ -4,14 +4,19 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log('Ready');
-
+    
     /** ---- Initialisation ---- **/
     const btns = document.querySelectorAll(".recipe_tag--remove");
     const ul = document.querySelector("#recipe_tag--list");
-    const id = ul.getAttribute('data-id');
+    if (ul!=null){
+        const id = ul.getAttribute('data-id');
+    }
     const csrf = document.querySelector('input[name="csrf_nesti"]');
 
     console.log(csrf);
+
+
+
 
 
     /** ---- Event ----**/
@@ -31,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
-    
+
 
     /**
      * Requete Ajax pour supprimer un tag d'une recette
