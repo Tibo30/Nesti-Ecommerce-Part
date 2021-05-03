@@ -33,6 +33,10 @@
 
 	<div class="tag-propositions">
 
+		<div class="tag-propositions-title">
+			Try our tagged recipes selection !
+		</div>
+
 		<div class="tag-proposition-recipes">
 			{% for tag in tags %}
 				<div class="tag-proposition-recipe">
@@ -57,7 +61,7 @@
 if (tags.length > 0) {
 tags.forEach((element, index) => element.addEventListener('mouseenter', (function (e) { // Add event listener on tag image
 var goTo = document.createElement("div");
-goTo.innerHTML="See more !";
+goTo.innerHTML = "See more !";
 goTo.classList.add("tag-see-more");
 var divImage = element.firstElementChild;
 divImage.appendChild(goTo);
@@ -65,7 +69,7 @@ divImage.appendChild(goTo);
 })))
 
 tags.forEach((element, index) => element.addEventListener('mouseout', (function (e) { // Add event listener on tag image
-var goTo=document.querySelector(".tag-see-more").remove();
+var goTo = document.querySelector(".tag-see-more").remove();
 
 })))
 }
