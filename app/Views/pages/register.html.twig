@@ -8,48 +8,59 @@
 			<div class="register-form-left">
 				<div class="form-group">
 					<label for="register-lastname">Lastname</label>
-					<input type="text" class="form-control" id="register-lastname">
+					<input type="text" class="form-control" id="register-lastname" name="lastname">
+					<span class="text-danger" id="errorUserLastname">{{validation.getErrors()["lastname"]}}</span>
 				</div>
 				<div class="form-group">
 					<label for="register-firstname">Firstname</label>
-					<input type="text" class="form-control" id="register-firstname">
+					<input type="text" class="form-control" id="register-firstname" name="firstname">
+					<span class="text-danger" id="errorUserFirstname">{{validation.getErrors()["firstname"]}}</span>
 				</div>
 				<div class="form-group">
 					<label for="register-username">Username</label>
-					<input type="text" class="form-control" id="register-username">
+					<input type="text" class="form-control" id="register-username" name="username">
+					<span class="text-danger" id="errorUserUsername">{{validation.getErrors()["username"]}}</span>
 				</div>
 				<div class="form-group">
 					<label for="register-email">Email</label>
-					<input type="email" class="form-control" id="register-email">
+					<input type="email" class="form-control" id="register-email" name="email">
+					<span class="text-danger" id="errorUserEmail">{{validation.getErrors()["email"]}}</span>
 				</div>
 				<div class="form-group">
 					<label for="register-password">Password</label>
-					<input type="password" class="form-control" id="register-password">
+					<input type="password" class="form-control" id="register-password" name="password">
+					<span class="text-danger" id="errorUserPassword">{{validation.getErrors()["password"]}}</span>
 				</div>
 			</div>
 			<div class="register-form-right">
 				<div class="form-group">
 					<label for="register-confirm-password">Confirm Password</label>
-					<input type="password" class="form-control" id="register-confirm-password">
+					<input type="password" class="form-control" id="register-confirm-password" name="confirmPassword">
+					<span class="text-danger" id="errorUserConfirmPassword">{{validation.getErrors()["confirmPassword"]}}</span>
 				</div>
 				<div class="form-group">
 					<label for="register-address1">Address 1</label>
-					<input type="text" class="form-control" id="register-address1">
+					<input type="text" class="form-control" id="register-address1" name="address1">
+					<span class="text-danger" id="errorUserAddress1">{{validation.getErrors()["address1"]}}</span>
 				</div>
 				<div class="form-group">
 					<label for="register-address2">Address 2</label>
-					<input type="text" class="form-control" id="register-address2">
+					<input type="text" class="form-control" id="register-address2" name="address2">
+					<span class="text-danger" id="errorUserAddress2">{{validation.getErrors()["address2"]}}</span>
 				</div>
 				<div class="form-group">
 					<label for="register-postcode">Postcode</label>
-					<input type="text" class="form-control" id="register-postcode">
+					<input type="text" class="form-control" id="register-postcode" name="postcode">
+					<span class="text-danger" id="errorUserPostcode">{{validation.getErrors()["postcode"]}}</span>
 				</div>
 				<div class="form-group">
 					<label for="register-city">City</label>
-					<input type="text" class="form-control" id="register-city">
+					<input type="text" class="form-control" id="register-city" name="city">
+					<span class="text-danger" id="errorUserCity">{{validation.getErrors()["city"]}}</span>
 				</div>
 			</div>
 		</div>
+
 		<button type="submit" class="btn-register">Register</button>
 	</div>
 	{{ form_close() }}
