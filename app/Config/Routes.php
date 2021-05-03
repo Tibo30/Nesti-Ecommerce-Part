@@ -65,6 +65,7 @@ $routes->get('login', 'LoginController::login');
 $routes->post('dashboard', 'ConnectionController::checkLogin');
 $routes->get('dashboard', 'ConnectionController::index');
 $routes->get('register', 'LoginController::register');
+$routes->post('register', 'UserController::createUser');
 $routes->get('disconnect', 'ConnectionController::disconnect');
 
 $routes->get('cart', 'CartController::cart');
