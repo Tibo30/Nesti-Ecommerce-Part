@@ -140,12 +140,26 @@ button:hover {
     padding: 2rem;
     box-shadow: 0 0 5px #666;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
 }
 
 .last-visited-title {
     font-family: var(--fontTitle);
-    margin-bottom: 1rem;
-    font-size: 25px;
+    text-align: center;
+    margin: 1rem auto 3rem auto;
+    padding-bottom: 1rem;
+    font-size: 30px;
+    position: relative;
+}
+
+.last-visited-title::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    border-bottom: 7px solid var(--thirdColor);
 }
 
 .last-visited-recipes {
@@ -183,6 +197,26 @@ button:hover {
     width: 90%;
     margin: auto;
     margin-bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.tag-propositions-title {
+    font-family: var(--fontTitle);
+    text-align: center;
+    margin: 1rem auto 4rem auto;
+    padding-bottom: 1rem;
+    font-size: 30px;
+    position: relative;
+}
+
+.tag-propositions-title::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 30%;
+    border-bottom: 7px solid var(--thirdColor);
 }
 
 .tag-proposition-recipes {
@@ -194,9 +228,9 @@ button:hover {
 
 .tag-proposition-title {
     font-family: var(--fontTitle);
-    font-size: 20px;
+    font-size: 25px;
     margin-bottom: 2rem;
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
 
 .tag-proposition-recipe {
@@ -896,7 +930,7 @@ button:hover {
     margin-bottom: 3rem;
     box-shadow: 0 0 5px #666;
     transition: 0.5s all ease-in-out;
-    position: relative
+    position: relative;
 }
 
 .article-card:hover {
@@ -1283,8 +1317,8 @@ button:hover {
 }
 
 .return-button-cart:hover {
-   text-decoration: none;
-   color: var(--primaryTextColor);
+    text-decoration: none;
+    color: var(--primaryTextColor);
 }
 
 .div-title-cart {
@@ -1310,7 +1344,6 @@ button:hover {
     border-bottom: 7px solid var(--thirdColor);
 }
 
-
 .cart-element {
     color: var(--classicColorText);
     background-color: var(--fourthcolor);
@@ -1324,7 +1357,6 @@ button:hover {
     position: relative;
     padding: 2rem 0 2rem 4rem;
 }
-
 
 .cart-img {
     background-repeat: no-repeat;
@@ -1386,12 +1418,11 @@ button:hover {
     text-align: center;
 }
 
-.cart-page-titles{
-   
+.cart-page-titles {
     margin-bottom: 1rem;
 }
 
-.cart-page-element{
+.cart-page-element {
     font-family: var(--fontTitle);
 }
 
