@@ -6,28 +6,7 @@
 		<div class="last-visited-title">
 			Last visits
 		</div>
-		<div class="last-visited-recipes">
-			<div class="last-visited-recipe">
-				<img class="img-history" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap">
-				<div>Crepes</div>
-			</div>
-			<div class="last-visited-recipe">
-				<img class="img-history" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap">
-				<div>Crepes</div>
-			</div>
-			<div class="last-visited-recipe">
-				<img class="img-history" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap">
-				<div>Crepes</div>
-			</div>
-			<div class="last-visited-recipe">
-				<img class="img-history" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap">
-				<div>Crepes</div>
-			</div>
-			<div class="last-visited-recipe">
-				<img class="img-history" src="{{base_url('/assets/pictures/crepes.jpg')}}" alt="Card image cap">
-				<div>Crepes</div>
-			</div>
-		</div>
+		<div class="last-visited-recipes"></div>
 	</div>
 
 
@@ -41,7 +20,7 @@
 			{% for tag in tags %}
 				<div class="tag-proposition-recipe">
 					<div class="tag-proposition-title">{{tag.name}}</div>
-					<a class="test" href="{{base_url('recipes/'~(tag.name|replace({" ":"_"})))}}">
+					<a class="tag-link-recipes" href="{{base_url('recipes/'~(tag.name|replace({" ":"_"})))}}">
 						{% if tag.getOneRecipe() is not null %}
 							<div class="img-tag" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{tag.getOneRecipe().getPicture().name~"."~tag.getonerecipe().getpicture().extension}}");'></div>
 						{% endif %}
@@ -57,7 +36,29 @@
 {% block script %}
 	<script>
 
-		var tags = document.querySelectorAll('.test');
+		var lastVisited = document.querySelector('.last-visited-recipes');
+var listHistory = JSON.parse(localStorage.getItem("history"));
+console.log(listHistory);
+listHistory.forEach(element => {
+var lastVisitedRecipe = document.createElement("div");
+lastVisitedRecipe.classList.add("last-visited-recipe");
+
+var imgRecipe = document.createElement("img");
+imgRecipe.alt = "picture of " + element.recipe_name;
+imgRecipe.classList.add("img-history");
+imgRecipe.src = element.picture;
+
+var recipeName = document.createElement("div");
+recipeName.innerHTML = element.recipe_name;
+
+lastVisitedRecipe.appendChild(imgRecipe);
+lastVisitedRecipe.appendChild(recipeName);
+
+lastVisited.appendChild(lastVisitedRecipe);
+})
+
+
+var tags = document.querySelectorAll('.tag-link-recipes');
 if (tags.length > 0) {
 tags.forEach((element, index) => element.addEventListener('mouseenter', (function (e) { // Add event listener on tag image
 var goTo = document.createElement("div");
