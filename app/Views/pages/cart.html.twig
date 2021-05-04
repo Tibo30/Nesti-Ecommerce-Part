@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 {% block content %}
-<div onclick="emptyBasket()">Empty basket</div>
+	<div onclick="emptyBasket()">Empty basket</div>
 	<div class="cart-page">
 		<a class="return-button-cart" onclick="rtn()">&#129136; Return</a>
 		<div class="div-title-cart">
@@ -8,43 +8,51 @@
 		</div>
 		<div class="cart-elements"></div>
 
-		<div class="total">
+		<div class="svg-empty-cart" hidden><img class="fas logo-svg" src="{{base_url('/assets/pictures/emptycart.svg')}}" alt="">
+		NO ITEMS IN CART
+		</div>
+
+		<div class="total-cart">
 			<div>TOTAL HT :
 			</div>
 			<div class="cart-total-articles"></div>
 		</div>
 		<div class="btn-valid-cart">
-			<Link to="/valider-le-panier">
+			<a href="{{ base_url('/pay')}}">
 				<Button class="cart-validation">Confirm cart and pay</Button>
-			</Link>
+			</a>
 		</div>
 	</div>
-
-	
-
 
 {% endblock %}
 
 {% block script %}
 	<script>
 
-		getCart();
+		isEmptyCart();
+
+function isEmptyCart() {
+var cart = [JSON.parse(localStorage.getItem("cart"))].flat();
+if (cart[0]!=null) {
+getCart();
+} else {
+document.querySelector(".total-cart").hidden = true;
+document.querySelector(".btn-valid-cart").hidden = true;
+document.querySelector(".svg-empty-cart").hidden = false;
+}
+}
+
 
 function getCart() {
 var cart = [JSON.parse(localStorage.getItem("cart"))].flat();
-console.log(cart);
 var cartElement = document.querySelector(".cart-elements");
 if (cart[0] != null) {
 var html = "";
-var total =0;
-cart.forEach(function (element,index) {
+var total = 0;
+cart.forEach(function (element, index) {
 var picture = "https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/" + element.picture;
 
-html += '<div class="cart-element"><div class="cart-img-info">' + 
-'<div class="cart-img" style="background-image: url(' + picture + ');"></div>' + 
-'<div class="cart-info">' + element.name + '</div></div><div class="cart-details"><div class="cart-details-element"><p class="cart-page-titles">Unit cost</p><p class="cart-page-element">' + 
-element.price + ' €/u</p></div><div class="cart-details-element"><p class="cart-page-titles">Quantity</p><p class="cart-page-element">' + 
-'<select id="inputQuantity" class="form-control" name="quantity" onchange="updateQuantity('+index+')">';
+html += '<div class="cart-element"><div class="cart-img-info">' + '<div class="cart-img" style="background-image: url(' + picture + ');"></div>' + '<div class="cart-info">' + element.name + '</div></div><div class="cart-details"><div class="cart-details-element"><p class="cart-page-titles">Unit cost</p><p class="cart-page-element">' + element.price + ' €/u</p></div><div class="cart-details-element"><p class="cart-page-titles">Quantity</p><p class="cart-page-element">' + '<select id="inputQuantity" class="form-control" name="quantity" onchange="updateQuantity(' + element.id_article + ')">';
 for (i = 1; i <= 10; i ++) {
 if (i == element.quantity) {
 html += '<option selected>' + i + '</option>';
@@ -53,17 +61,17 @@ html += '<option>' + i + '</option>';
 }
 }
 html += '</select></p></div><div class="cart-details-element">' + '<p class="cart-page-titles">Total cost</p><p class="cart-page-element">' + (
-Math.round(Number(element.quantity) * Number(element.price) * 100) / 100) + ' €</p></div></div><i class="delete-cart-element fas fa-trash" onclick="removeElement('+index+')"></i></div>';
+Math.round(Number(element.quantity) * Number(element.price) * 100) / 100
+) + ' €</p></div></div><i class="delete-cart-element fas fa-trash" onclick="removeElement(' + index + ')"></i></div>';
 
 cartElement.innerHTML = html;
 
-total+=(Math.round(Number(element.quantity) * Number(element.price) * 100) / 100);
+total += (Math.round(Number(element.quantity) * Number(element.price) * 100) / 100);
 
-console.log(element);
 })
 }
 
-document.querySelector(".cart-total-articles").innerHTML="&nbsp"+total+" €";
+document.querySelector(".cart-total-articles").innerHTML = "&nbsp" + total + " €";
 
 }
 
@@ -85,26 +93,26 @@ localStorage.clear();
 ** this method permit to delete an item from the cart
 */
 function removeElement(index) {
-    var table = ([].concat(JSON.parse(localStorage.getItem("cart"))))
-    table.splice(index, 1)
-    localStorage.setItem("cart", JSON.stringify(table))
-    window.location.reload();
-  }  
+var table = [(JSON.parse(localStorage.getItem("cart")))]
+console.log(table);
+table.splice(index, 1)
+localStorage.setItem("cart", JSON.stringify(table))
+window.location.reload();
+}
 
 /*
 ** this method permit to update the quantity of an item from the cart
 */
-  function updateQuantity(index) {
-     var table = ([].concat(JSON.parse(localStorage.getItem("cart"))))
-    JSON.parse(localStorage.getItem("cart")).forEach((element, index) => {
-      if (element.id == element.id) { //we scan all the elements from the cart and we compare there id with the id of the modified item
-        element.quantity = event.target.value // we associate the new quantity to the item
-        table.splice(index, 1, element) // we modify the item in the cart (table)
-      }
-    })
-    localStorage.setItem("cart", JSON.stringify(table)) // we save the new cart in the local storage
-    window.location.reload();
-  }  
-
+function updateQuantity(id) {
+var table = (JSON.parse(localStorage.getItem("cart")))
+JSON.parse(localStorage.getItem("cart")).forEach((element, index) => {
+if (element.id_article == id) { // we scan all the elements from the cart and we compare there id with the id of the modified item
+element.quantity = event.target.value // we associate the new quantity to the item
+table.splice(index, 1, element) // we modify the item in the cart (table)
+}
+})
+localStorage.setItem("cart", JSON.stringify(table)) // we save the new cart in the local storage
+window.location.reload();
+}
 	</script>
 {% endblock %}
