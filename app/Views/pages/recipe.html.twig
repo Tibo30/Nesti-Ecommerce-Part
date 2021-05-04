@@ -173,8 +173,46 @@
 
 {% block script %}
 	<script>
+//localStorage.clear();
+		addToHistory();
 
-		const csrf = document.querySelector('input[name="csrf_nesti"]');
+function addToHistory() {
+
+var element = {
+"id_recipes": {{ recipe.id_recipes }},
+"recipe_name":"{{ recipe.recipe_name }}",
+"picture": 'https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture().name~"."~recipe.getpicture().extension }}',
+};
+
+var oldHistory = []
+
+if (JSON.parse(localStorage.getItem("history")) != null) { // in the case where the history isn't null, we save its value
+oldHistory = [JSON.parse(localStorage.getItem("history"))].flat();
+}
+if (oldHistory.length == 0) { // if the history is empty
+var firstRecipe = element; // we add the id of the recipe to the history
+localStorage.setItem("history", JSON.stringify(firstRecipe))
+} else {
+var newHistory = [];
+newHistory = oldHistory.flat();
+
+const idList = oldHistory.map(el => {
+return el.id_recipes;
+}); // return the id of each element
+
+index = idList.indexOf({{ recipe.id_recipes }}); // we check if this recipe is already in the history
+if (index!=-1){ // if it is, we delete it (to then put it at the first place)
+	newHistory.splice(index, 1);
+}
+newHistory.unshift(element); // we add the id of the recipe to the history
+if (newHistory.length == 6) { // we keep only 5 element in history
+newHistory.splice(5, 1);
+}
+localStorage.setItem("history", JSON.stringify(newHistory)) // set the history with the new element
+}
+}
+
+const csrf = document.querySelector('input[name="csrf_nesti"]');
 
 allComments = document.querySelector(".see-all-comments"); // get the button to display all comments
 
