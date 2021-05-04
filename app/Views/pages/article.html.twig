@@ -117,8 +117,8 @@
 				</div>
 
 				<div class="modal-footer">
-					<button class="btn-keep-looking" data-dismiss="modal"><img class="fas logo-svg" src="{{base_url('/assets/pictures/market.svg')}}" alt="">Keep looking</button>
-					<a href="{{ base_url('/cart/') }}">
+						<button class="btn-keep-looking" data-dismiss="modal"><img class="fas logo-svg" src="{{base_url('/assets/pictures/market.svg')}}" alt="">Keep looking</button>
+					<a href="{{ base_url('cart')}}">
 						<button class="btn-confirm-go-to-cart">
 							<i class="fas fa-shopping-cart mr-2 fa-1x"></i>
 							Go to Cart Page</button>
@@ -163,15 +163,15 @@ var log = "{{ session.logged }}";
 if (log == "yes") { // if the user is logged in
 var quantity = document.querySelector("#inputQuantity").value;
 var idArticle = {{ article.id_article }};
-var picture = "{{article.getPicture().name~"."~article.getpicture().extension }}";
-var name = "{{article.getName()}}";
-var price = {{article.getLastPrice()}};
+var picture = "{{ article.getPicture().name~"."~article.getpicture().extension }}";
+var name = "{{ article.getName() }}";
+var price = {{ article.getLastPrice() }};
 var element = {
 "id_article": idArticle,
 "quantity": quantity,
 "picture": picture,
-"name":name,
-"price":price
+"name": name,
+"price": price
 };
 
 var oldCart = []
@@ -217,6 +217,5 @@ window.location = ROOT + "/login";
 }
 }))
 }
-
 	</script>
 {% endblock %}
