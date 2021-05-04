@@ -2,17 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Models\ArticleModel;
-use App\Models\RecipeModel;
-use App\Models\PictureModel;
-use App\Models\GradeModel;
-use App\Models\RecipeIngredientModel;
-use App\Models\ParagraphModel;
-use App\Models\CommentModel;
+use App\Models\UserModel;
+use App\Models\CityModel;
 
-use App\Entities\Recipe;
-use App\Entities\RecipeIngredient;
-use App\Entities\Paragraph;
+use App\Entities\User;
+use App\Entities\City;
 
 class UserController extends BaseController
 {
@@ -20,6 +14,8 @@ class UserController extends BaseController
     {
 
         $data = [];
+        $data["success"]=false;
+        $data['csrf_token'] = csrf_hash();
         helper('form');
 
         if ($this->request->getMethod() == 'post') {
@@ -40,63 +36,78 @@ class UserController extends BaseController
                 ],
                 [   // Errors
                     'lastname' => [
-                        'regex_check_name' => 'The %s field is not valid!'
+                        'regex_check_name' => 'The lastname field is not valid!'
                     ],
                     'firstname' => [
-                        'regex_check_name' => 'The %s field is not valid!'
+                        'regex_check_name' => 'The firstname field is not valid!'
                     ],
                     'username' => [
-                        'regex_check_username' => 'The username has to be between 7 to 20 alphanumeric characters("." "_" "-" accepted)'
+                        'regex_check_username' => 'The username has to be between 7 to 20 alphanumeric characters("." "_" "-" accepted)',
+                        'is_unique' => 'This username is already taken'
                     ],
                     'password' => [
                         'regex_check_password' => 'The password isn\'t strong enough or doesn\'t respect the conditions'
                     ],
                     'postcode' => [
-                        'regex_check_postcode' => 'TPlease enter a valid postcode (5 digits)'
+                        'regex_check_postcode' => 'Please enter a valid postcode (5 digits)'
+                    ],
+                    'email' => [
+                        'is_unique' => 'This email is already taken'
                     ],
 
                 ]
             );
 
-            $res = $validation->withRequest($this->request)->run();
+            $check = $validation->withRequest($this->request)->run(); // check the validation rules
 
-            if (!$res) {
-                $data['validation'] = $validation;
-                var_dump($validation->getErrors());
+            if (!$check) {
+                $data['validation'] = $validation->getErrors();
             } else {
+                $lastname = $this->request->getPost('lastname');
+                $firstname = $this->request->getPost('firstname');
+                $username = $this->request->getPost('username');
+                $email = $this->request->getPost('email');
+                $password = $this->request->getPost('password');
+                $address1 = $this->request->getPost('address1');
+                $address2 = $this->request->getPost('address2');
+                $postcode = $this->request->getPost('postcode');
+                $cityName = $this->request->getPost('city');
 
+                $cityModel = new CityModel();
+                $city = $cityModel->where("city_name", $cityName)->find();
+                $cityId = 0;
+                if (count($city) > 0) {
+                    $cityId = $city[0]->id_city;
+                } else {
+                    $newCity = new City();
+                    $newCity->fill(['city_name' => $cityName]);
+                    $cityId = $cityModel->insert($newCity);
+                }
 
-                // // 3. On récupère les données     
-                // $name = $this->request->getPost('tag_name');
-                // // 4. On rempli un objet Entity        
-                // $tag = new Tag();
-                // $tag->fill([
-                //     'name' => ucfirst($name),
-                //     //'slug' => $this->slugify($name)
-                //     // `slugify()` est une fonction perso, définie dans Common.php        
-                // ]);
+                $newUser = new User();
+                $newUser->fill([
+                    'lastname' => $lastname,
+                    'firstname' => $firstname,
+                    'username' => $username,
+                    'email' => $email,
+                    'password' => $password,
+                    'address1' => $address1,
+                    'address2' => $address2,
+                    'postcode' => $postcode,
+                    'id_city' => $cityId
+                ]);
+                $userModel = new UserModel();
+                $userModel->insert($newUser);
+                $data["city"]=$cityName;
 
-
-                // // 5. On fait appel au model        
-                // $model = new TagModel();
-                // // 6. On sauvegarde 
-                // // si l'id est renseigné il fait un update, sinon il fait un insert       
-
-                // $s = $model->insert($tag);
-
-                // // 7. On traite les erreurs éventuelles
-                // if ($s === false) {
-                //     // les données enregistrées dans flasData ne sont concervés
-                //     // que pour la prochaine page, puis elles seront détruites.            
-                //     $session->setFlashdata('errors', $model->errors());
-                //     dd($session->getFlashdata('errors'));
-                // } else {
-                //     $session->setFlashdata('success', true);
-                // }
+                $data["user"]=$newUser;
+                $data["success"]=true;
             }
         }
-
-        // 8. on redirige ou on affiche une vue
-        return $this->twig->render("pages/register.html", $data);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        die;
+        
+        // return $this->twig->render("pages/register.html", $data);
     }
 }
