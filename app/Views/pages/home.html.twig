@@ -39,7 +39,7 @@
 		var lastVisited = document.querySelector('.last-visited-recipes');
 var listHistory = JSON.parse(localStorage.getItem("history"));
 console.log(listHistory);
-listHistory.forEach(element => {
+listHistory.forEach(function(element) {
 var lastVisitedRecipe = document.createElement("div");
 lastVisitedRecipe.classList.add("last-visited-recipe");
 
