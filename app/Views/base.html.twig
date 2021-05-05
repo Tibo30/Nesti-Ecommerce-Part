@@ -68,7 +68,7 @@
 							<i class="fas fa-search mr-2"></i>
 						</button>
 					</form>
-					<a id="nav-cart-logo" class='cart-logo nav-link {{loc=="Panier" ? "active" : ""}}' href="{{base_url('cart')}}">
+					<a id="nav-cart-logo" class='cart-logo nav-link {{loc=="Panier" ? "active" : ""}}' href="{{ session.logged == "yes" ? base_url('cart') : base_url('login')}}">
 						<i class="fas fa-shopping-cart mr-2 fa-3x"></i>
 						{# <i class="fab fa-opencart mr-2 fa-3x"></i> #}
 					</a>
