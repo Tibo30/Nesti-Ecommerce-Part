@@ -1,22 +1,68 @@
 {% extends "base.html.twig" %}
 {% block content %}
-<div onclick="emptyBasket()">Empty basket</div>
-	<div class="cart-page">
-		<a class="return-button-cart" onclick="rtn()">&#129136; Return</a>
-		<div class="div-title-cart">
-			<div class="title-cart">Cart</div>
-		</div>
-		<div class="cart-elements"></div>
-
-		<div class="total">
-			<div>TOTAL HT :
+	<div class="pay-page">
+		<div class="order-details">
+			<div class="div-title-pay">
+				<div class="title-pay">Your order</div>
 			</div>
-			<div class="cart-total-articles"></div>
+			<div class="pay-cart-elements"></div>
+
+			<div class="pay-details">
+				<div class="pay-subtotal">
+					<div>Subtotal :
+					</div>
+					<div class="pay-subtotal-articles"></div>
+				</div>
+				<div class="pay-shipment">
+					<div>SHIPMENT :
+					</div>
+					<div class="pay-total-shipment">Free delivery</div>
+				</div>
+				<div class="pay-total">
+					<div>TOTAL :
+					</div>
+					<div class="pay-total-articles"></div>
+				</div>
+			</div>
 		</div>
-		<div class="btn-valid-cart">
-			<Link to="/valider-le-panier">
-				<Button class="cart-validation">Confirm cart and pay</Button>
-			</Link>
+
+		<div class="pay-card-details">
+			<form>
+				<div class="title-pay-card-details">Credit card details</div>
+				<div class="cards">
+					<div class="card-group">
+						<div class="card">
+							<div class="logo"><img src="{{base_url('/assets/pictures/logo-card.png')}}" alt="Visa"></div>
+							<div class="chip"><img src="{{base_url('/assets/pictures/chip.png')}}" alt="chip"></div>
+							<div class="number">
+								<label for="cardnumber">Card number</label>
+								<input placeholder="1234 5678 9012 3456" id="cardnumber" name="cardnumber" maxlength="19">
+							</div>
+							<div class="name">
+								<label for="name">Your name</label>
+								<input placeholder="SHOUNAK DAS" id="name" name="name">
+							</div>
+							<div class="to">
+								<label for="expirationdate">Expiration date</label>
+								<input placeholder="06/21" id="expirationdate" name="expirationdate">
+							</div>
+						</div>
+					</div>
+					<div class="back-card">
+						<div class="border-card"></div>
+						<div class="csv-code">
+							<label for="csv">CSV</label>
+							<input placeholder="123" id="csv" name="csv">
+						</div>
+					</div>
+				</div>
+
+				<div class="btn-valid-pay">
+					<a href="">
+						<button type="submit" class="pay-validation">Pay</button>
+					</a>
+				</div>
+			</form>
 		</div>
 	</div>
 
@@ -25,6 +71,49 @@
 
 {% block script %}
 	<script>
+		getCart();
 
+function getCart() {
+var cart = [JSON.parse(localStorage.getItem("cart"))].flat();
+var cartElement = document.querySelector(".pay-cart-elements");
+if (cart[0] != null) {
+var html = "";
+var total = 0;
+cart.forEach(function (element, index) {
+var picture = "https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/" + element.picture;
+
+html += '<div class="pay-cart-element"><div class="pay-img-info">' + '<div class="pay-cart-img" style="background-image: url(' + picture + ');"></div>' + '<div class="pay-cart-info">' + element.name + '</div></div><div class="pay-cart-details"><div class="pay-cart-details-element"><p class="pay-cart-page-titles">Unit cost</p><p class="pay-cart-page-element">' + element.price + ' €/u</p></div><div class="pay-cart-details-element"><p class="pay-cart-page-titles">Quantity</p><p class="pay-cart-page-element">';
+
+html += element.quantity + '</p></div><div class="pay-cart-details-element">' + '<p class="pay-cart-page-titles">Total cost</p><p class="pay-cart-page-element">' + (
+Math.round(Number(element.quantity) * Number(element.price) * 100) / 100
+) + ' €</p></div></div></div>';
+
+cartElement.innerHTML = html;
+
+total += (Math.round(Number(element.quantity) * Number(element.price) * 100) / 100);
+
+})
+}
+
+document.querySelector(".pay-total-articles").innerHTML = "&nbsp" + total + " €";
+document.querySelector(".pay-subtotal-articles").innerHTML = "&nbsp" + total + " €";
+}
+
+// add listener on input card number
+var cardNumber = document.querySelector("#cardnumber");
+cardNumber.addEventListener("keyup", function () {
+var value = cardNumber.value;
+var newValue = '';
+value = value.replace(/\s+/g, ''); // delete space
+for (var i = 0; i < value.length; i++) {
+if (i % 4 == 0 && i > 0) {
+newValue = newValue.concat(' ');
+} 
+newValue = newValue.concat(value[i]);
+
+}
+cardNumber.value=newValue;
+
+});
 	</script>
 {% endblock %}
