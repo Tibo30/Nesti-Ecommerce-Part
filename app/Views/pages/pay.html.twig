@@ -1,5 +1,6 @@
 {% extends "base.html.twig" %}
 {% block content %}
+	{{ form_open(base_url('/pay'),{class:"form-pay-card"})}}
 	<div class="pay-page">
 		<div class="order-details">
 			<div class="div-title-pay">
@@ -14,7 +15,7 @@
 					<div class="pay-subtotal-articles"></div>
 				</div>
 				<div class="pay-shipment">
-					<div>SHIPMENT :
+					<div>Shipment :
 					</div>
 					<div class="pay-total-shipment">Free delivery</div>
 				</div>
@@ -23,55 +24,69 @@
 					</div>
 					<div class="pay-total-articles"></div>
 				</div>
+				<div class="pay-delivery-details">
+					<div>Delivery address :
+					</div>
+					<input id="address" name="address" value="{{user.address1 ~" "~ user.postcode ~" "~ user.getCity().city_name}}" maxlength="50" required>
+				</div>
 			</div>
+
 		</div>
 
 		<div class="pay-card-details">
-			<form>
-				<div class="title-pay-card-details">Credit card details</div>
-				<div class="cards">
-					<div class="card-group">
-						<div class="card">
-							<div class="logo"><img src="{{base_url('/assets/pictures/logo-card.png')}}" alt="Visa"></div>
-							<div class="chip"><img src="{{base_url('/assets/pictures/chip.png')}}" alt="chip"></div>
-							<div class="number">
-								<label for="cardnumber">Card number</label>
-								<input placeholder="1234 5678 9012 3456" id="cardnumber" name="cardnumber" maxlength="19">
-							</div>
-							<div class="name">
-								<label for="name">Your name</label>
-								<input placeholder="SHOUNAK DAS" id="name" name="name">
-							</div>
-							<div class="to">
-								<label for="expirationdate">Expiration date</label>
-								<input placeholder="06/21" id="expirationdate" name="expirationdate">
-							</div>
-						</div>
-					</div>
-					<div class="back-card">
-						<div class="border-card"></div>
-						<div class="csv-code">
-							<label for="csv">CSV</label>
-							<input placeholder="123" id="csv" name="csv">
-						</div>
-					</div>
-				</div>
 
-				<div class="btn-valid-pay">
-					<a href="">
-						<button type="submit" class="pay-validation">Pay</button>
-					</a>
+			<div class="title-pay-card-details">Credit card details</div>
+			<div class="cards">
+				<div class="card-group">
+					<div class="card">
+						<div class="logo"><img src="{{base_url('/assets/pictures/logo-card.png')}}" alt="Visa"></div>
+						<div class="chip"><img src="{{base_url('/assets/pictures/chip.png')}}" alt="chip"></div>
+						<div class="number">
+							<label for="cardnumber">Card number</label>
+							<input placeholder="1234 5678 9012 3456" id="cardnumber" name="cardnumber" maxlength="19" value="" required>
+						</div>
+						<div class="name">
+							<label for="name">Your name</label>
+							<input placeholder="SHOUNAK DAS" id="name" name="name" maxlength="30" value="" required>
+						</div>
+						<div class="to">
+							<label for="expirationdate">Expiration date</label>
+							<input placeholder="06/21" id="expirationdate" name="expirationdate" maxlength="5" value="" required>
+						</div>
+					</div>
 				</div>
-			</form>
+				<div class="back-card">
+					<div class="border-card"></div>
+					<div class="pay-error-number" hidden>You entered an invalid card number</div>
+					<div class="pay-error-date" hidden>You card has expired</div>
+					<div class="pay-error-name" hidden>Please enter a valid name</div>
+					<div class="pay-error-csv" hidden>You CSV has to be 3 digits</div>
+					<div class="csv-code">
+						<label for="csv">CSV</label>
+						<input placeholder="123" id="csv" name="csv" maxlength="3" value="" required>
+					</div>
+				</div>
+			</div>
+
+			<div class="btn-valid-pay">
+				{# <a href=""> #}
+				{# <button type="submit" class="pay-validation">Pay</button> #}
+					<button type="submit" class="pay-validation"> Pay</button>
+				{# </a> #}
+			</div>
+
 		</div>
 	</div>
-
+	{{ form_close() }}
 
 {% endblock %}
 
 {% block script %}
 	<script>
-		getCart();
+
+		const csrf = document.querySelector('input[name="csrf_nesti"]');
+
+getCart();
 
 function getCart() {
 var cart = [JSON.parse(localStorage.getItem("cart"))].flat();
@@ -106,14 +121,184 @@ var value = cardNumber.value;
 var newValue = '';
 value = value.replace(/\s+/g, ''); // delete space
 for (var i = 0; i < value.length; i++) {
-if (i % 4 == 0 && i > 0) {
+if (i % 4 == 0 && i > 0) { // add a space after every 4 digits
 newValue = newValue.concat(' ');
-} 
+}
 newValue = newValue.concat(value[i]);
+}
+cardNumber.value = newValue;
+});
+
+// add listener on input expiration date
+var cardDate = document.querySelector("#expirationdate");
+cardDate.addEventListener("keyup", function () {
+var value = cardDate.value;
+var newValue = '';
+value = value.replace("/", ''); // delete /
+for (var i = 0; i < value.length; i++) {
+if (i % 2 == 0 && i > 0) { // add a / after every 2 digits
+newValue = newValue.concat('/');
+}
+newValue = newValue.concat(value[i]);
+}
+cardDate.value = newValue;
+});
+
+
+var formCard = document.querySelector(".form-pay-card");
+formCard.addEventListener("submit", function () {
+event.preventDefault();
+
+document.querySelector(".pay-error-number").hidden = true;
+document.querySelector(".pay-error-date").hidden = true;
+document.querySelector(".pay-error-csv").hidden = true;
+document.querySelector(".pay-error-name").hidden = true;
+
+var cardNumber = document.querySelector("#cardnumber");
+var valueNumber = cardNumber.value;
+
+var cardName = document.querySelector("#name");
+var valueName = cardName.value;
+
+var cardDate = document.querySelector("#expirationdate");
+var valueDate = cardDate.value;
+
+var cardCsv = document.querySelector("#csv");
+var valueCsv = cardCsv.value;
+
+var orderAddress = document.querySelector("#address");
+var valueAddress = orderAddress.value;
+
+var isValid = true;
+if (!isValidCardNumber(valueNumber)) {
+document.querySelector(".pay-error-number").hidden = false;
+isValid = false;
+}
+if (!isValidDate(valueDate)) {
+document.querySelector(".pay-error-date").hidden = false;
+isValid = false;
+}
+if (! valueCsv.match(/^\d+$/)) {
+document.querySelector(".pay-error-csv").hidden = false;
+isValid = false;
+}
+
+if (! valueName.match(/[a-zA-ZÀ-ÿ ,.'-]+$/i) || valueName.length < 3) {
+document.querySelector(".pay-error-name").hidden = false;
+isValid = false;
+}
+
+console.log(isValid)
+
+if (isValid == true) {
+
+payOrder(this).then((response) => {
+if (response) {
+if (response.success && response.csrf_token) {
+
+alert("Request OK");
+
+} 
+// Refresh CSRF
+
+csrf.setAttribute('value', response.csrf_token);
+}
+});
+}
+})
+
+/**
+     * Ajax request to add order to database
+     * @param form obj
+     * @returns mixed
+     */
+async function payOrder(obj) {
+
+
+var myHeaders = new Headers();
+
+let formData = new FormData(obj);
+
+formData.append('cart', localStorage.getItem("cart"));
+
+formData.append(csrf.name, csrf.value);
+
+
+var myInit = {
+method: 'POST',
+headers: myHeaders,
+mode: 'cors',
+cache: 'default',
+body: formData
+};
+
+let response = await fetch(ROOT + '/pay', myInit);
+try {
+if (response.ok) {
+return await response.json();
+} else {
+return false;
+}
+} catch (e) {
+console.error(e.message);
+}
 
 }
-cardNumber.value=newValue;
 
-});
+
+/*
+** Luhm algorithm (check if the card number is valid)
+*/
+function isValidCardNumber(str) {
+var copyStr = str.replace(/\s+/g, '');
+var sum = 0;
+var isValid = false;
+
+if (copyStr.length == 16) {
+if (copyStr.match(/^\d+$/)) {
+for (var i = 0; i < copyStr.length; i++) {
+var valueI = Number(copyStr.charAt(i));
+var doubleI = 0;
+if (i % 2 == 0) { // multiple by 2 every digit at an even index
+doubleI = valueI * 2 >= 10 ? (valueI * 2 - 9) : valueI * 2; // it the result is more than 10, we reduce of 9
+sum += doubleI;
+copyStr = copyStr.substring(0, i) + doubleI + copyStr.substring(i + 1);
+copyStr.replace(i, doubleI);
+} else {
+sum += valueI;
+copyStr = copyStr.substring(0, i) + valueI + copyStr.substring(i + 1);
+}
+
+}
+if (sum % 10 == 0) { // we check the modulo by 10 of the sum. If it is 0, the number is valid
+isValid = true;
+}
+}
+}
+return isValid;
+}
+
+
+/*
+** Check if the card has expired
+*/
+function isValidDate(str) {
+
+var today = new Date();
+var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+var yy = String(today.getFullYear()).substring(2);
+
+var isValid = false;
+var date = str.replace("/", '');
+
+if (date.length == 4) {
+if (date.match(/^\d+$/)) {
+if (date.substring(2) > yy || (date.substring(0, 2) >= mm && date.substring(2) == yy)) {
+isValid = true;
+}
+}
+}
+return isValid;
+}
 	</script>
 {% endblock %}
