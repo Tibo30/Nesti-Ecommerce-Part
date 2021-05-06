@@ -51,6 +51,13 @@ class RecipeModel extends Model
         return $query->getResult();
     }
 
+    public function searchRecipe(String $name){
+        $builder = $this->db->table('recipes');
+        $builder->like("recipe_name", "%".$name."%");
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
 
     // public function getRecipe($id){
 
