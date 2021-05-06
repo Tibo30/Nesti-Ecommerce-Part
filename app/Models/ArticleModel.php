@@ -20,5 +20,6 @@ class ArticleModel extends Model
         return $query->getResult();
     }
 
+   
     
 }
