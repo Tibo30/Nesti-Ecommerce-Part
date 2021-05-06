@@ -70,6 +70,9 @@ $routes->get('disconnect', 'ConnectionController::disconnect');
 
 $routes->get('cart', 'CartController::cart');
 $routes->get('pay', 'CartController::pay');
+$routes->post('pay', 'AjaxController::payCart');
+
+$routes->post('search', 'SearchController::search');
 
 // $routes->get('/recipes/tagged', 'RecipeController::recipesTagged');
 
