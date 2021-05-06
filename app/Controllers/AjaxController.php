@@ -12,6 +12,12 @@ use App\Entities\Recipe;
 use App\Entities\Grade;
 use App\Entities\Comment;
 
+use App\Models\OrderLineModel;
+use App\Entities\OrderLine;
+
+use App\Models\OrderRequestModel;
+use App\Entities\OrderRequest;
+
 class AjaxController extends BaseController
 {
 
@@ -54,32 +60,32 @@ class AjaxController extends BaseController
                 $recipeObject = $recipe;
             }
             $averageGrade = $recipeObject->getAverageGrade();
-            $copyAverageGrade=$averageGrade;
+            $copyAverageGrade = $averageGrade;
             $picture = $recipeObject->getPicture();
             $html .= '<div class="recipe-card" data-number="' . $index . '" ' . ($index > 7 ? 'hidden' : '') . '>' .
                 '<img class="recipe-img" src="https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/' . $picture->name . "." . $picture->extension . '" alt="Card image cap">' .
-                '<div class="recipe-card-body"><h5 class="recipe-card-title">' . $recipeObject->recipe_name . '</h5>'.
+                '<div class="recipe-card-body"><h5 class="recipe-card-title">' . $recipeObject->recipe_name . '</h5>' .
                 '<div class="recipes-card-grade"><div class="recipes-grade-stars">';
 
-            for ($i=1;$i<=5;$i++){
-                $html .='<span class="fa-stack" style="width:1em"><i class="far fa-star fa-stack-1x"></i>';
-                if($copyAverageGrade>0){
-                    if($copyAverageGrade>=1){
-                        $html.='<i class="fas fa-star fa-stack-1x"></i>';
-                    }else{
-                        $html.='<i class="fas fa-star-half fa-stack-1x"></i>';
+            for ($i = 1; $i <= 5; $i++) {
+                $html .= '<span class="fa-stack" style="width:1em"><i class="far fa-star fa-stack-1x"></i>';
+                if ($copyAverageGrade > 0) {
+                    if ($copyAverageGrade >= 1) {
+                        $html .= '<i class="fas fa-star fa-stack-1x"></i>';
+                    } else {
+                        $html .= '<i class="fas fa-star-half fa-stack-1x"></i>';
                     }
                 }
-                $html.='</span>';
+                $html .= '</span>';
                 $copyAverageGrade--;
             }
-                $html.='</div><div class="recipes-grade-value">';
-            if ($recipeObject->getGrades()>0){
-                $html.=(ceil($averageGrade*10)/10).'/5 on '.$recipeObject->getGrades().' view';
+            $html .= '</div><div class="recipes-grade-value">';
+            if ($recipeObject->getGrades() > 0) {
+                $html .= (ceil($averageGrade * 10) / 10) . '/5 on ' . $recipeObject->getGrades() . ' view';
             } else {
-                $html.='0 view';
+                $html .= '0 view';
             }
-            $html.='</div></div>'.'<a href="' . base_url("/recipe/" . $recipeObject->id_recipes) . '"><button class="recipe-btn-see">See Recipe</button>' .
+            $html .= '</div></div>' . '<a href="' . base_url("/recipe/" . $recipeObject->id_recipes) . '"><button class="recipe-btn-see">See Recipe</button>' .
                 '</a></div></div>'; // we prepare the updated html (cards)
             $index++;
         }
@@ -151,11 +157,11 @@ class AjaxController extends BaseController
             $data['success'] = true;
         } else {
             $errorMessage = $error;
-            if ($error == ("Duplicate entry '". $idUser . "-" . $idRecipe . "' for key 'PRIMARY'")) {
+            if ($error == ("Duplicate entry '" . $idUser . "-" . $idRecipe . "' for key 'PRIMARY'")) {
                 $errorMessage = "You already gave a grade to this recipe !";
             }
-           
-           
+
+
             $data["error"] = $errorMessage;
         }
 
@@ -212,6 +218,47 @@ class AjaxController extends BaseController
         } else {
             $data["error"] = "You already wrote a comment for this recipe !";
         }
+
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        die;
+    }
+
+
+    /**
+     * Add grade to a recipe (ajax request)
+     * @return void
+     */
+    public function payCart()
+    {
+
+        $data = [];
+        $data['success'] = false;
+
+        $orderRequestModel = new OrderRequestModel();
+        $orderLineModel = new OrderLineModel();
+
+        $cart = json_decode($this->request->getPost('cart')); // get the cart
+
+        if (count($cart) > 0) {
+            $newOrder = new OrderRequest();
+            $newOrder->fill([
+                'state' => "a",
+                'id_users' => $_SESSION['id']
+            ]);
+            $idOrder = $orderRequestModel->insert($newOrder);
+            foreach ($cart as $orderLine) {
+                $newOrderLine = new OrderLine();
+                $newOrderLine->fill([
+                    'id_order' => $idOrder,
+                    'id_article' => $orderLine->id_article,
+                    "quantity_ordered" => $orderLine->quantity
+                ]);
+                $orderLineModel->insert($newOrderLine);
+            }
+            $data['success'] = true;
+        }
+
 
         header('Content-Type: application/json');
         echo json_encode($data);
