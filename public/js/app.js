@@ -11,9 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (ul!=null){
         const id = ul.getAttribute('data-id');
     }
-    const csrf = document.querySelector('input[name="csrf_nesti"]');
 
-    console.log(csrf);
+    if (csrf!=undefined){
+        console.log(csrf);
+    }
+    
 
 
 

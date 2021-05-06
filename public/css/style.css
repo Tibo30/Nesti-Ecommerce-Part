@@ -1507,7 +1507,7 @@ button:hover {
 .pay-page {
     display: flex;
     flex-direction: row;
-    flex-basis: wrap;
+    flex-wrap: wrap;
     width: 80%;
     margin: auto;
     position: relative;
@@ -1522,7 +1522,7 @@ button:hover {
     border: 1px solid var(--thirdcolor);
     background-color: var(--primaryTextColor);
     height: 100%;
-    width: 40%;
+    width: 580px;
     min-width: 400px;
     margin: 4rem 0;
 }
@@ -1623,7 +1623,6 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-self: end;
-    margin-top: 2rem;
     align-items: flex-end;
 }
 
@@ -1672,6 +1671,27 @@ button:hover {
     margin-right: 1rem;
 }
 
+.pay-delivery-details{
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+}
+
+.pay-delivery-details div{
+    color: white;
+    margin-bottom: 1rem;
+    font-family: var(--fontTitle);
+    align-self: flex-start;
+}
+
+.pay-delivery-details input{
+   font-size: 12px;
+   width: 100%;
+}
+
 .pay-validation {
     cursor: pointer;
     color: var(--primaryTextColor);
@@ -1696,8 +1716,10 @@ button:hover {
     padding: 2rem 7rem 2rem 5rem;
     border: 2px solid var(--secondaryColor);
     position: relative;
-    width: 40%;
+    width: 580px;
     margin: 4rem 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .pay-card-details form{
@@ -1790,7 +1812,7 @@ button:hover {
 
 .number {
     font-size: 10px;
-    left: 10%;
+    left: 8%;
     bottom: 25%;
     display: flex;
     flex-direction: column;
@@ -1798,16 +1820,16 @@ button:hover {
 
 .name {
     font-size: 10px;
-    left: 10%;
-    bottom: 10%;
+    left:8%;
+    bottom: 8%;
     display: flex;
     flex-direction: column;
 }
 
 .to {
     font-size: 10px;
-    right: 10%;
-    bottom: 10%;
+    right: 8%;
+    bottom: 8%;
     display: flex;
     flex-direction: column;
 }
@@ -1832,9 +1854,45 @@ button:hover {
     width: 50px;
 }
 
+.name input{
+    width: 190px;
+}
+
 .border-card {
     position: absolute;
     border-bottom: 50px solid black;
     width: 100%;
     top: 15%;
+}
+
+.pay-error-number{
+    position: absolute;
+    left: 7%;
+    bottom: 17%;
+    font-size: 10px;
+    color: red;
+}
+
+.pay-error-date{
+    position: absolute;
+    left: 7%;
+    bottom: 10%;
+    font-size: 10px;
+    color: red;
+}
+
+.pay-error-name{
+    position: absolute;
+    left: 7%;
+    bottom: 3%;
+    font-size: 10px;
+    color: red;
+}
+
+.pay-error-csv{
+    position: absolute;
+    right: 7%;
+    bottom: 3%;
+    font-size: 10px;
+    color: red;
 }
