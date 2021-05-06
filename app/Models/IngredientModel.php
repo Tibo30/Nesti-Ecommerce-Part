@@ -28,5 +28,13 @@ class IngredientModel extends Model
         return $query->getResult();
     }
 
+    
+    public function searchProduct(String $name){
+        $builder = $this->db->table('products');
+        $builder->like("product_name", "%".$name."%");
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
 
 }
