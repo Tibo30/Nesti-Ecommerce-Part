@@ -19,32 +19,34 @@ class SearchController extends BaseController
     {
 
         $searchWord = filter_input(INPUT_POST, "search-bar", FILTER_SANITIZE_STRING); 
-        //    $req = self::$_bdd->prepare('SELECT * FROM lots WHERE received_date LIKE :date"%"');
-        var_dump($searchWord);
 
         $recipeModel = new RecipeModel();
         $articleModel = new ArticleModel();
         $productModel = new IngredientModel();
-        $articles=[];
+        $articles=null;
         $recipes=[];
+        $recipeObjects=[];
+        $articleObjects=[];
 
         $products = $productModel->searchProduct($searchWord);
         if (count($products)>0){
             foreach($products as $product){
-                $articles[]=$articleModel->where('id_products',$product->id_products)->findAll();
+                $articles=$articleModel->where('id_products',$product->id_products)->findAll();
+                foreach($articles as $article){
+                    $articleObjects[]=$article;
+                }
             }
         }
-
+    
         $recipes = $recipeModel->searchRecipe($searchWord);
 
-        var_dump($products);
-        var_dump($articles);
-        var_dump($recipes);
-
+        foreach ($recipes as $recipe){
+            $recipeObjects[] = new Recipe(get_object_vars($recipe));
+        }
 
         $data["loc"] = "Search";
-        // $data["recipes"] = $recipes;
-        // $data["articles"] = $articles;
+        $data["recipes"] = $recipeObjects;
+        $data["articles"] = $articleObjects;
         return $this->twig->render("pages/search.html", $data);
     }
 
