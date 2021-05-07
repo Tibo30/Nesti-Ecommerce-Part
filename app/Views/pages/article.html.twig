@@ -74,6 +74,7 @@
 				</div>
 				<div class="recipe-card-body">
 					<h5 class="recipe-card-title">{{recipe.recipe_name}}</h5>
+					{{ include('/templates/recipe-info.html.twig')  }}
 					{{ include('/templates/recipes-grade.html.twig')  }}
 					<a href="{{ base_url('/recipe/'~recipe.id_recipes) }}">
 						<button class="recipe-btn-see">See Recipe</button>
