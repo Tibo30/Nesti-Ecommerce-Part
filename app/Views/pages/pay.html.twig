@@ -84,12 +84,18 @@
 {% block script %}
 	<script>
 
+
 		const csrf = document.querySelector('input[name="csrf_nesti"]');
 
 getCart();
 
 function getCart() {
 var cart = [JSON.parse(localStorage.getItem("cart"))].flat();
+
+if (cart.length == 0 || cart == undefined) { // if there is nothing in the cart and the user try to come to this page
+window.history.back();
+} else {
+
 var cartElement = document.querySelector(".pay-cart-elements");
 if (cart[0] != null) {
 var html = "";
@@ -112,6 +118,7 @@ total += (Math.round(Number(element.quantity) * Number(element.price) * 100) / 1
 
 document.querySelector(".pay-total-articles").innerHTML = "&nbsp" + total + " €";
 document.querySelector(".pay-subtotal-articles").innerHTML = "&nbsp" + total + " €";
+}
 }
 
 // add listener on input card number
@@ -195,10 +202,10 @@ if (isValid == true) {
 payOrder(this).then((response) => {
 if (response) {
 if (response.success && response.csrf_token) {
-
+localStorage.setItem("cart",null);
 alert("Request OK");
 
-} 
+}
 // Refresh CSRF
 
 csrf.setAttribute('value', response.csrf_token);
