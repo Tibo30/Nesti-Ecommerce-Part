@@ -1,0 +1,36 @@
+<div class="articles-cards">
+	{% set index=0 %}
+	{% for article in articles %}
+		<div class="article-card {{article.getStock()<=0? 'article-card-out-of-stock' : ''}}" data-number={{index}} {{ index > 7 ? 'hidden' : ''}}>
+			<div class="article-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture().name~"."~article.getPicture().extension }}");'></a>
+		</div>
+		<div class="article-card-body">
+			<h5 class="article-card-title">{{article.quantity_per_unit~" "~article.getUnitMeasure().name~" of "~article.getIngredient().product_name}}</h5>
+			<div class="article-card-price">{{article.getLastPrice() | round(2, 'ceil')}}
+				€</div>
+			{% if article.getStock()<=0 %}
+				<div class="article-out-of-stock">Out of stock</div>
+			{% endif %}
+			<a href="{{ base_url('/article/'~article.id_article) }}">
+				<button class="article-btn-see">See Article</button>
+			</a>
+		</div>
+	</div>
+	{% set index=index+1 %}
+{% endfor %}
+
+</div>
+
+{% set numberPage=(articles | length /8) | round(0,'ceil') %}
+
+		<div class="btn-pagination-articles">
+			{% if numberPage>1 %}
+				<button id="btn_prev" class="btn-pagination" onclick="prevPage()">Prev</button>
+
+				{% for index in 1..numberPage %}
+					<button id="btn_page" class="btn-pagination" onclick="goPage({{index}})">{{index}}</button>
+
+				{% endfor %}
+				<button id="btn_next" class="btn-pagination" onclick="nextPage()">Next</button>
+			{% endif %}
+		</div>
