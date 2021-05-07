@@ -8,7 +8,7 @@ use App\Entities\Recipe;
 use App\Models\ArticleModel;
 use App\Entities\Article;
 
-use App\Models\IngredientModel;
+use App\Models\ProductModel;
 
 
 class SearchController extends BaseController
@@ -22,7 +22,7 @@ class SearchController extends BaseController
 
         $recipeModel = new RecipeModel();
         $articleModel = new ArticleModel();
-        $productModel = new IngredientModel();
+        $productModel = new ProductModel();
         $articles=null;
         $recipes=[];
         $recipeObjects=[];
