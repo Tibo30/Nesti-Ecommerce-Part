@@ -6,6 +6,8 @@ use CodeIgniter\Controller;
 use App\Entities\User;
 use App\Models\ConnectionModel;
 use App\Models\UserModel;
+use App\Models\UserLogModel;
+use App\Entities\UserLog;
 
 class ConnectionController extends BaseController
 {
@@ -75,6 +77,13 @@ class ConnectionController extends BaseController
                 ];
 
                 $this->session->set($dataSession);
+
+                $newUserLog = new UserLog();
+                $newUserLog->fill([
+                    'id_users' => $activUser->id_users
+                ]);
+                $userLogModel = new UserLogModel();
+                $userLogModel->insert($newUserLog);
 
                 $data['success'] = true;
 
