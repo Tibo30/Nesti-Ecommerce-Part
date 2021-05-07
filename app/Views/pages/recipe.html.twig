@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% if recipe.state == "a" %}
+
 	<div class="recipeDetails">
 		<div class="underLink">
 			<a href="{{ base_url('/recipes')}}">
@@ -169,6 +171,14 @@
 		</div>
 
 	</div>
+
+	{% else %}
+
+	<div class="svg-blocked-recipe"><img class="fas logo-svg-blocked" src="{{base_url('/assets/pictures/block.svg')}}" alt="">
+		THIS RECIPE IS NOT AVAILABLE
+		</div>
+
+	{% endif %}
 {% endblock %}
 
 {% block script %}
