@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\RecipeModel;
-use App\Models\IngredientModel;
+use App\Models\ProductModel;
 use App\Models\ParagraphModel;
 
 class ApiController extends BaseController
@@ -35,11 +35,19 @@ class ApiController extends BaseController
     public function recipe($idRecipe)
     {
         $modelRecipe = new RecipeModel();
-        $modelIngredient = new IngredientModel();
+        $modelProduct = new ProductModel();
         $modelParagraph = new ParagraphModel();
 
         $recipe = $modelRecipe->find($idRecipe);
-        $ingredients = $modelIngredient->getIngredients($idRecipe);
+        $products = $modelProduct->getIngredients($idRecipe); // need to add check if product is ingredient ??
+        
+        $ingredients=[];
+        foreach($products as $product){
+            if ($product->isIngredient()){
+                $ingredients[]=$product;
+            }
+        }
+
         $paragraphs= $modelParagraph->getParagraphs($idRecipe);
         $recipe->paragraphs=$paragraphs;
         $recipe->ingredients=$ingredients;
