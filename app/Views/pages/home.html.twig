@@ -37,7 +37,8 @@
 	<script>
 
 		var lastVisited = document.querySelector('.last-visited-recipes');
-var listHistory = JSON.parse(localStorage.getItem("history"));
+var listHistory = [JSON.parse(localStorage.getItem("history"))].flat();
+if (listHistory!=undefined && listHistory[0]!=null){
 listHistory.forEach(function(element) {
 var lastVisitedRecipe = document.createElement("div");
 lastVisitedRecipe.classList.add("last-visited-recipe");
@@ -60,6 +61,7 @@ link.appendChild(lastVisitedRecipe);
 
 lastVisited.appendChild(link);
 })
+}
 
 
 var tags = document.querySelectorAll('.tag-link-recipes');
