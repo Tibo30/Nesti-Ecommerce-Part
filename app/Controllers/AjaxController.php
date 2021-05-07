@@ -229,7 +229,7 @@ class AjaxController extends BaseController
 
 
     /**
-     * Add grade to a recipe (ajax request)
+     * pay Cart and add request to database (ajax request)
      * @return void
      */
     public function payCart()
@@ -267,4 +267,6 @@ class AjaxController extends BaseController
         echo json_encode($data);
         die;
     }
+
+
 }
