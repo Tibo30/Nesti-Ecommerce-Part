@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const id = ul.getAttribute('data-id');
     }
 
-    if (csrf!=undefined){
-        console.log(csrf);
-    }
+    // if (csrf!=undefined){
+    //     console.log(csrf);
+    // }
     
 
 
