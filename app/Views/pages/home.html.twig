@@ -38,7 +38,6 @@
 
 		var lastVisited = document.querySelector('.last-visited-recipes');
 var listHistory = JSON.parse(localStorage.getItem("history"));
-console.log(listHistory);
 listHistory.forEach(function(element) {
 var lastVisitedRecipe = document.createElement("div");
 lastVisitedRecipe.classList.add("last-visited-recipe");
@@ -51,10 +50,15 @@ imgRecipe.src = element.picture;
 var recipeName = document.createElement("div");
 recipeName.innerHTML = element.recipe_name;
 
+var link = document.createElement("a");
+link.href="{{base_url()}}"+"/recipe/"+element.id_recipes;
+
 lastVisitedRecipe.appendChild(imgRecipe);
 lastVisitedRecipe.appendChild(recipeName);
 
-lastVisited.appendChild(lastVisitedRecipe);
+link.appendChild(lastVisitedRecipe);
+
+lastVisited.appendChild(link);
 })
 
 
