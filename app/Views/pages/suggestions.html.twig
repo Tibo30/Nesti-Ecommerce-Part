@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+{% block content %}
+	<div id="header">
+		<p id="titleIngredient">~ The Recipe Finder ~</p>
+		<br>
+		<p id="instructions">
+			You are in lack of inspiration? You don't know what to cook tonight for your family? We have THE SOLUTION!
+			<br>
+			Just click on the heart if you have the ingredient at home. Of course, if you don't, click on the cross.
+			<br>
+			When you think you are done, click on the button named
+			<i>"Consult the recipes"</i>
+			and we will find succulent recipes for you in no time!
+		</p>
+		<br>
+	</div>
+
+	<div id="containerIngredientCards"></div>
+	
+	<div class="containerResult relative flex flex-col m-auto justify-center items-center mt-10">
+		<p id="sentenceRecipesAvailable" class="text-white"></p>
+		<div id="containerButtons">
+			<button id="tryAgain" onclick="window.location.reload()">Try again</button>
+			<button id="consultRecipe">Consult the recipes</button>
+		</div>
+	</div>
+	{{ form_open(base_url("/recipes/suggestions"),{class:"form-get-suggestions"})}}
+	{{ form_close() }}
+
+
+{% endblock %}
+
+{% block script %}
+
+	<script>
+		const csrf = document.querySelector('input[name="csrf_nesti"]');
+
+var ingredientsJSON = {{ ingredientsJSON|json_encode|raw }};
+
+console.log(ingredientsJSON);
+
+var recipesJSON = {{ recipesJSON|json_encode|raw }};
+
+console.log(recipesJSON);
+	</script>
+
+{% endblock %}
