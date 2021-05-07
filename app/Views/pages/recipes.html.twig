@@ -21,42 +21,14 @@
 
 		<h1 class="recipes-title-selection"></h1>
 
-		<div class="recipes-cards">
-			{% set index=0 %}
-			{% for recipe in recipes %}
-				<div class="recipe-card" data-number={{index}} {{ index > 7 ? 'hidden' : ''}}>
-					<div class="recipe-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture().name~"."~recipe.getPicture().extension }}");'></a>
-				</div>
-				<div class="recipe-card-body">
-					<h5 class="recipe-card-title">{{recipe.recipe_name}}</h5>
-					{{ include('/templates/recipes-grade.html.twig')  }}
-					
-					<a href="{{ base_url('/recipe/'~recipe.id_recipes) }}">
-						<button class="recipe-btn-see">See Recipe</button>
-					</a>
-				</div>
-			</div>
-			{% set index=index+1 %}
-		{% endfor %}
+		{{ include('/templates/all-recipes.html.twig')  }}
+
+	
 	</div>
-	{% set numberPage=(recipes | length /8) | round(0,'ceil') %}
-
-	<div class="btn-pagination-recipes">
-		{% if numberPage>1 %}
-			<button id="btn_prev" class="btn-pagination" onclick="prevPage()">Prev</button>
-
-			{% for index in 1..numberPage %}
-				<button id="btn_page" class="btn-pagination" onclick="goPage({{index}})">{{index}}</button>
-
-			{% endfor %}
-			<button id="btn_next" class="btn-pagination" onclick="nextPage()">Next</button>
-		{% endif %}
-	</div>
-
-
-</div>{% endblock %}{% block script %}
-<script>
-	const ROOT2 = "{{ base_url() }}";
+{% endblock %}
+{% block script %}
+	<script>
+		const ROOT2 = "{{ base_url() }}";
 const csrf = document.querySelector('input[name="csrf_nesti"]');
 
 
@@ -199,4 +171,5 @@ scroll(0, 0)
 function numPages() {
 return numPage;
 }
-</script>{% endblock %}
+	</script>
+{% endblock %}
