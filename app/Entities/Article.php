@@ -5,7 +5,7 @@ namespace App\Entities;
 use CodeIgniter\Entity;
 use App\Models\PictureModel;
 use App\Models\UnitMeasureModel;
-use App\Models\IngredientModel;
+use App\Models\ProductModel;
 use App\Models\LotModel;
 use App\Models\ArticleModel;
 use App\Models\OrderLineModel;
@@ -28,9 +28,9 @@ class Article extends Entity
         return $unit;
     }
 
-    public function getIngredient()
+    public function getProduct()
     {
-        $ingModel = new IngredientModel();
+        $ingModel = new ProductModel();
         $ing = $ingModel->find($this->id_products);
         return $ing;
     }
@@ -55,7 +55,7 @@ class Article extends Entity
 
     public function getName()
     {
-        $name = $this->quantity_per_unit . " " . $this->getUnitMeasure()->name . " of " . $this->getIngredient()->product_name;
+        $name = $this->quantity_per_unit . " " . $this->getUnitMeasure()->name . " of " . $this->getProduct()->product_name;
 
         return $name;
     }
