@@ -26,7 +26,7 @@ class ArticleController extends BaseController
         // $articles = $model->orderBy("id_products","asc")->findAll();
         $articles = $model->findAll();
         usort($articles, function ($r1, $r2) { // sort the array ASC according to the product name of the article
-            return $r1->getIngredient()->product_name <=> $r2->getIngredient()->product_name;
+            return $r1->getProduct()->product_name <=> $r2->getProduct()->product_name;
         });
         $data["loc"] = "Articles";
         $data["articles"] = $articles;
@@ -48,7 +48,7 @@ class ArticleController extends BaseController
         $article = $articleModel->find($idArticle); // get the article object
         if ($article!=null){
 
-            $idIngredient = $article->getIngredient()->id_products; // get the id of the ingredient for this article
+            $idIngredient = $article->getProduct()->id_products; // get the id of the ingredient for this article
 
             $recipesIng = $recipeIngredientModel->where("id_ingredients",$idIngredient)->findAll(); // get all the recipes ing obj for this ingredient
     
