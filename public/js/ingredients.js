@@ -1,6 +1,8 @@
 // Attach a click event to the document
 document.addEventListener("DOMContentLoaded", function() {
 
+    localStorage.setItem("validRecipes",null);
+
     // Creation of the variables
     var myObj = ingredientsJSON;
     var myObjRecipe = recipesJSON;
