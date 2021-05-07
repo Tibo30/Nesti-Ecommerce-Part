@@ -86,14 +86,14 @@ window.history.back();
 ** This method clear the cart
 */
 function emptyBasket() {
-localStorage.clear();
+localStorage.setItem("cart",null);
 }
 
 /*
 ** this method permit to delete an item from the cart
 */
 function removeElement(index) {
-var table = [(JSON.parse(localStorage.getItem("cart")))]
+var table = (JSON.parse(localStorage.getItem("cart")))
 console.log(table);
 table.splice(index, 1)
 localStorage.setItem("cart", JSON.stringify(table))
