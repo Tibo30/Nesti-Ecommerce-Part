@@ -53,7 +53,7 @@
 		</div>
 
 	</div>
-
+{% if article.isIngredient()==true %}
 	<div class="article-number-recipes">
 		There
 		{{recipes | length ==1 ? "is" : "are"}}
@@ -89,6 +89,9 @@
 			</div>
 		{% endif %}
 	</div>
+	
+{% endif %}
+
 	<div class="open-modal-cart" data-toggle="modal" type="button" data-target="#modal-go-to-car" hidden></div>
 	<div class="modal fade" id="modal-go-to-car" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
