@@ -11,6 +11,8 @@ use App\Entities\Article;
 
 use App\Models\ProductModel;
 
+use App\Models\TagModel;
+
 use App\Models\RecipeIngredientModel;
 
 
@@ -71,6 +73,33 @@ class SuggestionsController extends BaseController
         $data["ingredientsJSON"]=$resultsIngredient;
         $data["recipesJSON"]=$resultsRecipe;
         return $this->twig->render("pages/suggestions.html", $data);
+    }
+
+    
+    /**
+     * get validRecipes from suggestions
+     * @return void
+     */
+    public function recipesSuggestions()
+    {
+        helper('form');
+        $tagModel = new TagModel();
+        $tags = $tagModel->findAll();
+
+        $recipeModel = new RecipeModel();
+
+        $validRecipes = json_decode($this->request->getPost('validRecipes')); // get the validRecipes
+
+        $recipes=[];
+        foreach($validRecipes as $validRecipe){
+            $recipes[]= $recipeModel->find($validRecipe->recipeId);
+        }
+
+        $data["loc"] = "Recipes";
+        $data["recipes"] = $recipes;
+        $data["tags"] = $tags;
+        return $this->twig->render("pages/recipes.html", $data);
+
     }
 
 
