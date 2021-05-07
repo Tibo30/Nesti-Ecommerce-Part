@@ -4,7 +4,7 @@ namespace App\Entities;
 
 use CodeIgniter\Entity;
 use App\Models\UnitMeasureModel;
-use App\Models\IngredientModel;
+use App\Models\ProductModel;
 
 class RecipeIngredient extends Entity {     
 
@@ -14,8 +14,8 @@ class RecipeIngredient extends Entity {
         return $unit;
     }
 
-    public function getIngredient(){
-        $ingModel = new IngredientModel();
+    public function getProduct(){
+        $ingModel = new ProductModel();
         $ing = $ingModel -> find($this->id_ingredients);
         return $ing;
     }
