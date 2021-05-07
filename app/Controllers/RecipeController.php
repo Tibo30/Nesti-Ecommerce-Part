@@ -71,11 +71,7 @@ class RecipeController extends BaseController
         
 
         $listRecipesIng = $recipeIngredientModel->where('id_recipes',$idRecipe)->findAll(); // get all the recipe ingredients for a recipe. Return array of object
-        $recipesIngObjects = [];
-        foreach ($listRecipesIng as $ingredient) {
-            $recipesIngObjects[] = $ingredient;
-        }
-
+      
         $listParagraphs = $paragraphModel->getParagraphs($idRecipe); // get all the steps for a recipe. Return an array of object
         $listParagraphsObject = [];
         foreach ($listParagraphs as $paragraph) {
@@ -87,9 +83,35 @@ class RecipeController extends BaseController
 
         $data["loc"] = "Recipe";
         $data["recipe"] = $recipe;
-        $data["recipeIngredients"] = $recipesIngObjects;
+        $data["recipeIngredients"] = $listRecipesIng;
         $data["paragraphs"] = $listParagraphsObject;
         $data["comments"] = $listComments;
         return $this->twig->render("pages/recipe.html", $data);
+    }
+
+    
+    /**
+     * get validRecipes from suggestions
+     * @return void
+     */
+    public function recipesSuggestions()
+    {
+        $tagModel = new TagModel();
+        $tags = $tagModel->findAll();
+
+        $recipeModel = new RecipeModel();
+
+        $validRecipes = json_decode($this->request->getPost('validRecipes')); // get the validRecipes
+
+        $recipes=[];
+        foreach($validRecipes as $validRecipe){
+            $recipes[]= $recipeModel->find($validRecipe->recipeId);
+        }
+
+        $data["loc"] = "Recipes";
+        $data["recipes"] = $recipes;
+        $data["tags"] = $tags;
+        return $this->twig->render("pages/recipes.html", $data);
+
     }
 }
