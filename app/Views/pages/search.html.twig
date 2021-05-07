@@ -1,5 +1,33 @@
 {% extends "base.html.twig" %}
 {% block content %}
-	
 
+<div class="search-page">
+
+	<div class="btn-search-results">
+		<button class="btn-search-results-recipes">Result by recipes</button>
+		<button class="btn-search-results-articles">Result by articles</button>
+	</div>
+	<div class="recipes-search">{{ include('/templates/all-recipes.html.twig')  }}</div>
+
+	<div class="articles-search" hidden>{{ include('/templates/all-articles.html.twig')  }}</div>
+
+</div>
+{% endblock %}
+
+{% block script %}
+	<script>
+
+		var searchRecipes = document.querySelector(".btn-search-results-recipes");
+var searchArticles = document.querySelector(".btn-search-results-articles");
+
+searchRecipes.addEventListener("click", function () {
+document.querySelector(".articles-search").hidden = true;
+document.querySelector(".recipes-search").hidden = false;
+})
+
+searchArticles.addEventListener("click", function () {
+document.querySelector(".articles-search").hidden = false;
+document.querySelector(".recipes-search").hidden = true;
+})
+	</script>
 {% endblock %}
