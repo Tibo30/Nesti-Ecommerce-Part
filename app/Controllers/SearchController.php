@@ -31,7 +31,7 @@ class SearchController extends BaseController
         $products = $productModel->searchProduct($searchWord);
         if (count($products)>0){
             foreach($products as $product){
-                $articles=$articleModel->where('id_products',$product->id_products)->findAll();
+                $articles=$articleModel->where('id_products',$product->id_products)->where("state","a")->findAll();
                 foreach($articles as $article){
                     $articleObjects[]=$article;
                 }
@@ -41,7 +41,10 @@ class SearchController extends BaseController
         $recipes = $recipeModel->searchRecipe($searchWord);
 
         foreach ($recipes as $recipe){
-            $recipeObjects[] = new Recipe(get_object_vars($recipe));
+            if ($recipe->state=="a"){
+                $recipeObjects[] = new Recipe(get_object_vars($recipe));
+            }
+            
         }
 
         $data["loc"] = "Search";
