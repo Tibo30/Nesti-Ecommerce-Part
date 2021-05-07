@@ -70,7 +70,7 @@
 		<div class="recipe-list-ingredient">
 			{% for recipeIngredient in recipeIngredients %}
 				<div class="recipe-ingredient">
-					{{recipeIngredient.quantity~" "~recipeIngredient.getUnitMeasure().name~" of "~recipeIngredient.getIngredient().product_name}}
+					{{recipeIngredient.quantity~" "~recipeIngredient.getUnitMeasure().name~" of "~recipeIngredient.getProduct().product_name}}
 				</div>
 			{% endfor %}
 		</div>
