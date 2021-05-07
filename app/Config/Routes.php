@@ -52,6 +52,7 @@ $routes->get('home', 'HomeController::home');
 $routes->get('about', 'Pages::about');
 
 $routes->post('/recipes/tagged', 'AjaxController::recipesTagged');
+$routes->post('/recipes/suggestions', 'RecipeController::recipesSuggestions');
 $routes->get('recipes', 'RecipeController::recipes');
 $routes->get('recipe/(:num)', 'RecipeController::recipe/$1');
 $routes->post('recipe/addgrade', 'AjaxController::addgrade');
@@ -73,6 +74,8 @@ $routes->get('pay', 'CartController::pay');
 $routes->post('pay', 'AjaxController::payCart');
 
 $routes->post('search', 'SearchController::search');
+
+$routes->get('suggestions', 'SuggestionsController::suggestions');
 
 // $routes->get('/recipes/tagged', 'RecipeController::recipesTagged');
 
