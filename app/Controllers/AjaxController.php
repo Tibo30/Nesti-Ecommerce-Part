@@ -41,7 +41,7 @@ class AjaxController extends BaseController
         if (count($tags) > 0) {
             $recipes = $model->getRecipesbyTags($tags); // method that get all the recipes from tags selected. Return an array of object
         } else {
-            $recipes = $model->findAll(); // if there is no tag selected, we display all the recipes. Return an array of recipe object
+            $recipes = $model->where("state","a")->findAll(); // if there is no tag selected, we display all the recipes. Return an array of recipe object
         }
 
         usort($recipes, function ($r1, $r2) { // sort the array ASC according to the product name of the article
