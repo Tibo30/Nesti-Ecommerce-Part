@@ -65,7 +65,10 @@ class AjaxController extends BaseController
             $html .= '<div class="recipe-card" data-number="' . $index . '" ' . ($index > 7 ? 'hidden' : '') . '>' .
                 '<img class="recipe-img" src="https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/' . $picture->name . "." . $picture->extension . '" alt="Card image cap">' .
                 '<div class="recipe-card-body"><h5 class="recipe-card-title">' . $recipeObject->recipe_name . '</h5>' .
-                '<div class="recipes-card-grade"><div class="recipes-grade-stars">';
+                '<div class="recipe-info"><div class="recipe-info-element"><i class="far fa-clock" aria-hidden="true"></i>'.
+                '<p>'.$recipe->time.'</p></div><div class="recipe-info-element"><i class="fa fa-utensils" aria-hidden="true"></i>'.
+                '<p>'.$recipe->number_of_people.'</p></div><div class="recipe-info-element"><i class="fa fa-fire" aria-hidden="true"></i>'.
+                '<p>'.$recipe->difficulty.'</p></div></div><div class="recipes-card-grade"><div class="recipes-grade-stars">';
 
             for ($i = 1; $i <= 5; $i++) {
                 $html .= '<span class="fa-stack" style="width:1em"><i class="far fa-star fa-stack-1x"></i>';
