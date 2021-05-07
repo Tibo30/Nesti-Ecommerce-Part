@@ -34,11 +34,11 @@ html {
 
 /*------------------------------ Common -----------------------------*/
 
-button {
+.all-recipes button,  .all-articles button, .articleDetails button, .search-page button{
     transition: 0.5s all ease-in-out;
 }
 
-button:hover {
+.all-recipes button:hover, .all-articles button:hover, .articleDetails button:hover, .search-page  button:hover{
     background-color: var(--thirdColor) !important;
     color: var(--secondaryTextColor) !important;
     box-shadow: 0 0 5px #666;
@@ -756,6 +756,26 @@ button:hover {
 
 .recipeDetails .write-comment-title {
     margin-bottom: 1rem;
+}
+
+
+
+.logo-svg-blocked {
+    width: 500px !important;
+    height: 500px !important;
+    font-weight: 1200px;
+    filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(332deg) brightness(97%) contrast(86%);
+    margin-bottom: 5rem;
+    margin-top: 5rem;
+}
+
+.svg-blocked-recipe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5rem;
+    font-family: "Roboto";
+    font-size: 50px;
 }
 
 /* -------------------------- Login ----------------------------- */
@@ -1923,6 +1943,10 @@ button:hover {
 
 .btn-search-results {
     margin: 3rem auto 2rem auto;
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .btn-search-results-recipes, .btn-search-results-articles {
