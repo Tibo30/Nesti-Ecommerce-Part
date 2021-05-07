@@ -25,7 +25,7 @@ class RecipeController extends BaseController
         $model = new RecipeModel();
         $tagModel = new TagModel();
         $tags = $tagModel->findAll();
-        $recipes = $model->findAll();
+        $recipes = $model->where("state","a")->findAll();
 
         $data["loc"] = "Recipes";
         $data["recipes"] = $recipes;
@@ -90,28 +90,4 @@ class RecipeController extends BaseController
     }
 
     
-    /**
-     * get validRecipes from suggestions
-     * @return void
-     */
-    public function recipesSuggestions()
-    {
-        $tagModel = new TagModel();
-        $tags = $tagModel->findAll();
-
-        $recipeModel = new RecipeModel();
-
-        $validRecipes = json_decode($this->request->getPost('validRecipes')); // get the validRecipes
-
-        $recipes=[];
-        foreach($validRecipes as $validRecipe){
-            $recipes[]= $recipeModel->find($validRecipe->recipeId);
-        }
-
-        $data["loc"] = "Recipes";
-        $data["recipes"] = $recipes;
-        $data["tags"] = $tags;
-        return $this->twig->render("pages/recipes.html", $data);
-
-    }
 }
