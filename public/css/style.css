@@ -34,11 +34,11 @@ html {
 
 /*------------------------------ Common -----------------------------*/
 
-.all-recipes button,  .all-articles button, .articleDetails button, .search-page button{
+.all-recipes button, .all-articles button, .articleDetails button, .search-page button {
     transition: 0.5s all ease-in-out;
 }
 
-.all-recipes button:hover, .all-articles button:hover, .articleDetails button:hover, .search-page  button:hover{
+.all-recipes button:hover, .all-articles button:hover, .articleDetails button:hover, .search-page button:hover {
     background-color: var(--thirdColor) !important;
     color: var(--secondaryTextColor) !important;
     box-shadow: 0 0 5px #666;
@@ -275,21 +275,24 @@ html {
     opacity: 0.7;
 }
 
-/* 
-@keyframes see-more {
-    0% {
-        opacity: 0.3; 
+@media only screen and (max-width: 1200px) {
+    .last-visited {
+        min-width: 350px;
     }
-    50% {
-        opacity: 0.5;
+    .last-visited-recipes {
+        justify-content: space-around;
     }
-    80% {
-        opacity: 0.7; 
+    .last-visited-recipe {
+        margin-bottom: 1rem;
     }
-    100% {
-        opacity: 1; 
+}
+
+@media only screen and (max-width: 800px) {
+    .tag-proposition-recipes {
+        flex-direction: column;
+        align-items: center;
     }
-} */
+}
 
 /* -------------------------- Recipes ----------------------------- */
 
@@ -461,6 +464,25 @@ html {
     border-radius: 0.25rem;
     margin-top: 1rem;
     margin-bottom: 2rem;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .recipes-cards{
+        padding: 0 0;
+    }
+}
+
+
+@media only screen and (max-width: 1340px) {
+    
+    .recipes-tags{
+        flex-direction: column;
+        align-items: center;
+    }
+    .recipes-tags h5{
+        margin-bottom: 1rem;
+    }
 }
 
 /* -------------------------- Recipe ----------------------------- */
@@ -758,8 +780,6 @@ html {
     margin-bottom: 1rem;
 }
 
-
-
 .logo-svg-blocked {
     width: 500px !important;
     height: 500px !important;
@@ -776,6 +796,54 @@ html {
     margin-bottom: 5rem;
     font-family: "Roboto";
     font-size: 50px;
+}
+
+@media only screen and (max-width: 630px) {
+
+    .recipeDetails{
+        width: 100%;
+    }
+
+    .underLink{
+        margin-left:1rem
+    }
+
+    .recipeDetails .recipe-list-steps{
+        width: 95%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    .recipeDetails .recipe-picture{
+        width: 350px;
+    }
+
+    .recipeDetails .recipe-ingredients-title{
+        width: 350px;
+    }
+
+    .recipeDetails .recipe-list-ingredient{
+        width: 350px;
+    }
+
+    .recipe-steps{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .recipeDetails .recipe-steps-title{
+        width: 350px;
+    }
+
+    .recipeDetails .recipe-grade{
+        width: 350px;
+    }
+
+    .recipeDetails .recipe-comments{
+        width: 350px;
+    }
 }
 
 /* -------------------------- Login ----------------------------- */
@@ -820,6 +888,13 @@ html {
     font-weight: bold;
     font-family: var(--fontTitle);
     color: var(--primaryTextColor)
+}
+
+@media only screen and (max-width: 500px) {
+
+    .login-form{
+        width: 350px;
+    }
 }
 
 /* -------------------------- Register ----------------------------- */
@@ -1074,6 +1149,13 @@ html {
     border-radius: 0.25rem;
     margin-top: 1rem;
     margin-bottom: 2rem;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .articles-cards{
+        padding: 0 0;
+    }
 }
 
 /* ---------------------------- Article ---------------------- */
@@ -1353,6 +1435,43 @@ html {
     text-decoration: none !important;
 }
 
+@media only screen and (max-width: 1150px) {
+
+    .articleDetails .form-add-article{
+        right:-12rem;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+
+    .articleDetails .article-picture{
+        width: 350px;
+    }
+
+    .articleDetails .recipes-cards{
+        width: 100%;
+    }
+
+    .articleDetails .form-add-article{
+        position: relative;
+        top: 0;
+        right:0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-control{
+        width: 50%;
+    }
+
+    .form-add-article-cart{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 /* -----------------------------Cart Page----------------------------- */
 
 .cart-page {
@@ -1536,6 +1655,50 @@ html {
     align-self: end;
     font-family: var(--fontTitle);
     font-size: 20px;
+}
+
+@media only screen and (max-width: 1400px) {
+
+   .cart-img-info{
+       flex-direction: column;
+       align-items: center;
+       width: 20%;
+   }
+
+   .cart-img{
+    margin-right: 0;
+   }
+}
+
+@media only screen and (max-width: 800px) {
+
+    .cart-page{
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .cart-element{
+        padding-left: 0;
+    }
+
+    .cart-details{
+        width: 70%;
+    }
+
+    .cart-page-element .form-control{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+    .cart-img-info{
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
 }
 
 /* -----------------------------Pay Page----------------------------- */
@@ -1933,6 +2096,30 @@ html {
     color: red;
 }
 
+
+@media only screen and (max-width: 600px) {
+
+    .pay-card-details{
+       width: 500px;
+       padding-left: 0;
+       padding-right: 0;
+    }
+
+    .back-card{
+        left: 0;
+        top: 80%;
+    }
+
+    .pay-page .cards{
+        margin-top: 1rem;
+    }
+
+    .btn-valid-pay{
+        margin-right: 1rem;
+    }
+
+}
+
 /* -------------------------------Search Page------------------------------ */
 
 .search-page {
@@ -2037,7 +2224,6 @@ html {
     height: 480px;
 }
 
-
 /* Style of the paragraphe inside the card*/
 
 .cardIngredient p {
@@ -2072,7 +2258,6 @@ html {
     border: 5px solid #03030338;
     cursor: pointer;
 }
-
 
 /* Style of the dislike buttons */
 
@@ -2125,7 +2310,19 @@ html {
     border: 1px solid var(--primaryTextColor);
     padding: 0.375rem 0.375rem;
     border-radius: 0.25rem;
-    margin: auto  2rem ;
+    margin: auto 2rem;
+}
+
+
+@media only screen and (max-width: 500px) {
+    
+    #containerIngredientCards {
+        width: 300px;
+    }
+
+    .cardIngredient{
+        width: 300px !important;
+    }
 }
 
 /*************************************************** Style of the Javascript part ***************************************************/
@@ -2153,9 +2350,11 @@ html {
 }
 
 #sentenceRecipesAvailable {
-    font-family: 'Noto', cursive;
+    font-family: var(--fontTitle);
     font-size: 1.7rem;
     text-shadow: 2px 2px 4px #000000;
+    text-align: center;
+    color: var(--thirdColor) !important;
 }
 
 /* Amination for the swipe to the left */
@@ -2216,4 +2415,60 @@ html {
 
 .cardIngredient {
     animation-fill-mode: forwards;
+}
+
+@media only screen and (max-width: 800px) {
+    #header {
+        padding: 0 1rem;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    #titleIngredient{
+        text-align: center;
+    }
+    
+    /* Keyframes for the left transition */
+
+@keyframes swipe-left {
+    0% {
+        z-index: 100;
+        transform: translateY(0px) rotate(-4deg);
+    }
+    50% {
+        transform: translateY(+120%) rotate(-5deg) translateX(-40%);
+        opacity: 0.7;
+    }
+    80% {
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateX(0%) rotate(0) translateY(0%) scale(0.95);
+        opacity: 0;
+        z-index: -50;
+    }
+}
+
+/* Keyframes for the right transition */
+
+@keyframes swipe-right {
+    0% {
+        z-index: 100;
+        transform: translateY(0px) rotate(4deg);
+    }
+    50% {
+        transform: translateY(-120%) rotate(5deg) translateX(+40%);
+        opacity: 0.7;
+    }
+    80% {
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateX(0%) rotate(0) translateY(0%) scale(0.95);
+        opacity: 0;
+        z-index: -50;
+    }
+}
+
 }
