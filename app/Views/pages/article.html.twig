@@ -53,7 +53,7 @@
 		</div>
 
 	</div>
-{% if article.isIngredient()==true %}
+{% if article.getProduct().isIngredient()==true %}
 	<div class="article-number-recipes">
 		There
 		{{recipes | length ==1 ? "is" : "are"}}
