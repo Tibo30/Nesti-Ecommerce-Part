@@ -72,19 +72,14 @@ class RecipeController extends BaseController
 
         $listRecipesIng = $recipeIngredientModel->where('id_recipes',$idRecipe)->findAll(); // get all the recipe ingredients for a recipe. Return array of object
       
-        $listParagraphs = $paragraphModel->getParagraphs($idRecipe); // get all the steps for a recipe. Return an array of object
-        $listParagraphsObject = [];
-        foreach ($listParagraphs as $paragraph) {
-            $paragraphsObject = new Paragraph(get_object_vars($paragraph)); // change the array of object to array paragraph of object
-            $listParagraphsObject[] = $paragraphsObject;
-        }
-
+        $listParagraphs = $paragraphModel->where('id_recipes',$idRecipe)->orderBy('order_paragraph','ASC')->findAll(); // get all the steps for a recipe. Return an array of object
+  
         $listComments = $commentModel->where("id_recipes", $idRecipe)->where("state","a")->findAll(); // get all the accepted comments for a recipe
 
         $data["loc"] = "Recipe";
         $data["recipe"] = $recipe;
         $data["recipeIngredients"] = $listRecipesIng;
-        $data["paragraphs"] = $listParagraphsObject;
+        $data["paragraphs"] = $listParagraphs;
         $data["comments"] = $listComments;
         return $this->twig->render("pages/recipe.html", $data);
     }
