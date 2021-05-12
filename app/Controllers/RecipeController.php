@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\TagModel;
+use App\Models\TaggedModel;
 use App\Models\RecipeModel;
 use App\Models\PictureModel;
 use App\Models\GradeModel;
@@ -39,19 +40,30 @@ class RecipeController extends BaseController
     public function recipesByTag($tag)
     {
         helper('form');
-        $tag=str_replace('_', ' ', $tag);
         $model = new RecipeModel();
         $tagModel = new TagModel();
+
+        $taggedModel = new TaggedModel();
+
         $tags = $tagModel->findAll();
-        $recipes = $model->getRecipesbyTag($tag); // get all the recipes for a tag. Return an array of object
-        $recipesObject = [];
-        foreach ($recipes as $recipe) {
-            $recipesObject[] = new Recipe(get_object_vars($recipe)); // change the array of object to array of recipe object
+
+        $recipesTagged = $taggedModel->where("id_tag",$tag)->findAll(); // get all the recipes for a tag. Return an array of object
+       
+        $recipes = [];
+
+        foreach ($recipesTagged as $recipeTagged) {
+            $recipe = $model->find($recipeTagged->id_recipes);
+            if($recipe->state=="a"){
+                $recipes[] = $recipe ; 
+            }
         }
+
+        $tagChosen = $tagModel->find($tag);
+
         $data["loc"] = "Recipes";
-        $data["recipes"] = $recipesObject;
+        $data["recipes"] = $recipes;
         $data["tags"] = $tags;
-        $data["tagChosen"] = $tag;
+        $data["tagChosen"] = $tagChosen->name;
         return $this->twig->render("pages/recipes.html", $data);
     }
 
