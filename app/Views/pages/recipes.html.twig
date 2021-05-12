@@ -11,7 +11,7 @@
 				{% for tag in tags %}
 					{{ form_open(base_url())}}
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="{{tag.name |capitalize }}" {{tag.name == tagChosen ? "checked" : ""}}>
+						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" data-id="{{tag.id_tag}}" value="{{tag.name |capitalize }}" {{tag.name == tagChosen ? "checked" : ""}}>
 						<label class="form-check-label" for="inlineCheckbox1">{{tag.name}}</label>
 					</div>
 					{{ form_close() }}
@@ -37,10 +37,10 @@ var tagsChecked = []
 
 var checkboxes = document.querySelectorAll(".form-check-input"); // get all the checkboxes
 
-checkboxes.forEach(element => element.checked ? tagsChecked.push(element.value) : "");
-// if the user comes from a click on a tag in Home page, we had the tag to the list
+checkboxes.forEach(element => element.checked ? tagsChecked.push(element.getAttribute("data-id")) : "");
+// if the user comes from a click on a tag in Home page, we add the tag to the list
 if (tagsChecked.length > 0) {
-document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection for " + tagsChecked.join(" & ") + " recipes";
+document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection for {{tagChosen}} recipes";
 } else {
 document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection of recipes";
 }
@@ -48,9 +48,9 @@ document.querySelector(".recipes-title-selection").innerHTML = "Here is our sele
 // Add event listener on checkboxes
 checkboxes.forEach((element, index) => element.addEventListener('change', (function (e) {
 if (e.target.checked == true) { // check the value to true or false in the list according to the "checked" value (bool)
-tagsChecked.push(e.target.value);
+tagsChecked.push(e.target.getAttribute("data-id"));
 } else {
-tagsChecked.splice(tagsChecked.indexOf(e.target.value), 1)
+tagsChecked.splice(tagsChecked.indexOf(e.target.getAttribute("data-id")), 1)
 } recipesTagged(tagsChecked).then((response) => {
 if (response) {
 if (response.success && response.csrf_token) {
@@ -67,7 +67,7 @@ pagination = document.querySelector(".btn-pagination-recipes");
 pagination.innerHTML = "";
 pagination.innerHTML = response.pagination;
 if (tagsChecked.length > 0) {
-document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection for " + tagsChecked.join(" & ") + " recipes";
+document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection for " + response.listTagsName.join(" & ") + " recipes";
 } else {
 document.querySelector(".recipes-title-selection").innerHTML = "Here is our selection of recipes";
 }
