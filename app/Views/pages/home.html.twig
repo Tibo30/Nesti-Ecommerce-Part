@@ -20,7 +20,7 @@
 			{% for tag in tags %}
 				<div class="tag-proposition-recipe">
 					<div class="tag-proposition-title">{{tag.name}}</div>
-					<a class="tag-link-recipes" href="{{base_url('recipes/'~(tag.name|replace({" ":"_"})))}}">
+					<a class="tag-link-recipes" href="{{base_url('recipes/'~(tag.id_tag))}}">
 						{% if tag.getOneRecipe() is not null %}
 							<div class="img-tag" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{tag.getOneRecipe().getPicture().name~"."~tag.getonerecipe().getpicture().extension}}");'></div>
 						{% endif %}
