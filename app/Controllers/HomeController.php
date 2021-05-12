@@ -19,11 +19,8 @@ class HomeController extends BaseController
 		$recipeModel = new RecipeModel();
 		$pictureModel= new PictureModel();
 		$tags = $tagModel -> findAll();
-		// print_r($tags[0]);
 		shuffle($tags);
 		$tagsSliced=array_slice($tags,0,4);
-		
-		// $tags[0]->getOneRecipe();
 		
 		$data["tags"] = $tagsSliced;
         $data["base_dir"]=__DIR__;
