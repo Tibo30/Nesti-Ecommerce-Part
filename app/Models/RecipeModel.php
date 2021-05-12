@@ -39,17 +39,17 @@ class RecipeModel extends Model
         return $query->getResult();
     }
 
-    public function getRecipesbyTag(String $data)
-    {
-        $query = $this->db->query('SELECT r.* FROM recipes r JOIN tagged td ON r.id_recipes=td.id_recipes JOIN tag t ON td.id_tag=t.id_tag WHERE r.state="a" AND t.name="' . $data . '"');
-        return $query->getResult();
-    }
+    // public function getRecipesbyTag(String $data)
+    // {
+    //     $query = $this->db->query('SELECT r.* FROM recipes r JOIN tagged td ON r.id_recipes=td.id_recipes JOIN tag t ON td.id_tag=t.id_tag WHERE r.state="a" AND t.name="' . $data . '"');
+    //     return $query->getResult();
+    // }
 
-    public function getRecipesbyTags(Array $tags)
-    { 
-        $query = $this->db->query('SELECT DISTINCT r.* FROM recipes r JOIN tagged td ON r.id_recipes=td.id_recipes JOIN tag t ON td.id_tag=t.id_tag WHERE r.state="a" AND t.name IN ("' . implode('","', $tags) . '")');
-        return $query->getResult();
-    }
+    // public function getRecipesbyTags(Array $tags)
+    // { 
+    //     $query = $this->db->query('SELECT DISTINCT r.* FROM recipes r JOIN tagged td ON r.id_recipes=td.id_recipes JOIN tag t ON td.id_tag=t.id_tag WHERE r.state="a" AND t.id_tag IN ("' . implode('","', $tags) . '")');
+    //     return $query->getResult();
+    // }
 
     public function searchRecipe(String $name){
         $builder = $this->db->table('recipes');
