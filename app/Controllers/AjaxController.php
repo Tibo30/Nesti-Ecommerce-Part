@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\TagModel;
+use App\Models\TaggedModel;
 use App\Models\RecipeModel;
 use App\Models\PictureModel;
 use App\Models\GradeModel;
@@ -31,17 +32,27 @@ class AjaxController extends BaseController
         $data['success'] = false;
 
         $model = new RecipeModel();
-
+        $taggedModel = new TaggedModel();
+        $tagModel = new TagModel();
         $tags = json_decode($this->request->getPost('tags')); // get the tags from the post
-
         // refresh CSRF token
         $data['csrf_token'] = csrf_hash();
 
-
+        $recipes = [];
+        $listTagsName=[];
         if (count($tags) > 0) {
-            $recipes = $model->getRecipesbyTags($tags); // method that get all the recipes from tags selected. Return an array of object
+            foreach ($tags as $tag) {
+                $listTagsName[]= $tagModel->find($tag)->name;
+                $recipesTagged = $taggedModel->where("id_tag", $tag)->findAll(); // get all the recipes for a tag. Return an array of object
+                foreach ($recipesTagged as $recipeTagged) {
+                    $recipe = $model->find($recipeTagged->id_recipes);
+                    if ($recipe->state == "a") {
+                        $recipes[$recipe->id_recipes] = $recipe; // add id in key to avoid duplicate
+                    }
+                }
+            }
         } else {
-            $recipes = $model->where("state","a")->findAll(); // if there is no tag selected, we display all the recipes. Return an array of recipe object
+            $recipes = $model->where("state", "a")->findAll(); // if there is no tag selected, we display all the recipes. Return an array of recipe object
         }
 
         usort($recipes, function ($r1, $r2) { // sort the array ASC according to the product name of the article
@@ -54,21 +65,16 @@ class AjaxController extends BaseController
         $pagination = "";
 
         foreach ($recipes as $recipe) { // update html recipes
-            if (count($tags) > 0) {
-                $recipeObject = new Recipe(get_object_vars($recipe)); // change the array of object to array of recipe object.
-            } else {
-                $recipeObject = $recipe;
-            }
-            $averageGrade = $recipeObject->getAverageGrade();
+            $averageGrade = $recipe->getAverageGrade();
             $copyAverageGrade = $averageGrade;
-            $picture = $recipeObject->getPicture();
+            $picture = $recipe->getPicture();
             $html .= '<div class="recipe-card" data-number="' . $index . '" ' . ($index > 7 ? 'hidden' : '') . '>' .
                 '<img class="recipe-img" src="https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/' . $picture->name . "." . $picture->extension . '" alt="Card image cap">' .
-                '<div class="recipe-card-body"><h5 class="recipe-card-title">' . $recipeObject->recipe_name . '</h5>' .
-                '<div class="recipe-info"><div class="recipe-info-element"><i class="far fa-clock" aria-hidden="true"></i>'.
-                '<p>'.$recipe->time.'</p></div><div class="recipe-info-element"><i class="fa fa-utensils" aria-hidden="true"></i>'.
-                '<p>'.$recipe->number_of_people.'</p></div><div class="recipe-info-element"><i class="fa fa-fire" aria-hidden="true"></i>'.
-                '<p>'.$recipe->difficulty.'</p></div></div><div class="recipes-card-grade"><div class="recipes-grade-stars">';
+                '<div class="recipe-card-body"><h5 class="recipe-card-title">' . $recipe->recipe_name . '</h5>' .
+                '<div class="recipe-info"><div class="recipe-info-element"><i class="far fa-clock" aria-hidden="true"></i>' .
+                '<p>' . $recipe->time . '</p></div><div class="recipe-info-element"><i class="fa fa-utensils" aria-hidden="true"></i>' .
+                '<p>' . $recipe->number_of_people . '</p></div><div class="recipe-info-element"><i class="fa fa-fire" aria-hidden="true"></i>' .
+                '<p>' . $recipe->difficulty . '</p></div></div><div class="recipes-card-grade"><div class="recipes-grade-stars">';
 
             for ($i = 1; $i <= 5; $i++) {
                 $html .= '<span class="fa-stack" style="width:1em"><i class="far fa-star fa-stack-1x"></i>';
@@ -83,12 +89,12 @@ class AjaxController extends BaseController
                 $copyAverageGrade--;
             }
             $html .= '</div><div class="recipes-grade-value">';
-            if ($recipeObject->getGrades() > 0) {
-                $html .= (ceil($averageGrade * 10) / 10) . '/5 on ' . $recipeObject->getGrades() . ' view';
+            if ($recipe->getGrades() > 0) {
+                $html .= (ceil($averageGrade * 10) / 10) . '/5 on ' . $recipe->getGrades() . ' view';
             } else {
                 $html .= '0 view';
             }
-            $html .= '</div></div>' . '<a href="' . base_url("/recipe/" . $recipeObject->id_recipes) . '"><button class="recipe-btn-see">See Recipe</button>' .
+            $html .= '</div></div>' . '<a href="' . base_url("/recipe/" . $recipe->id_recipes) . '"><button class="recipe-btn-see">See Recipe</button>' .
                 '</a></div></div>'; // we prepare the updated html (cards)
             $index++;
         }
@@ -102,6 +108,7 @@ class AjaxController extends BaseController
         }
 
         $data["recipes"] = $recipes;
+        $data["listTagsName"] = $listTagsName;
         $data['success'] = true;
         $data["html"] = $html;
         $data["pagination"] = $pagination;
@@ -267,6 +274,4 @@ class AjaxController extends BaseController
         echo json_encode($data);
         die;
     }
-
-
 }
