@@ -56,7 +56,7 @@ $routes->get('recipes', 'RecipeController::recipes');
 $routes->get('recipe/(:num)', 'RecipeController::recipe/$1');
 $routes->post('recipe/addgrade', 'AjaxController::addgrade');
 $routes->post('recipe/addcomment', 'AjaxController::addcomment');
-$routes->get('recipes/(:any)', 'RecipeController::recipesByTag/$1');
+$routes->get('recipes/(:num)', 'RecipeController::recipesByTag/$1');
 
 $routes->get('market', 'ArticleController::articles');
 $routes->get('article/(:num)', 'ArticleController::article/$1');
