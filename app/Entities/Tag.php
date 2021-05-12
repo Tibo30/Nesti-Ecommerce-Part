@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use CodeIgniter\Entity;
 use App\Models\RecipeModel;
+use App\Models\TaggedModel;
 use App\Entities\Recipe;
 
 class Tag extends Entity
@@ -13,10 +14,21 @@ class Tag extends Entity
     public function getOneRecipe()
     {
         $recipeModel = new RecipeModel();
-        $recipes = $recipeModel->getRecipesbyTag($this->name);
+        $taggedModel = new TaggedModel();
+
+        $recipesTagged = $taggedModel->where("id_tag",$this->id_tag)->findAll(); // get all the recipes for a tag. Return an array of object
+       
+        $recipes = [];
+        foreach ($recipesTagged as $recipeTagged) {
+            $recipe = $recipeModel->find($recipeTagged->id_recipes);
+            if($recipe->state=="a"){
+                $recipes[] = $recipe ; 
+            }
+        }
+
         shuffle($recipes);
         if (count($recipes)>0){
-            $recipe = new Recipe(get_object_vars($recipes[0]));
+            $recipe = $recipes[0];
         } else {
             $recipe=null;
         }
