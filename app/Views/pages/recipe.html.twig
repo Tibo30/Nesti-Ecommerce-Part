@@ -18,6 +18,9 @@
 		<h1 class="recipeTitle">
 			{{recipe.recipe_name | capitalize}}
 		</h1>
+		<h2 class="recipeChief">
+			By {{recipe.getChief().firstname ~ " " ~ recipe.getChief().lastname| capitalize}}
+		</h2>
 
 		<div class="grade">
 			<div class="grade-stars">
@@ -47,7 +50,7 @@
 			</div>
 		</div>
 
-		<div class="recipe-picture" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture().name~"."~recipe.getpicture().extension }}");'></a>
+		<div class="recipe-picture" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture()!=null ? recipe.getPicture().name~"."~recipe.getpicture().extension : "nopicture.png" }}");'></a>
 	</div>
 
 	<div class="recipe-info">
