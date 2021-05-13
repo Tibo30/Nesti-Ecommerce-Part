@@ -72,7 +72,7 @@ class AjaxController extends BaseController
                 '<img class="recipe-img" src="https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/' . $picture->name . "." . $picture->extension . '" alt="Card image cap">' .
                 '<div class="recipe-card-body"><h5 class="recipe-card-title">' . $recipe->recipe_name . '</h5>' .
                 '<div class="recipe-info"><div class="recipe-info-element"><i class="far fa-clock" aria-hidden="true"></i>' .
-                '<p>' . $recipe->time . '</p></div><div class="recipe-info-element"><i class="fa fa-utensils" aria-hidden="true"></i>' .
+                '<p>' . $recipe->getDisplayTime() . '</p></div><div class="recipe-info-element"><i class="fa fa-utensils" aria-hidden="true"></i>' .
                 '<p>' . $recipe->number_of_people . '</p></div><div class="recipe-info-element"><i class="fa fa-fire" aria-hidden="true"></i>' .
                 '<p>' . $recipe->difficulty . '</p></div></div><div class="recipes-card-grade"><div class="recipes-grade-stars">';
 
@@ -253,7 +253,7 @@ class AjaxController extends BaseController
         if (count($cart) > 0) {
             $newOrder = new OrderRequest();
             $newOrder->fill([
-                'state' => "a",
+                'state' => "w",
                 'id_users' => $_SESSION['id']
             ]);
             $idOrder = $orderRequestModel->insert($newOrder);
