@@ -166,12 +166,13 @@ html {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
 .last-visited-recipe {
     position: relative;
+    margin-right: 1rem ;
 }
 
 .last-visited-recipe div {
@@ -284,6 +285,7 @@ html {
     }
     .last-visited-recipe {
         margin-bottom: 1rem;
+        margin-right: 0;
     }
 }
 
@@ -514,8 +516,13 @@ html {
 
 .recipeDetails .recipeTitle {
     font-size: 30px;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-family: var(--fontTitle);
+}
+
+.recipeDetails .recipeChief {
+    font-size: 15px;
+    margin-bottom: 1rem;
 }
 
 .recipeDetails .grade {
