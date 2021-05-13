@@ -6,6 +6,7 @@ use CodeIgniter\Entity;
 use App\Models\TagModel;
 use App\Models\PictureModel;
 use App\Models\GradeModel;
+use App\Models\UserModel;
 
 class Recipe extends Entity
 {
@@ -21,7 +22,11 @@ class Recipe extends Entity
     {
 
         $pictureModel = new PictureModel();
-        $picture = $pictureModel->find($this->id_pictures);
+        if ($this->id_pictures != null) {
+            $picture = $pictureModel->find($this->id_pictures);
+        } else {
+            $picture = null;
+        }
         return $picture;
     }
 
@@ -47,5 +52,29 @@ class Recipe extends Entity
             $averageGrade = $totalGrades / count($grades);
         }
         return $averageGrade;
+    }
+
+     /**
+     * Get the display time (xH yM)
+     */
+    public function getDisplayTime()
+    {
+        $troncatedTime = explode(":", $this->time);
+
+        $hour = ($troncatedTime[0]!=null && $troncatedTime[0]!="00") ? $troncatedTime[0] . ' h ' : '';
+        $min = $troncatedTime[1] ? $troncatedTime[1] . ' min ' : '';
+
+        $displayTime = $hour . $min;
+        return $displayTime;
+    }
+
+     /**
+     * Get the value of chief
+     */
+    public function getChief()
+    {
+        $userModel = new UserModel();
+        $chief = $userModel->find($this->id_chief);
+        return $chief;
     }
 }
