@@ -17,7 +17,11 @@ class Article extends Entity
     {
 
         $pictureModel = new PictureModel();
-        $picture = $pictureModel->find($this->id_pictures);
+        if ($this->id_pictures != null) {
+            $picture = $pictureModel->find($this->id_pictures);
+        } else {
+            $picture = null;
+        }
         return $picture;
     }
 

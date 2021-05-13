@@ -25,7 +25,13 @@ public function getPictureName(){
     
     if (count($articles)>0){
 
-        $pictureName=$articles[0]->getPicture()->name.".".$articles[0]->getPicture()->extension;
+        if ($articles[0]->getPicture() != null) {
+            $pictureName=$articles[0]->getPicture()->name.".".$articles[0]->getPicture()->extension;
+        } else {
+            $pictureName="nopicture.png";
+        }
+
+       
     }
     return $pictureName;
 }

@@ -21,7 +21,7 @@ class Tag extends Entity
         $recipes = [];
         foreach ($recipesTagged as $recipeTagged) {
             $recipe = $recipeModel->find($recipeTagged->id_recipes);
-            if($recipe->state=="a"){
+            if($recipe->state=="a" && $recipe->getPicture()!=null){
                 $recipes[] = $recipe ; 
             }
         }
