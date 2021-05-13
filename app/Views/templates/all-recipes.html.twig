@@ -3,14 +3,14 @@
 		{% set index=0 %}
 		{% for recipe in recipes %}
 			<div class="recipe-card" data-number={{index}} {{ index > 7 ? 'hidden' : ''}}>
-				<div class="recipe-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture().name~"."~recipe.getPicture().extension }}");'></a>
+				<div class="recipe-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture()!=null ? recipe.getPicture().name~"."~recipe.getpicture().extension : "nopicture.png" }}");'></a>
 			</div>
 			<div class="recipe-card-body">
 				<h5 class="recipe-card-title">{{recipe.recipe_name}}</h5>
 				<div class="recipe-info">
 					<div class="recipe-info-element">
 						<i class="far fa-clock" aria-hidden="true"></i>
-						<p>{{recipe.time}}</p>
+						<p>{{recipe.getDisplayTime()}}</p>
 					</div>
 					<div class="recipe-info-element">
 						<i class="fa fa-utensils" aria-hidden="true"></i>
