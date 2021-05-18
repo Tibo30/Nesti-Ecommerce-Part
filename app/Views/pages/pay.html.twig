@@ -202,8 +202,12 @@ if (isValid == true) {
 payOrder(this).then((response) => {
 if (response) {
 if (response.success && response.csrf_token) {
-localStorage.setItem("cart",null);
+localStorage.setItem("cart", null);
 alert("Request OK");
+
+setTimeout(function () {
+window.location.href = ROOT + "/home"; // will redirect to home page
+}, 2000); // will call the function after 2 secs.
 
 }
 // Refresh CSRF
