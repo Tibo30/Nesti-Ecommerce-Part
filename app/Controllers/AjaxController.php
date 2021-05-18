@@ -244,20 +244,28 @@ class AjaxController extends BaseController
 
         $data = [];
         $data['success'] = false;
+        // refresh CSRF token
+        $data['csrf_token'] = csrf_hash();
 
         $orderRequestModel = new OrderRequestModel();
         $orderLineModel = new OrderLineModel();
 
+        $listCart=[];
         $cart = json_decode($this->request->getPost('cart')); // get the cart
+        if (is_object($cart)){
+           $listCart[]=$cart; 
+        } else {
+            $listCart=$cart;
+        }
 
-        if (count($cart) > 0) {
+        if (count($listCart) > 0) {
             $newOrder = new OrderRequest();
             $newOrder->fill([
                 'state' => "w",
                 'id_users' => $_SESSION['id']
             ]);
             $idOrder = $orderRequestModel->insert($newOrder);
-            foreach ($cart as $orderLine) {
+            foreach ($listCart as $orderLine) {
                 $newOrderLine = new OrderLine();
                 $newOrderLine->fill([
                     'id_order' => $idOrder,
