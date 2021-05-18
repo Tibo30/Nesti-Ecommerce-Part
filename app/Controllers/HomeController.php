@@ -10,7 +10,19 @@ class HomeController extends BaseController
 {
 	public function index()
 	{
-		return view('welcome_message');
+		
+		$tagModel = new TagModel();
+		$recipeModel = new RecipeModel();
+		$pictureModel= new PictureModel();
+		$tags = $tagModel -> findAll();
+		shuffle($tags);
+		$tagsSliced=array_slice($tags,0,4);
+		
+		$data["tags"] = $tagsSliced;
+        $data["base_dir"]=__DIR__;
+        $data["loc"]="Home";
+		
+        return $this->twig->render("pages/home.html", $data);
 	}
 
 	public function home()
