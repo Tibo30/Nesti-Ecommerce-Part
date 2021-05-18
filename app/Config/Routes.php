@@ -17,8 +17,8 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
-$routes->setDefaultMethod('index');
+$routes->setDefaultController('HomeController');
+$routes->setDefaultMethod('home');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
@@ -81,7 +81,8 @@ $routes->post('/recipes/suggestions', 'SuggestionsController::recipesSuggestions
 $routes->get('/api',"ApiController::index");
 $routes->get('/api/recipes',"ApiController::recipes");
 $routes->get('/api/recipe/(:num)',"ApiController::recipe/$1");
-$routes->get('/api/category/(:alpha)',"ApiController::category/$1");
+$routes->get('/api/category/(:any)',"ApiController::category/$1");
+$routes->get('/api/categories',"ApiController::categories");
 $routes->get('/api/search/(:alpha)',"ApiController::searchRecipe/$1");
 
 /*
