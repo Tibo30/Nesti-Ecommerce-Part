@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\RecipeModel;
 use App\Models\ProductModel;
 use App\Models\ParagraphModel;
+use App\Models\TagModel;
+use App\Entities\Product;
 
 class ApiController extends BaseController
 {
@@ -32,6 +34,15 @@ class ApiController extends BaseController
         die;
     }
 
+    public function categories()
+    {
+        $model = new TagModel();
+        $tags = $model->findAll();
+        header('Content-Type: application/json');
+        echo json_encode($tags);
+        die;
+    }
+
     public function recipe($idRecipe)
     {
         $modelRecipe = new RecipeModel();
@@ -39,27 +50,29 @@ class ApiController extends BaseController
         $modelParagraph = new ParagraphModel();
 
         $recipe = $modelRecipe->find($idRecipe);
-        $products = $modelProduct->getIngredients($idRecipe); // need to add check if product is ingredient ??
-        
-        $ingredients=[];
-        foreach($products as $product){
-            if ($product->isIngredient()){
-                $ingredients[]=$product;
-            }
+        $products = $modelProduct->getIngredients($idRecipe); 
+
+
+        $ingredients = [];
+        foreach ($products as $product) {
+            
+                $ingredients[] = $product;
+            
         }
 
-        $paragraphs= $modelParagraph->getParagraphs($idRecipe);
-        $recipe->paragraphs=$paragraphs;
-        $recipe->ingredients=$ingredients;
+        $paragraphs = $modelParagraph->getParagraphs($idRecipe);
+        $recipe->paragraphs = $paragraphs;
+        $recipe->ingredients = $ingredients;
         header('Content-Type: application/json');
         echo json_encode($recipe);
         die;
     }
 
-    public function searchRecipe($name){
+    public function searchRecipe($name)
+    {
         $modelRecipe = new RecipeModel();
         //$recipes =  $modelRecipe->like('recipe_name', $name);   
-        $recipes =  $modelRecipe->findRecipe($name);   
+        $recipes =  $modelRecipe->findRecipe($name);
         header('Content-Type: application/json');
         echo json_encode($recipes);
         die;
