@@ -26,7 +26,7 @@ class RecipeModel extends Model
 
     public function findCat($cat)
     {
-        $query = $this->db->query('SELECT * FROM `view_api_recipes` WHERE tag="' . $cat . '"');
+        $query = $this->db->query('SELECT * FROM `view_api_recipes` WHERE id_tag="' . $cat . '"');
         return $query->getResult();
     }
 
