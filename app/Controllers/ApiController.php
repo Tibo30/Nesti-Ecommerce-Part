@@ -20,14 +20,13 @@ class ApiController extends BaseController
     public function recipes($token)
     {
         $tokenModel = new TokenModel();
-        $tokenBdd = $tokenModel->find(1);
-        if ($token == $tokenBdd->token_value) {
+        $tokenBdd = $tokenModel->where('token_value', $token)->find();
+        header('Content-Type: application/json');
+        if ($tokenBdd != null) {
             $model = new RecipeModel();
             $recipes = $model->findAllForApi();
-            header('Content-Type: application/json');
             echo json_encode($recipes);
         } else {
-            header('Content-Type: application/json');
             echo json_encode('you don\'t have the rights');
         }
         die;
@@ -36,14 +35,13 @@ class ApiController extends BaseController
     public function category($token, $cat)
     {
         $tokenModel = new TokenModel();
-        $tokenBdd = $tokenModel->find(1);
-        if ($token == $tokenBdd->token_value) {
+        $tokenBdd = $tokenModel->where('token_value', $token)->find();
+        header('Content-Type: application/json');
+        if ($tokenBdd != null) {
             $model = new RecipeModel();
             $recipes = $model->findCat($cat);
-            header('Content-Type: application/json');
             echo json_encode($recipes);
         } else {
-            header('Content-Type: application/json');
             echo json_encode('you don\'t have the rights');
         }
         die;
@@ -52,14 +50,13 @@ class ApiController extends BaseController
     public function categories($token)
     {
         $tokenModel = new TokenModel();
-        $tokenBdd = $tokenModel->find(1);
-        if ($token == $tokenBdd->token_value) {
+        $tokenBdd = $tokenModel->where('token_value', $token)->find();
+        header('Content-Type: application/json');
+        if ($tokenBdd != null) {
             $model = new TagModel();
             $tags = $model->findAll();
-            header('Content-Type: application/json');
             echo json_encode($tags);
         } else {
-            header('Content-Type: application/json');
             echo json_encode('you don\'t have the rights');
         }
         die;
@@ -68,15 +65,15 @@ class ApiController extends BaseController
     public function recipe($token, $idRecipe)
     {
         $tokenModel = new TokenModel();
-        $tokenBdd = $tokenModel->find(1);
-        if ($token == $tokenBdd->token_value) {
+        $tokenBdd = $tokenModel->where('token_value', $token)->find();
+        header('Content-Type: application/json');
+        if ($tokenBdd != null) {
             $modelRecipe = new RecipeModel();
             $modelProduct = new ProductModel();
             $modelParagraph = new ParagraphModel();
 
             $recipe = $modelRecipe->find($idRecipe);
             $products = $modelProduct->getIngredients($idRecipe);
-
 
             $ingredients = [];
             foreach ($products as $product) {
@@ -87,10 +84,8 @@ class ApiController extends BaseController
             $paragraphs = $modelParagraph->getParagraphs($idRecipe);
             $recipe->paragraphs = $paragraphs;
             $recipe->ingredients = $ingredients;
-            header('Content-Type: application/json');
             echo json_encode($recipe);
         } else {
-            header('Content-Type: application/json');
             echo json_encode('you don\'t have the rights');
         }
         die;
@@ -99,15 +94,13 @@ class ApiController extends BaseController
     public function searchRecipe($token, $name)
     {
         $tokenModel = new TokenModel();
-        $tokenBdd = $tokenModel->find(1);
-        if ($token == $tokenBdd->token_value) {
+        $tokenBdd = $tokenModel->where('token_value', $token)->find();
+        header('Content-Type: application/json');
+        if ($tokenBdd != null) {
             $modelRecipe = new RecipeModel();
-            //$recipes =  $modelRecipe->like('recipe_name', $name);   
             $recipes =  $modelRecipe->findRecipe($name);
-            header('Content-Type: application/json');
             echo json_encode($recipes);
         } else {
-            header('Content-Type: application/json');
             echo json_encode('you don\'t have the rights');
         }
         die;
