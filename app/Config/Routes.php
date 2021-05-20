@@ -79,11 +79,11 @@ $routes->post('/recipes/suggestions', 'SuggestionsController::recipesSuggestions
 // $routes->get('/recipes/tagged', 'RecipeController::recipesTagged');
 
 $routes->get('/api',"ApiController::index");
-$routes->get('/api/recipes',"ApiController::recipes");
-$routes->get('/api/recipe/(:num)',"ApiController::recipe/$1");
-$routes->get('/api/category/(:any)',"ApiController::category/$1");
-$routes->get('/api/categories',"ApiController::categories");
-$routes->get('/api/search/(:alpha)',"ApiController::searchRecipe/$1");
+$routes->get('/(:any)/api/recipes',"ApiController::recipes/$1");
+$routes->get('/(:any)/api/recipe/(:num)',"ApiController::recipe/$1/$2");
+$routes->get('/(:any)/api/category/(:any)',"ApiController::category/$1/$2");
+$routes->get('/(:any)/api/categories',"ApiController::categories/$1");
+$routes->get('/(:any)/api/search/(:alpha)',"ApiController::searchRecipe/$1/$2");
 
 /*
  * --------------------------------------------------------------------
