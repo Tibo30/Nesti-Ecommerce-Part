@@ -125,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (validRecipes.length < 2) {
                 recipesAvailables = "There is " + validRecipes.length + " recipe available.";
                 consultButton.disabled = false;
+                consultButton.style.background = '#10b981';
                 if (validRecipes.length == 0) {
                     // Change parameters of buttons Try Again and Consult the recipes if there is no recipes available
                     consultButton.style.background = '#ef4444';
