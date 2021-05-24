@@ -33,6 +33,7 @@ class RecipeModel extends Model
     public function findRecipe($name)
     {
         $builder = $this->db->table('recipes');
+        $builder->where("state", "a");
         $builder->like("recipe_name", $name);
         $query = $builder->get();
 
