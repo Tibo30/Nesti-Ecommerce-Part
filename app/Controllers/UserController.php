@@ -90,7 +90,7 @@ class UserController extends BaseController
                     'firstname' => $firstname,
                     'username' => $username,
                     'email' => $email,
-                    'password' => $password,
+                    'password' => password_hash($password, PASSWORD_BCRYPT),
                     'address1' => $address1,
                     'address2' => $address2,
                     'postcode' => $postcode,
