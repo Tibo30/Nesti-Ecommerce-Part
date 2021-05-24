@@ -40,28 +40,24 @@
 							<a class='nav-link {{loc=="Home" ? "active" : ""}}' href="{{base_url('home')}}">
 								<img
 								class=" filter-green fas logo-svg" src="{{base_url('/assets/pictures/home.svg')}}" alt="">
-								{# <i class="fas fa-home mr-2"></i> #}
 								Home</a>
 						</li>
 						<li class="nav-item">
 							<a class='nav-link {{loc=="Suggestion" ? "active" : ""}}' href="{{base_url('suggestions')}}">
 								<img
 								class="fas logo-svg" src="{{base_url('/assets/pictures/fridge.svg')}}" alt="">
-								{# <i class="fas fa-utensils mr-2"></i> #}
 								Suggestions</a>
 						</li>
 						<li class="nav-item">
 							<a class='nav-link {{(loc=="Recipes" or loc=="Recipe") ? "active" : ""}}' href="{{base_url('recipes')}}">
 								<img
 								class="fas logo-svg" src="{{base_url('/assets/pictures/hat.svg')}}" alt="">
-								{# <i class="fas fa-clipboard-list mr-2"></i> #}
 								Recipes</a>
 						</li>
 						<li class="nav-item">
 							<a class='nav-link {{loc=="Market" ? "active" : ""}}' href="{{base_url('market')}}">
 								<img
 								class="fas logo-svg" src="{{base_url('/assets/pictures/market.svg')}}" alt="">
-								{# <i class="fas fa-euro-sign mr-2"></i> #}
 								Market</a>
 						</li>
 					</ul>
@@ -72,9 +68,8 @@
 					</button>
 					{{ form_close() }}
 
-					<a id="nav-cart-logo" class='cart-logo nav-link {{loc=="Panier" ? "active" : ""}}' href="{{ session.logged == "yes" ? base_url('cart') : base_url('login')}}">
+					<a id="nav-cart-logo" class='cart-logo nav-link {{loc=="Panier" ? "active" : ""}}' href="{{base_url('cart')}}">
 						<i class="fas fa-shopping-cart mr-2 fa-3x"></i>
-						{# <i class="fab fa-opencart mr-2 fa-3x"></i> #}
 					</a>
 					<a class='login-logo nav-link {{(loc=="Login" or loc=="Register" or loc=="Dashboard") ? "active" : ""}}' href="{{base_url('dashboard')}}">
 						<i class="fas fa-user-circle mr-2 fa-3x"></i>
@@ -82,22 +77,6 @@
 				</div>
 			</nav>
 
-			{# <ul>
-																						<li>
-																							<a href="{{base_url('home')}}">Home</a>
-																						</li>
-																						<li>
-																							<a href="{{base_url('tags')}}">Lire Tous</a>
-																						</li>
-																						{# <li><a href="{{base_url('tag/1')}}">Lire 1</a></li>
-																														<li><a href="{{base_url('tag/1/edit')}}">Editer 1</a></li> #}
-			{# <li>
-																							<a href="{{base_url('tag/create')}}">Créer</a>
-																						</li>
-																						<li>
-																							<a href="{{base_url('tag/search')}}">Rechercher</a>
-																						</li>
-																					</ul>  #}
 		{% endblock %}
 
 		<div id="content"> {% block content %}{% endblock %}
