@@ -23,7 +23,6 @@ class ArticleController extends BaseController
     {
         helper('form');
         $model = new ArticleModel();
-        // $articles = $model->orderBy("id_products","asc")->findAll();
         $articles = $model->where("state","a")->findAll();
         usort($articles, function ($r1, $r2) { // sort the array ASC according to the product name of the article
             return $r1->getProduct()->product_name <=> $r2->getProduct()->product_name;
