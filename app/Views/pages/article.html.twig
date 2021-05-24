@@ -209,10 +209,7 @@ formAddArticle = document.querySelector(".form-add-article-cart");
 if (formAddArticle != null) {
 formAddArticle.addEventListener('submit', (function (e) {
 event.preventDefault();
-// localStorage.clear();
 
-var log = "{{ session.logged }}";
-if (log == "yes") { // if the user is logged in
 var quantity = document.querySelector("#inputQuantity").value;
 var idArticle = {{ article.id_article }};
 var picture = "{{ article.getPicture().name~"."~article.getpicture().extension }}";
@@ -263,10 +260,6 @@ elementAdded = el;
 });
 document.querySelector(".article-body-quantity").innerHTML = "Quantity : " + elementAdded.quantity;
 
-
-} else { // if the user is not logged in => go to login page
-window.location = ROOT + "/login";
-}
 }))
 }
 	</script>
