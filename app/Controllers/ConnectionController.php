@@ -17,7 +17,7 @@ class ConnectionController extends BaseController
     {
         helper($this->helpers);
         $data["base_dir"] = __DIR__;
-        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true) {
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
             $data["loc"] = "Dashboard";
             return $this->twig->render("pages/dashboard.html", $data);
         } else {
@@ -50,22 +50,22 @@ class ConnectionController extends BaseController
 
         if ($isVerified) {
             if ($activUser->state == "a") {
-                $roles=[];
+                $roles = [];
                 $userModel = new UserModel();
                 $chief = $userModel->isChief($activUser->id_users);
                 $modo = $userModel->isModerator($activUser->id_users);
                 $admin = $userModel->isAdmin($activUser->id_users);
 
-                if (count($chief)>0 && $chief[0]->role_state=="a" ){
-                    $roles[]="chief";
+                if (count($chief) > 0 && $chief[0]->role_state == "a") {
+                    $roles[] = "chief";
                 }
-                if (count($modo)>0 && $modo[0]->role_state=="a" ){
-                    $roles[]="modo";
+                if (count($modo) > 0 && $modo[0]->role_state == "a") {
+                    $roles[] = "modo";
                 }
-                if (count($admin)>0 && $admin[0]->role_state=="a" ){
-                    $roles[]="admin";
+                if (count($admin) > 0 && $admin[0]->role_state == "a") {
+                    $roles[] = "admin";
                 }
-                               
+
                 $dataSession = [
                     'lastname' => $activUser->lastname,
                     'firstname' => $activUser->firstname,
@@ -98,13 +98,21 @@ class ConnectionController extends BaseController
         } else {
             $errorEmail = "";
             $errorPassword = "";
-            if ($activeUserId == null) {
-                $errorEmail = "The Email or Username used is not register";
+            if ($emailPassword == null) {
+                $errorEmail = "The Email or Username is mandatory";
             } else {
-                if ($isVerified == false) {
-                    $errorPassword = "The password is incorrect";
+                if ($activeUserId == null) {
+                    $errorEmail = "The Email or Username used is not register";
+                } else {
+                    if ($isVerified == false) {
+                        $errorPassword = "The password is incorrect";
+                    }
                 }
             }
+            if ($password == null) {
+                $errorPassword = "The password is mandatory";
+            }
+
             $errorMessages = ['emailUsername' => $errorEmail, 'password' => $errorPassword];
             $data['errorMessages'] = $errorMessages;
             $data["loc"] = "Login";
