@@ -229,7 +229,7 @@ if (JSON.parse(localStorage.getItem("cart")) != null) { // in the case where the
 oldCart = [JSON.parse(localStorage.getItem("cart"))].flat();
 }
 if (oldCart.length == 0) { // if the cart is empty
-const firstCart = element
+const firstCart = [].concat(element);
 localStorage.setItem("cart", JSON.stringify(firstCart))
 } else { // if the cart has at least one element
 const idList = oldCart.map(el => {
