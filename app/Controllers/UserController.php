@@ -59,7 +59,7 @@ class UserController extends BaseController
             );
 
             $check = $validation->withRequest($this->request)->run(); // check the validation rules
-
+            $data['validation']=[];
             if (!$check) {
                 $data['validation'] = $validation->getErrors();
             } else {
