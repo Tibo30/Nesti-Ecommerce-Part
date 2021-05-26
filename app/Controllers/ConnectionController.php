@@ -48,8 +48,7 @@ class ConnectionController extends BaseController
         $activeUserId = $activUser->id_users;
         $isVerified = password_verify($password, $activUser->password);
 
-
-        if ($isVerified && $activeUserId != 0) {
+        if ($isVerified) {
             if ($activUser->state == "a") {
                 $roles=[];
                 $userModel = new UserModel();
