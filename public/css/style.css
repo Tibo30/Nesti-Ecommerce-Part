@@ -34,15 +34,16 @@ html {
 
 /*------------------------------ Common -----------------------------*/
 
-.all-recipes button, .all-articles button, .articleDetails button, .search-page button {
+.all-recipes button, .all-articles button, .articleDetails button, .search-page button, .all-recipes a, .all-articles a, .articleDetails a, .search-page a, .cart-page .cart-validation {
     transition: 0.5s all ease-in-out;
 }
 
-.all-recipes button:hover, .all-articles button:hover, .articleDetails button:hover, .search-page button:hover {
+.all-recipes a:hover, .all-recipes button:hover, .all-articles button:hover, .all-articles a:hover, .articleDetails button:hover, .articleDetails a:hover, .search-page button:hover, .search-page a:hover, .cart-page .cart-validation:hover {
     background-color: var(--thirdColor) !important;
     color: var(--secondaryTextColor) !important;
     box-shadow: 0 0 5px #666;
     transform: scale(1.1);
+    text-decoration: none;
 }
 
 /*-------------------------------- NAV ------------------------------ */
