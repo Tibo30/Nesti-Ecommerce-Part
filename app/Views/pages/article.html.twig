@@ -213,12 +213,14 @@ var idArticle = {{ article.id_article }};
 var picture = "{{ article.getPicture().name~"."~article.getpicture().extension }}";
 var name = "{{ article.getName() }}";
 var price = {{ article.getLastPrice() }};
+var stock = {{ article.getStock() }};
 var element = {
 "id_article": idArticle,
 "quantity": quantity,
 "picture": picture,
 "name": name,
-"price": price
+"price": price,
+"stock": stock
 };
 
 var oldCart = []
@@ -236,7 +238,12 @@ return el.id_article
 if (idList.indexOf(element.id_article) != -1) { // in the case where the article is already in the cart, we add the quantity
 const finalcart = oldCart.map(el => {
 if (el.id_article === element.id_article) {
-el.quantity = parseInt(el.quantity) + parseInt(element.quantity);
+if ((parseInt(el.quantity) + parseInt(element.quantity))<=stock){
+el.quantity = Math.min(parseInt(el.quantity) + parseInt(element.quantity),stock);
+} else {
+alert("There"+ (stock>1? " are" : " is") +" only "+stock + (stock>1 ? " pieces" : " piece") + " remaining");
+el.quantity=stock;
+}
 }
 return el;
 })
