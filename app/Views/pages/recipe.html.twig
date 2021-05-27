@@ -149,7 +149,7 @@
 								<div class="recipe-comment-title">
 									{{comment.comment_title}}
 								</div>
-								<div class="recipe-comment-content">{{comment.comment_content}}</div>
+								<div class="recipe-comment-content">{{comment.comment_content | raw}}</div>
 							</div>
 							{% set index=index+1 %}
 						{% endfor %}
@@ -164,8 +164,10 @@
 							</div>
 							<div class="form-send-comment" hidden>
 								{{ form_open(base_url(),{class:"form-write-comment"})}}
-								<textarea lang="en" class="write-comment-title" rows="1" maxlength="50" style="resize: none;" name="title" placeholder="Title" required></textarea>
-								<textarea class="write-comment-area" rows="5" maxlength="50" style="resize: none;" name="comment" placeholder="Write your comment here !" required></textarea>
+								<textarea lang="en" class="write-comment-title" rows="1" maxlength="50" style="resize: none;" name="title" placeholder="Title"></textarea>
+								<span class="text-danger" id="errorCommentTitle"></span>
+								<textarea class="write-comment-area" rows="5" maxlength="50" style="resize: none;" name="comment" placeholder="Write your comment here !"></textarea>
+								<span class="text-danger" id="errorCommentContent"></span>
 								<button type="submit" class="btn-send-comment">Send comment</button>
 								{{ form_close() }}
 							</div>
@@ -368,11 +370,15 @@ if (log == "yes") { // if the user is logged in
 addComment(this).then((response) => {
 if (response) {
 if (response.success && response.csrf_token) {
-
-alert("Your comment has been sent ! It has to been accepted by a moderator.");
+document.querySelector("#errorCommentTitle").innerHTML = "";
+document.querySelector("#errorCommentContent").innerHTML = "";
+document.querySelector(".write-comment-title").value = "";
+document.querySelector(".write-comment-area").value = "";
+alert("Your comment has been sent ! It has to be accepted by a moderator.");
 
 } else {
-alert(response.error);
+document.querySelector("#errorCommentTitle").innerHTML = response.validation['title'] || "";
+document.querySelector("#errorCommentContent").innerHTML = response.validation['comment'] || response.error || "";
 }
 // Refresh CSRF
 csrf.setAttribute('value', response.csrf_token);
