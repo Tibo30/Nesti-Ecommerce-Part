@@ -39,10 +39,10 @@ class AjaxController extends BaseController
         $data['csrf_token'] = csrf_hash();
 
         $recipes = [];
-        $listTagsName=[];
+        $listTagsName = [];
         if (count($tags) > 0) {
             foreach ($tags as $tag) {
-                $listTagsName[]= $tagModel->find($tag)->name;
+                $listTagsName[] = $tagModel->find($tag)->name;
                 $recipesTagged = $taggedModel->where("id_tag", $tag)->findAll(); // get all the recipes for a tag. Return an array of object
                 foreach ($recipesTagged as $recipeTagged) {
                     $recipe = $model->find($recipeTagged->id_recipes);
@@ -94,7 +94,7 @@ class AjaxController extends BaseController
             } else {
                 $html .= '0 view';
             }
-            $html .= '</div></div>' . '<a href="' . base_url("/recipe/" . $recipe->id_recipes) . '"><button class="recipe-btn-see">See Recipe</button>' .
+            $html .= '</div></div>' . '<a class="recipe-btn-see" href="' . base_url("/recipe/" . $recipe->id_recipes) . '">See Recipe' .
                 '</a></div></div>'; // we prepare the updated html (cards)
             $index++;
         }
@@ -102,7 +102,7 @@ class AjaxController extends BaseController
         if (intval($numberPage) > 1) { //update pagination part html
             $pagination .= '<button id="btn_prev" class="btn-pagination" onclick="prevPage()">Prev</button>';
             for ($i = 1; $i <= intval($numberPage); $i++) {
-                $pagination .= '<button id="btn_page" class="btn-pagination" onclick="goPage(' . $i . ')">' . $i . '</button>';
+                $pagination .= '<button id="btn_page' . $i . '" class="btn-pagination" onclick="goPage(' . $i . ')">' . $i . '</button>';
             }
             $pagination .= '<button id="btn_next" class="btn-pagination" onclick="nextPage()">Next</button>';
         }
@@ -164,6 +164,7 @@ class AjaxController extends BaseController
             }
 
             $data["averageGrade"] = $averageGrade;
+            $data["numberGrade"] = count($grades);
             $data['success'] = true;
         } else {
             $errorMessage = $error;
@@ -198,35 +199,39 @@ class AjaxController extends BaseController
 
         // refresh CSRF token
         $data['csrf_token'] = csrf_hash();
+        
+        if ($comment != "" && $title != "") {
+            $commentObject = new Comment();
+            $commentObject->fill([
+                'id_users' => $idUser,
+                'id_recipes' => $idRecipe,
+                'comment_content' => $comment,
+                'comment_title' => $title
+            ]);
 
-        $commentObject = new Comment();
-        $commentObject->fill([
-            'id_users' => $idUser,
-            'id_recipes' => $idRecipe,
-            'comment_content' => $comment,
-            'comment_title' => $title
-        ]);
-
-        $check = $commentModel->where('id_users', $idUser)->where('id_recipes', $idRecipe)->find(); // check if the user already wrote a comment for the recipe
-        $error = "";
-        if (count($check) == 0) {
-            try {
-                $s = $commentModel->save($commentObject);
-            } catch (\Exception $e) {
-                $error = $e->getMessage();
-            }
-
-            if ($error == "") {
-                $data['success'] = true;
-            } else {
-                $errorMessage = $error;
-                if ($error == "Duplicate entry '" + $idUser + "-" + $idRecipe + "' for key 'PRIMARY'") {
-                    $errorMessage = "You already wrote a comment to this recipe !";
+            $check = $commentModel->where('id_users', $idUser)->where('id_recipes', $idRecipe)->find(); // check if the user already wrote a comment for the recipe
+            $error = "";
+            if (count($check) == 0) {
+                try {
+                    $s = $commentModel->save($commentObject);
+                } catch (\Exception $e) {
+                    $error = $e->getMessage();
                 }
-                $data["error"] = $errorMessage;
+
+                if ($error == "") {
+                    $data['success'] = true;
+                } else {
+                    $errorMessage = $error;
+                    if ($error == "Duplicate entry '" + $idUser + "-" + $idRecipe + "' for key 'PRIMARY'") {
+                        $errorMessage = "You already wrote a comment to this recipe !";
+                    }
+                    $data["error"] = $errorMessage;
+                }
+            } else {
+                $data["error"] = "You already wrote a comment for this recipe !";
             }
         } else {
-            $data["error"] = "You already wrote a comment for this recipe !";
+            $data["error"] = "Please fill both title and content areas !";
         }
 
         header('Content-Type: application/json');
@@ -250,12 +255,12 @@ class AjaxController extends BaseController
         $orderRequestModel = new OrderRequestModel();
         $orderLineModel = new OrderLineModel();
 
-        $listCart=[];
+        $listCart = [];
         $cart = json_decode($this->request->getPost('cart')); // get the cart
-        if (is_object($cart)){
-           $listCart[]=$cart; 
+        if (is_object($cart)) {
+            $listCart[] = $cart;
         } else {
-            $listCart=$cart;
+            $listCart = $cart;
         }
 
         if (count($listCart) > 0) {
