@@ -191,16 +191,28 @@ class AjaxController extends BaseController
         $data['success'] = false;
 
         $commentModel = new CommentModel();
-        // filter_input(INPUT_POST, "id_recipe", FILTER_SANITIZE_STRING);
-        $title = $this->request->getPost('title'); // get the title from the post
-        $comment = $this->request->getPost('comment'); // get the comment from the post
+        $title = nl2br(stripslashes(strip_tags($this->request->getPost('title')))); // get the title from the post
+        $comment = nl2br(stripslashes(strip_tags($this->request->getPost('comment')))); // get the comment from the post
         $idRecipe = $this->request->getPost('id_recipe'); // get the id recipe from the post
         $idUser = $this->request->getPost('id_user'); // get the id user from the post
 
         // refresh CSRF token
         $data['csrf_token'] = csrf_hash();
-        
-        if ($comment != "" && $title != "") {
+
+        $validation = \Config\Services::validation();
+
+        $validation->setRules(
+            [
+                'title' => 'required',
+                'comment' => 'required',
+            ]
+        );
+
+        $checkValidation = $validation->withRequest($this->request)->run(); // check the validation rules
+        $data['validation'] = [];
+        if (!$checkValidation) {
+            $data['validation'] = $validation->getErrors();
+        } else {
             $commentObject = new Comment();
             $commentObject->fill([
                 'id_users' => $idUser,
@@ -230,8 +242,6 @@ class AjaxController extends BaseController
             } else {
                 $data["error"] = "You already wrote a comment for this recipe !";
             }
-        } else {
-            $data["error"] = "Please fill both title and content areas !";
         }
 
         header('Content-Type: application/json');
