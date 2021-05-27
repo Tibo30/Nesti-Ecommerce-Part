@@ -203,7 +203,7 @@ payOrder(this).then((response) => {
 if (response) {
 if (response.success && response.csrf_token) {
 localStorage.setItem("cart", null);
-alert("Request OK");
+alert("Order validated");
 
 setTimeout(function () {
 window.location.href = ROOT + "/home"; // will redirect to home page

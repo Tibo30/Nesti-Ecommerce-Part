@@ -11,8 +11,8 @@
 				{% for tag in tags %}
 					{{ form_open(base_url())}}
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" data-id="{{tag.id_tag}}" value="{{tag.name |capitalize }}" {{tag.name == tagChosen ? "checked" : ""}}>
-						<label class="form-check-label" for="inlineCheckbox1">{{tag.name}}</label>
+						<input class="form-check-input" type="checkbox" id="inlineCheckbox{{tag.id_tag}}" data-id="{{tag.id_tag}}" value="{{tag.name |capitalize }}" {{tag.name == tagChosen ? "checked" : ""}}>
+						<label class="form-check-label" for="inlineCheckbox{{tag.id_tag}}">{{tag.name}}</label>
 					</div>
 					{{ form_close() }}
 				{% endfor %}
@@ -144,7 +144,6 @@ changePage(current_page);
 function changePage(page) {
 var btn_next = document.getElementById("btn_next");
 var btn_prev = document.getElementById("btn_prev");
-var page_span = document.getElementById("page");
 
 // Validate page
 if (page < 1) {

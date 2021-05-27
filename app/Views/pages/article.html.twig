@@ -8,7 +8,7 @@
 				<p>Articles</p>
 			</a>
 			<p>
-				&nbsp >
+				&nbsp; >
 				{{article.getName() | capitalize}}
 			</p>
 		</div>
@@ -17,173 +17,171 @@
 			{{article.getName() | capitalize}}
 		</h1>
 		<div class="article-picture-add-cart">
-			<div class="article-picture" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture()!=null ? article.getPicture().name~"."~article.getpicture().extension : "nopicture.png" }}");'></a>
-		</div>
-		<div class="add-article-cart">
-			{% if article.getStock()>0 %}
-				<div class="form-add-article">
-					<div class="article-price">{{article.getLastPrice()}}
-						€</div>
-					<div class="in-stock-information">
-						In stock
-					</div>
-					{{ form_open(base_url(),{class:"form-add-article-cart"} )}}
-
-					<label for="inputQuantity">Quantity</label>
-					<select id="inputQuantity" class="form-control" name="quantity">
-						<option selected>1</option>
-						{% if article.getStock()>1 %}
-							{% if article.getStock()>10 %}
-								{% for i in range(2,10) %}
-									<option>{{i}}</option>
-								{% endfor %}
-							{% else %}
-								{% for i in range(2,article.getStock()) %}
-									<option>{{i}}</option>
-								{% endfor %}
-							{% endif %}
-						{% endif %}
-					</select>
-					<button type="submit" class="btn-add-article">Add to cart</button>
-
-					{{ form_close() }}
-
-				</div>
-			{% else %}
-				<div class="form-add-article-out-of-stock">
-					<div class="article-price">{{article.getLastPrice()}}
-						€</div>
-					<div class="out-of-stock-information">
-						Currently Out of stock !
-					</div>
-				</div>
-			{% endif %}
-		</div>
-
-	</div>
-	{% if article.getProduct().isIngredient()==true %}
-		<div class="article-number-recipes">
-			There
-			{{recipes | length ==1 ? "is" : "are"}}
-			{{recipes | length}}
-			{{recipes | length ==1 ? "recipe" : "recipes"}}
-			with this ingredient
-		</div>
-
-		<div class="recipes-cards">
-			{% set index=0 %}
-			{% for recipe in recipes %}
-				{% if index <4 %}
-					<div class="recipe-card">
-					{% else %}
-						<div class="recipe-card-hidden" hidden>
-						{% endif %}
-						<div class="recipe-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture().name~"."~recipe.getPicture().extension }}");'></a>
-					</div>
-					<div class="recipe-card-body">
-						<h5 class="recipe-card-title">{{recipe.recipe_name}}</h5>
-						<div class="recipe-info">
-							<div class="recipe-info-element">
-								<i class="far fa-clock" aria-hidden="true"></i>
-								<p>{{recipe.getDisplayTime()}}</p>
-							</div>
-							<div class="recipe-info-element">
-								<i class="fa fa-utensils" aria-hidden="true"></i>
-								<p>{{recipe.number_of_people}}</p>
-							</div>
-							<div class="recipe-info-element">
-								<i class="fa fa-fire" aria-hidden="true"></i>
-								<p>{{recipe.difficulty}}</p>
-							</div>
+			<div class="article-picture" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture()!=null ? article.getPicture().name~"."~article.getpicture().extension : "nopicture.png" }}");'></div>
+			<div class="add-article-cart">
+				{% if article.getStock()>0 %}
+					<div class="form-add-article">
+						<div class="article-price">{{article.getLastPrice()}}
+							€</div>
+						<div class="in-stock-information">
+							In stock
 						</div>
+						{{ form_open(base_url(),{class:"form-add-article-cart"} )}}
 
-						<div class="recipes-card-grade">
-							<div class="recipes-grade-stars">
-								{% set copyGrade = recipe.getAverageGrade() %}
-								{% for i in range(1,5) %}
-									<span class="fa-stack" style="width:1em">
-										<i class="far fa-star fa-stack-1x fa-fw"></i>
-										{% if (copyGrade > 0) %}
-											{% if (copyGrade >=1) %}
-												<i class="fas fa-star fa-stack-1x fa-fw"></i>
-											{% else %}
-												<i class="fas fa-star-half fa-stack-1x fa-fw"></i>
-											{% endif %}
-										{% endif %}
-										{% set copyGrade = (copyGrade - 1) %}
-									</span>
-								{% endfor %}
-							</div>
-							<div class="recipes-grade-value">
-								{% if (recipe.getGrades > 0) %}
-									{{recipe.getAverageGrade()|round(1, 'ceil')}}/5 on
-									{{recipe.getGrades}}
-									views
+						<label for="inputQuantity">Quantity</label>
+						<select id="inputQuantity" class="form-control" name="quantity">
+							<option selected>1</option>
+							{% if article.getStock()>1 %}
+								{% if article.getStock()>10 %}
+									{% for i in range(2,10) %}
+										<option>{{i}}</option>
+									{% endfor %}
 								{% else %}
-									0 view
+									{% for i in range(2,article.getStock()) %}
+										<option>{{i}}</option>
+									{% endfor %}
 								{% endif %}
+							{% endif %}
+						</select>
+						<button type="submit" class="btn-add-article">Add to cart</button>
+
+						{{ form_close() }}
+
+					</div>
+				{% else %}
+					<div class="form-add-article-out-of-stock">
+						<div class="article-price">{{article.getLastPrice()}}
+							€</div>
+						<div class="out-of-stock-information">
+							Currently Out of stock !
+						</div>
+					</div>
+				{% endif %}
+			</div>
+
+		</div>
+		{% if article.getProduct().isIngredient()==true %}
+			<div class="article-number-recipes">
+				There
+				{{recipes | length ==1 ? "is" : "are"}}
+				{{recipes | length}}
+				{{recipes | length ==1 ? "recipe" : "recipes"}}
+				with this ingredient
+			</div>
+
+			<div class="recipes-cards">
+				{% set index=0 %}
+				{% for recipe in recipes %}
+					{% if index <4 %}
+						<div class="recipe-card">
+						{% else %}
+							<div class="recipe-card-hidden" hidden>
+							{% endif %}
+							<div class="recipe-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture().name~"."~recipe.getPicture().extension }}");'></div>
+							<div class="recipe-card-body">
+								<h5 class="recipe-card-title">{{recipe.recipe_name}}</h5>
+								<div class="recipe-info">
+									<div class="recipe-info-element">
+										<i class="far fa-clock" aria-hidden="true"></i>
+										<p>{{recipe.getDisplayTime()}}</p>
+									</div>
+									<div class="recipe-info-element">
+										<i class="fa fa-utensils" aria-hidden="true"></i>
+										<p>{{recipe.number_of_people}}</p>
+									</div>
+									<div class="recipe-info-element">
+										<i class="fa fa-fire" aria-hidden="true"></i>
+										<p>{{recipe.difficulty}}</p>
+									</div>
+								</div>
+
+								<div class="recipes-card-grade">
+									<div class="recipes-grade-stars">
+										{% set copyGrade = recipe.getAverageGrade() %}
+										{% for i in range(1,5) %}
+											<span class="fa-stack" style="width:1em">
+												<i class="far fa-star fa-stack-1x fa-fw"></i>
+												{% if (copyGrade > 0) %}
+													{% if (copyGrade >=1) %}
+														<i class="fas fa-star fa-stack-1x fa-fw"></i>
+													{% else %}
+														<i class="fas fa-star-half fa-stack-1x fa-fw"></i>
+													{% endif %}
+												{% endif %}
+												{% set copyGrade = (copyGrade - 1) %}
+											</span>
+										{% endfor %}
+									</div>
+									<div class="recipes-grade-value">
+										{% if (recipe.getGrades > 0) %}
+											{{recipe.getAverageGrade()|round(1, 'ceil')}}/5 on
+											{{recipe.getGrades}}
+											{{recipe.getGrades==1?" view":" views"}}
+										{% else %}
+											0 view
+										{% endif %}
+									</div>
+								</div>
+								<a class="recipe-btn-see" href="{{ base_url('/recipe/'~recipe.id_recipes) }}">
+									See Recipe
+								</a>
 							</div>
 						</div>
-						<a href="{{ base_url('/recipe/'~recipe.id_recipes) }}">
-							<button class="recipe-btn-see">See Recipe</button>
-						</a>
-					</div>
+						{% set index=index+1 %}
+					{% endfor %}
+					{% if recipes|length >4 %}
+						<div class="see-all-recipes" data-hidden="true">
+							See more
+						</div>
+					{% endif %}
 				</div>
-				{% set index=index+1 %}
-			{% endfor %}
-			{% if recipes|length >4 %}
-				<div class="see-all-recipes" data-hidden="true">
-					See more
-				</div>
+
 			{% endif %}
-		</div>
 
-	{% endif %}
+			<div class="open-modal-cart" data-toggle="modal" data-target="#modal-go-to-car" hidden></div>
+			<div class="modal fade" id="modal-go-to-car" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title article-title-modal">The article has been successfully added to your cart !
+							</h5>
+							<button type="button" class="close" id="close-modal-go-to-carts" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body article-body-modal">
+							<div class="article-resume-article">
+								<div class="article-body-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture().name~"."~article.getpicture().extension }}");'></div>
+								<div class="article-body-info">
+									<h1 class="article-body-title">
+										{{article.getProduct().product_name | capitalize}}
+									</h1>
+									<div class="article-body-price">{{article.getLastPrice()}}
+										€/u</div>
+									<div class="article-body-quantity"></div>
+								</div>
+							</div>
 
-	<div class="open-modal-cart" data-toggle="modal" type="button" data-target="#modal-go-to-car" hidden></div>
-	<div class="modal fade" id="modal-go-to-car" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title article-title-modal">The article has been successfully added to your cart !
-					</h5>
-					<button type="button" class="close" id="close-modal-go-to-carts" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body article-body-modal">
-					<div class="article-resume-article">
-						<div class="article-body-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{article.getPicture().name~"."~article.getpicture().extension }}");'></div>
-						<div class="article-body-info">
-							<h1 class="article-body-title">
-								{{article.getProduct().product_name | capitalize}}
-							</h1>
-							<div class="article-body-price">{{article.getLastPrice()}}
-								€/u</div>
-							<div class="article-body-quantity"></div>
+							<div class="article-body-text">Would you like to go to your cart or keep looking ?</div>
+
+						</div>
+
+						<div class="modal-footer">
+							<button class="btn-keep-looking" data-dismiss="modal"><img class="fas logo-svg" src="{{base_url('/assets/pictures/market.svg')}}" alt="">Keep looking</button>
+							<a class="btn-confirm-go-to-cart" href="{{ base_url('cart')}}">
+								<i class="fas fa-shopping-cart mr-2 fa-1x"></i>
+								Go to Cart Page
+							</a>
 						</div>
 					</div>
-
-					<div class="article-body-text">Would you like to go to your cart or keep looking ?</div>
-
-				</div>
-
-				<div class="modal-footer">
-					<button class="btn-keep-looking" data-dismiss="modal"><img class="fas logo-svg" src="{{base_url('/assets/pictures/market.svg')}}" alt="">Keep looking</button>
-					<a href="{{ base_url('cart')}}">
-						<button class="btn-confirm-go-to-cart">
-							<i class="fas fa-shopping-cart mr-2 fa-1x"></i>
-							Go to Cart Page</button>
-					</a>
 				</div>
 			</div>
 		</div>
-	</div>
-{% endblock %}
-{% block script %}
-	<script>
+	{% endblock %}
+	{% block script %}
+		<script>
 
-		const csrf = document.querySelector('input[name="csrf_nesti"]');
+			const csrf = document.querySelector('input[name="csrf_nesti"]');
 allRecipes = document.querySelector(".see-all-recipes"); // get the button to display all recipes
 
 if (allRecipes != null) {
@@ -262,5 +260,5 @@ document.querySelector(".article-body-quantity").innerHTML = "Quantity : " + ele
 
 }))
 }
-	</script>
-{% endblock %}
+		</script>
+	{% endblock %}

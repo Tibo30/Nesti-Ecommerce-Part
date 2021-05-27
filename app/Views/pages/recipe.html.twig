@@ -2,199 +2,199 @@
 
 {% block content %}
 
-{% if recipe.state == "a" %}
+	{% if recipe.state == "a" %}
 
-	<div class="recipeDetails">
-		<div class="underLink">
-			<a href="{{ base_url('/recipes')}}">
-				<p>Recipe</p>
-			</a>
-			<p>
-				&nbsp >
+		<div class="recipeDetails">
+			<div class="underLink">
+				<a href="{{ base_url('/recipes')}}">
+					<p>Recipe</p>
+				</a>
+				<p>
+					&nbsp; >
+					{{recipe.recipe_name | capitalize}}
+				</p>
+			</div>
+
+			<h1 class="recipeTitle">
 				{{recipe.recipe_name | capitalize}}
-			</p>
-		</div>
+			</h1>
+			<h2 class="recipeChief">
+				By
+				{{recipe.getChief().firstname ~ " " ~ recipe.getChief().lastname| capitalize}}
+			</h2>
 
-		<h1 class="recipeTitle">
-			{{recipe.recipe_name | capitalize}}
-		</h1>
-		<h2 class="recipeChief">
-			By {{recipe.getChief().firstname ~ " " ~ recipe.getChief().lastname| capitalize}}
-		</h2>
-
-		<div class="grade">
-			<div class="grade-stars">
-				{% set copyGrade = recipe.getAverageGrade() %}
-				{% for i in range(1,5) %}
-					<span class="fa-stack" style="width:1em">
-						<i class="far fa-star fa-stack-1x"></i>
-						{% if (copyGrade > 0) %}
-							{% if (copyGrade >=1) %}
-								<i class="fas fa-star fa-stack-1x"></i>
-							{% else %}
-								<i class="fas fa-star-half fa-stack-1x"></i>
+			<div class="grade">
+				<div class="grade-stars">
+					{% set copyGrade = recipe.getAverageGrade() %}
+					{% for i in range(1,5) %}
+						<span class="fa-stack" style="width:1em">
+							<i class="far fa-star fa-stack-1x"></i>
+							{% if (copyGrade > 0) %}
+								{% if (copyGrade >=1) %}
+									<i class="fas fa-star fa-stack-1x"></i>
+								{% else %}
+									<i class="fas fa-star-half fa-stack-1x"></i>
+								{% endif %}
 							{% endif %}
-						{% endif %}
-						{% set copyGrade = (copyGrade - 1) %}
-					</span>
-				{% endfor %}
-			</div>
-			<div class="grade-value">
-				{% if (recipe.getGrades > 0) %}
-					{{recipe.getAverageGrade()|round(1, 'ceil')}}/5 on
-					{{recipe.getGrades}}
-					views
-				{% else %}
-					0 view
-				{% endif %}
-			</div>
-		</div>
-
-		<div class="recipe-picture" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture()!=null ? recipe.getPicture().name~"."~recipe.getpicture().extension : "nopicture.png" }}");'></a>
-	</div>
-
-	<div class="recipe-info">
-		<div class="recipe-info-element">
-			<i class="far fa-clock" aria-hidden="true"></i>
-			<p>{{recipe.time}}</p>
-		</div>
-		<div class="recipe-info-element">
-			<i class="fa fa-utensils" aria-hidden="true"></i>
-			<p>{{recipe.number_of_people}}</p>
-		</div>
-		<div class="recipe-info-element">
-			<i class="fa fa-fire" aria-hidden="true"></i>
-			<p>{{recipe.difficulty}}</p>
-		</div>
-	</div>
-
-	<div class="recipe-ingredients">
-		<div class="recipe-ingredients-title">
-			Ingredients
-		</div>
-		<div class="recipe-list-ingredient">
-			{% for recipeIngredient in recipeIngredients %}
-				<div class="recipe-ingredient">
-					{{recipeIngredient.quantity~" "~recipeIngredient.getUnitMeasure().name~" of "~recipeIngredient.getProduct().product_name}}
+							{% set copyGrade = (copyGrade - 1) %}
+						</span>
+					{% endfor %}
 				</div>
-			{% endfor %}
-		</div>
-
-	</div>
-
-	<div class="recipe-steps">
-		<div class="recipe-steps-title">Preparation</div>
-		<div class="recipe-list-steps">
-			{% for paragraph in paragraphs %}
-				<div class="recipe-step">
-					<div class="recipe-step-order">Step
-						{{paragraph.order_paragraph}}</div>
-					<div class="recipe-step-content">{{paragraph.content}}</div>
-				</div>
-			{% endfor %}
-		</div>
-	</div>
-
-	<div class="recipe-grade">
-		<div>
-			How do you rate this recipe ?
-		</div>
-		<div class="recipe-stars">
-			{% for i in range(0,4) %}
-				<span data-value={{5-i}} class="fa-stack grade-given" style="width:1em">
-					&#9734
-				</span>
-			{% endfor %}
-		</div>
-	</div>
-
-	<div class="recipe-comments">
-		<div class="recipe-comments-title">
-			Comments ({{comments|length}})
-		</div>
-		<div class="recipe-comments-content">
-			{% set index=0 %}
-			{% for comment in comments %}
-				{% if index <2 %}
-					<div class="recipe-comment">
+				<div class="grade-value">
+					{% if (recipe.getGrades > 0) %}
+						{{recipe.getAverageGrade()|round(1, 'ceil')}}/5 on
+						{{recipe.getGrades}}
+						{{recipe.getGrades==1?" view":" views"}}
 					{% else %}
-						<div class="recipe-comment-hidden" hidden>
-						{% endif %}
-						<div class="recipe-comment-user">
-							{{comment.getUser().username}}
+						0 view
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="recipe-picture" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture()!=null ? recipe.getPicture().name~"."~recipe.getpicture().extension : "nopicture.png" }}");'></div>
+
+			<div class="recipe-info">
+				<div class="recipe-info-element">
+					<i class="far fa-clock" aria-hidden="true"></i>
+					<p>{{recipe.time}}</p>
+				</div>
+				<div class="recipe-info-element">
+					<i class="fa fa-utensils" aria-hidden="true"></i>
+					<p>{{recipe.number_of_people}}</p>
+				</div>
+				<div class="recipe-info-element">
+					<i class="fa fa-fire" aria-hidden="true"></i>
+					<p>{{recipe.difficulty}}</p>
+				</div>
+			</div>
+
+			<div class="recipe-ingredients">
+				<div class="recipe-ingredients-title">
+					Ingredients
+				</div>
+				<div class="recipe-list-ingredient">
+					{% for recipeIngredient in recipeIngredients %}
+						<div class="recipe-ingredient">
+							{{recipeIngredient.quantity~" "~recipeIngredient.getUnitMeasure().name~" of "~recipeIngredient.getProduct().product_name}}
 						</div>
-						{% if comment.getUser().getGrade(recipe.id_recipes)[0] is not null %}
-							{% set gradeUser = comment.getUser().getGrade(recipe.id_recipes)[0].grade %}
-							<div class="recipe-comment-userGrade">
-								{% set copyGradeUser = gradeUser %}
-								{% for i in range(1,5) %}
-									<span class="fa-stack" style="width:1em">
-										<i class="far fa-star fa-stack-1x"></i>
-										{% if (copyGradeUser > 0) %}
-											{% if (copyGradeUser > 0.5) %}
-												<i class="fas fa-star fa-stack-1x"></i>
-											{% else %}
-												<i class="fas fa-star-half fa-stack-1x"></i>
-											{% endif %}
-										{% endif %}
-										{% set copyGradeUser = (copyGradeUser - 1) %}
-									</span>
-								{% endfor %}
-								<div class="recipe-comment-grade">
-									{{gradeUser}}/5
+					{% endfor %}
+				</div>
+
+			</div>
+
+			<div class="recipe-steps">
+				<div class="recipe-steps-title">Preparation</div>
+				<div class="recipe-list-steps">
+					{% for paragraph in paragraphs %}
+						<div class="recipe-step">
+							<div class="recipe-step-order">Step
+								{{paragraph.order_paragraph}}</div>
+							<div class="recipe-step-content">{{paragraph.content}}</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="recipe-grade">
+				<div>
+					How do you rate this recipe ?
+				</div>
+				<div class="recipe-stars">
+					{% for i in range(0,4) %}
+						<span data-value={{5-i}} class="fa-stack grade-given" style="width:1em">
+							&#9734;
+						</span>
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="recipe-comments">
+				<div class="recipe-comments-title">
+					Comments ({{comments|length}})
+				</div>
+				<div class="recipe-comments-content">
+					{% set index=0 %}
+					{% for comment in comments %}
+						{% if index <2 %}
+							<div class="recipe-comment">
+							{% else %}
+								<div class="recipe-comment-hidden" hidden>
+								{% endif %}
+								<div class="recipe-comment-user">
+									{{comment.getUser().username}}
 								</div>
+								{% if comment.getUser().getGrade(recipe.id_recipes)[0] is not null %}
+									{% set gradeUser = comment.getUser().getGrade(recipe.id_recipes)[0].grade %}
+									<div class="recipe-comment-userGrade">
+										{% set copyGradeUser = gradeUser %}
+										{% for i in range(1,5) %}
+											<span class="fa-stack" style="width:1em">
+												<i class="far fa-star fa-stack-1x"></i>
+												{% if (copyGradeUser > 0) %}
+													{% if (copyGradeUser > 0.5) %}
+														<i class="fas fa-star fa-stack-1x"></i>
+													{% else %}
+														<i class="fas fa-star-half fa-stack-1x"></i>
+													{% endif %}
+												{% endif %}
+												{% set copyGradeUser = (copyGradeUser - 1) %}
+											</span>
+										{% endfor %}
+										<div class="recipe-comment-grade">
+											{{gradeUser}}/5
+										</div>
+									</div>
+								{% endif %}
+								<div class="recipe-comment-date">{{comment.creation_date|date("m/d/Y H:m:s")}}</div>
+								<div class="recipe-comment-title">
+									{{comment.comment_title}}
+								</div>
+								<div class="recipe-comment-content">{{comment.comment_content}}</div>
+							</div>
+							{% set index=index+1 %}
+						{% endfor %}
+						{% if comments|length >2 %}
+							<div class="see-all-comments" data-hidden="true">
+								See all comments
 							</div>
 						{% endif %}
-						<div class="recipe-comment-date">{{comment.creation_date|date("m/d/Y H:m:s")}}</div>
-						<div class="recipe-comment-title">
-							{{comment.comment_title}}
+						<div class="write-comments">
+							<div class="write-comments-title">
+								Write a comment
+							</div>
+							<div class="form-send-comment" hidden>
+								{{ form_open(base_url(),{class:"form-write-comment"})}}
+								<textarea lang="en" class="write-comment-title" rows="1" maxlength="50" style="resize: none;" name="title" placeholder="Title" required></textarea>
+								<textarea class="write-comment-area" rows="5" maxlength="50" style="resize: none;" name="comment" placeholder="Write your comment here !" required></textarea>
+								<button type="submit" class="btn-send-comment">Send comment</button>
+								{{ form_close() }}
+							</div>
 						</div>
-						<div class="recipe-comment-content">{{comment.comment_content}}</div>
-					</div>
-					{% set index=index+1 %}
-				{% endfor %}
-				{% if comments|length >2 %}
-					<div class="see-all-comments" data-hidden="true">
-						See all comments
-					</div>
-				{% endif %}
-				<div class="write-comments">
-					<div class="write-comments-title">
-						Write a comment
-					</div>
-					<div class="form-send-comment" hidden>
-						{{ form_open(base_url(),{class:"form-write-comment"})}}
-						<textarea lang="en" class="write-comment-title" rows="1" max-length="50" style="resize: none;" name="title" placeholder="Title" required></textarea>
-						<textarea class="write-comment-area" rows="5" max-length="50" style="resize: none;" name="comment" placeholder="Write your comment here !" required></textarea>
-						<button type="submit" class="btn-send-comment">Send comment</button>
-						{{ form_close() }}
 					</div>
 				</div>
+
 			</div>
-		</div>
 
-	</div>
+		{% else %}
 
-	{% else %}
+			<div class="svg-blocked-recipe"><img class="fas logo-svg-blocked" src="{{base_url('/assets/pictures/block.svg')}}" alt="">
+				THIS RECIPE IS NOT AVAILABLE
+			</div>
 
-	<div class="svg-blocked-recipe"><img class="fas logo-svg-blocked" src="{{base_url('/assets/pictures/block.svg')}}" alt="">
-		THIS RECIPE IS NOT AVAILABLE
-		</div>
+		{% endif %}
+	{% endblock %}
 
-	{% endif %}
-{% endblock %}
-
-{% block script %}
-	<script>
-//localStorage.clear();
-		addToHistory();
+	{% block script %}
+		<script>
+			// localStorage.clear();
+addToHistory();
 
 function addToHistory() {
 
 var element = {
 "id_recipes": {{ recipe.id_recipes }},
 "recipe_name":"{{ recipe.recipe_name }}",
-"picture": 'https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture().name~"."~recipe.getpicture().extension }}',
+"picture": 'https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/ {{ recipe.getPicture().name~"."~recipe.getpicture().extension }}'
 };
 
 var oldHistory = []
@@ -214,8 +214,8 @@ return el.id_recipes;
 }); // return the id of each element
 
 index = idList.indexOf({{ recipe.id_recipes }}); // we check if this recipe is already in the history
-if (index!=-1){ // if it is, we delete it (to then put it at the first place)
-	newHistory.splice(index, 1);
+if (index != -1) { // if it is, we delete it (to then put it at the first place)
+newHistory.splice(index, 1);
 }
 newHistory.unshift(element); // we add the id of the recipe to the history
 if (newHistory.length == 6) { // we keep only 5 element in history
@@ -257,7 +257,38 @@ if (response) {
 if (response.success && response.csrf_token) {
 
 alert("You gave a " + grade + " /5 to this recipe");
-document.querySelector(".grade-value").innerHTML = Math.round(response.averageGrade * 10) / 10 + "/5";
+document.querySelector(".grade-value").innerHTML = Math.round(response.averageGrade * 10) / 10 + "/5 on " + response.numberGrade + (response.numberGrade == 1 ? " view" : " views");
+
+var grades = document.querySelector(".grade-stars");
+grades.innerHTML = "";
+for (var j = 0; j < 5; j++) {
+
+var span = document.createElement("span");
+span.className = "fa-stack";
+span.style.width = "1.25em"
+
+var i = document.createElement("i");
+i.className = "far fa-star fa-stack-1x fa-fw";
+
+span.appendChild(i);
+
+if (response.averageGrade > 0) {
+console.log(response.averageGrade);
+if (response.averageGrade >= 1) {
+
+var i2 = document.createElement("i");
+i2.className = "fas fa-star fa-stack-1x fa-fw";
+span.appendChild(i2);
+} else {
+var i3 = document.createElement("i");
+i3.className = "fas fa-star-half fa-stack-1x fa-fw";
+span.appendChild(i3);
+}
+
+}
+grades.appendChild(span);
+response.averageGrade = (response.averageGrade - 1)
+}
 
 } else {
 alert(response.error);
@@ -392,5 +423,5 @@ console.error(e.message);
 }
 
 }
-	</script>
-{% endblock %}
+		</script>
+	{% endblock %}

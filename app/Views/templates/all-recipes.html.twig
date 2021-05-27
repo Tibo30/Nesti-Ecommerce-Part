@@ -3,7 +3,7 @@
 		{% set index=0 %}
 		{% for recipe in recipes %}
 			<div class="recipe-card" data-number={{index}} {{ index > 7 ? 'hidden' : ''}}>
-				<div class="recipe-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture()!=null ? recipe.getPicture().name~"."~recipe.getpicture().extension : "nopicture.png" }}");'></a>
+				<div class="recipe-img" style='background-image: url("https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/{{recipe.getPicture()!=null ? recipe.getPicture().name~"."~recipe.getpicture().extension : "nopicture.png" }}");'>
 			</div>
 			<div class="recipe-card-body">
 				<h5 class="recipe-card-title">{{recipe.recipe_name}}</h5>
@@ -42,14 +42,14 @@
 						{% if (recipe.getGrades > 0) %}
 							{{recipe.getAverageGrade()|round(1, 'ceil')}}/5 on
 							{{recipe.getGrades}}
-							views
+							{{recipe.getGrades==1?" view":" views"}}
 						{% else %}
 							0 view
 						{% endif %}
 					</div>
 				</div>
-				<a href="{{ base_url('/recipe/'~recipe.id_recipes) }}">
-					<button class="recipe-btn-see">See Recipe</button>
+				<a class="recipe-btn-see" href="{{ base_url('/recipe/'~recipe.id_recipes) }}">
+					See Recipe
 				</a>
 			</div>
 		</div>
@@ -65,7 +65,7 @@
 		<button id="btn_prev" class="btn-pagination" onclick="prevPage()">Prev</button>
 
 		{% for index in 1..numberPage %}
-			<button id="btn_page" class="btn-pagination" onclick="goPage({{index}})">{{index}}</button>
+			<button id="btn_page{{index}}" class="btn-pagination" onclick="goPage({{index}})">{{index}}</button>
 
 		{% endfor %}
 		<button id="btn_next" class="btn-pagination" onclick="nextPage()">Next</button>

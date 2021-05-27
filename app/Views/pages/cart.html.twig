@@ -1,6 +1,5 @@
 {% extends "base.html.twig" %}
 {% block content %}
-	<div onclick="emptyBasket()">Empty basket</div>
 	<div class="cart-page">
 		<a class="return-button-cart" onclick="rtn()">&#129136; Return</a>
 		<div class="div-title-cart">
@@ -9,7 +8,7 @@
 		<div class="cart-elements"></div>
 
 		<div class="svg-empty-cart" hidden><img class="fas logo-svg" src="{{base_url('/assets/pictures/emptycart.svg')}}" alt="">
-		NO ITEMS IN CART
+			NO ITEMS IN CART
 		</div>
 
 		<div class="total-cart">
@@ -18,8 +17,7 @@
 			<div class="cart-total-articles"></div>
 		</div>
 		<div class="btn-valid-cart">
-			<a href="{{ base_url('/pay')}}">
-				<button class="cart-validation">Confirm cart and pay</button>
+			<a class="cart-validation" href="{{ base_url('/pay')}}">Confirm cart and pay
 			</a>
 		</div>
 	</div>
@@ -33,7 +31,7 @@
 
 function isEmptyCart() {
 var cart = [JSON.parse(localStorage.getItem("cart"))].flat();
-if (cart[0]!=null) {
+if (cart[0] != null) {
 getCart();
 } else {
 document.querySelector(".total-cart").hidden = true;
@@ -80,13 +78,6 @@ document.querySelector(".cart-total-articles").innerHTML = "&nbsp" + total + " â
 */
 function rtn() {
 window.history.back();
-}
-
-/*
-** This method clear the cart
-*/
-function emptyBasket() {
-localStorage.setItem("cart",null);
 }
 
 /*
