@@ -40,7 +40,6 @@ document.querySelector(".svg-empty-cart").hidden = false;
 }
 }
 
-
 function getCart() {
 var cart = [JSON.parse(localStorage.getItem("cart"))].flat();
 var cartElement = document.querySelector(".cart-elements");
@@ -51,7 +50,7 @@ cart.forEach(function (element, index) {
 var picture = "https://jolivet.needemand.com/realisations/nesti-admin/public/pictures/pictures/" + element.picture;
 
 html += '<div class="cart-element"><div class="cart-img-info">' + '<div class="cart-img" style="background-image: url(' + picture + ');"></div>' + '<div class="cart-info">' + element.name + '</div></div><div class="cart-details"><div class="cart-details-element"><p class="cart-page-titles">Unit cost</p><p class="cart-page-element">' + element.price + ' €/u</p></div><div class="cart-details-element"><p class="cart-page-titles">Quantity</p><p class="cart-page-element">' + '<select id="inputQuantity" class="form-control" name="quantity" onchange="updateQuantity(' + element.id_article + ')">';
-for (i = 1; i <= 10; i ++) {
+for (i = 1; i <= Math.min(10,element.stock); i ++) {
 if (i == element.quantity) {
 html += '<option selected>' + i + '</option>';
 } else {
