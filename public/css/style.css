@@ -59,7 +59,7 @@ html {
 .logo-svg {
     width: 30px;
     height: 30px;
-    font-weight: 1200px;
+    font-weight: 1200;
     filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(332deg) brightness(97%) contrast(86%);
     margin-right: 5px;
 }
@@ -791,7 +791,7 @@ html {
 .logo-svg-blocked {
     width: 500px !important;
     height: 500px !important;
-    font-weight: 1200px;
+    font-weight: 1200;
     filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(332deg) brightness(97%) contrast(86%);
     margin-bottom: 5rem;
     margin-top: 5rem;
@@ -1434,7 +1434,7 @@ html {
 .articleDetails .logo-svg {
     width: 22px !important;
     height: 20px !important;
-    font-weight: 1200px;
+    font-weight: 1200;
     filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(332deg) brightness(97%) contrast(86%);
     margin-right: 10px;
 }
@@ -1494,7 +1494,7 @@ html {
 .cart-page .logo-svg {
     width: 500px;
     height: 500px;
-    font-weight: 1200px;
+    font-weight: 1200;
     filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(332deg) brightness(97%) contrast(86%);
     margin-bottom: 5rem;
 }
