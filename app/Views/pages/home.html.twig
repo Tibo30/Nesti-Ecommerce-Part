@@ -37,7 +37,13 @@
 	<script>
 
 		var lastVisited = document.querySelector('.last-visited-recipes');
-var listHistory = [JSON.parse(localStorage.getItem("history"))].flat();
+		
+var listHistory = []
+
+if (JSON.parse(localStorage.getItem("history")) != null) { // in the case where the history isn't empty, we save its value
+listHistory = [JSON.parse(localStorage.getItem("history"))].flat();
+}
+
 if (listHistory!=undefined && listHistory[0]!=null){
 listHistory.forEach(function(element) {
 var lastVisitedRecipe = document.createElement("div");
