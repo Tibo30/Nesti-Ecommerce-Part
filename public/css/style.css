@@ -2156,10 +2156,11 @@ html {
     border-radius: 0.25rem;
 }
 
-.recipes-search {
+.recipes-search, .articles-search {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 90%;
 }
 
 .search-page .btn-pagination-recipes, .search-page .btn-pagination-articles {
@@ -2210,7 +2211,7 @@ html {
     margin: auto;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 /* Style of the different parts of the ingredient cards */
