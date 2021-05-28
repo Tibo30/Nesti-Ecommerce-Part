@@ -205,7 +205,7 @@ if (JSON.parse(localStorage.getItem("history")) != null) { // in the case where 
 oldHistory = [JSON.parse(localStorage.getItem("history"))].flat();
 }
 if (oldHistory.length == 0) { // if the history is empty
-var firstRecipe = element; // we add the id of the recipe to the history
+var firstRecipe = [].concat(element); // we add the id of the recipe to the history
 localStorage.setItem("history", JSON.stringify(firstRecipe))
 } else {
 var newHistory = [];
