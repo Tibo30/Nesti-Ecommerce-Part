@@ -59,7 +59,7 @@
 					<div class="border-card"></div>
 					<div class="pay-error-number" hidden>You entered an invalid card number</div>
 					<div class="pay-error-date" hidden>You card has expired</div>
-					<div class="pay-error-name" hidden>Please enter a valid name</div>
+					<div class="pay-error-name" hidden>Please enter a valid name (between 3 and 30 characters)</div>
 					<div class="pay-error-csv" hidden>You CSV has to be 3 digits</div>
 					<div class="csv-code">
 						<label for="csv">CSV</label>
@@ -185,12 +185,12 @@ if (!isValidDate(valueDate)) {
 document.querySelector(".pay-error-date").hidden = false;
 isValid = false;
 }
-if (! valueCsv.match(/^\d+$/)) {
+if (!valueCsv.match(/^\d{3}$/)) {
 document.querySelector(".pay-error-csv").hidden = false;
 isValid = false;
 }
 
-if (! valueName.match(/[a-zA-ZÀ-ÿ ,.'-]+$/i) || valueName.length < 3) {
+if (!valueName.match(/[a-zA-ZÀ-ÿ ,.'-]$/) || valueName.length>30 || valueName.length<3) {
 document.querySelector(".pay-error-name").hidden = false;
 isValid = false;
 }
