@@ -2098,8 +2098,8 @@ html {
 
 .pay-error-csv {
     position: absolute;
-    right: 7%;
-    bottom: 3%;
+    right: 26%;
+    bottom:12%;
     font-size: 10px;
     color: red;
 }
@@ -2202,6 +2202,15 @@ html {
     font-family: 'Roboto';
     font-size: 20px;
     margin-bottom: 4rem;
+}
+
+.containerResult{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    
 }
 
 /* Style of the different parts of the ingredient cards */
