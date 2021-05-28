@@ -54,7 +54,10 @@ class ArticleController extends BaseController
     
             $recipes=[];
             foreach($recipesIng as $ing){ // get all the recipes for this ingredient
-                $recipes[]=$recipeModel->find($ing->id_recipes);
+                $recipe = $recipeModel->where("state","a")->find($ing->id_recipes);
+                if ($recipe!=null){
+                    $recipes[]=$recipe;
+                }
             }    
             
             $data["loc"] = "Article";
