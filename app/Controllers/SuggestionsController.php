@@ -48,7 +48,7 @@ class SuggestionsController extends BaseController
        }
 
        $model = new RecipeModel();
-       $recipes = $model->findAll();
+       $recipes = $model->where("state","a")->findAll();
 
        $recipeIngredientModel = new RecipeIngredientModel();
 
