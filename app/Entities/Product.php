@@ -19,7 +19,7 @@ return $ing;
 }
 
 public function getPictureName(){
-    $pictureName="";
+    $pictureName="nopicture.png";
     $articleModel = new ArticleModel();
     $articles = $articleModel -> where ("id_products",$this->id_products)->findAll();
     
@@ -27,11 +27,7 @@ public function getPictureName(){
 
         if ($articles[0]->getPicture() != null) {
             $pictureName=$articles[0]->getPicture()->name.".".$articles[0]->getPicture()->extension;
-        } else {
-            $pictureName="nopicture.png";
-        }
-
-       
+        } 
     }
     return $pictureName;
 }
