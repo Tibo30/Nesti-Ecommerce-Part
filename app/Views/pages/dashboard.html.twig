@@ -9,11 +9,11 @@
 			<div>
 				Log Out
 			</div>
-			<img class="fas logo-svg" src="{{base_url('/assets/pictures/logout.svg')}}" alt="">
+			<img class="fas logo-svg" src="{{base_url('/assets/pictures/logout.svg')}}" alt="logout icon">
 		</a>
 		{% if "chief" in session.roles or "admin" in session.roles or "modo" in session.roles %}
 			<a class="link-admin" href="https://jolivet.needemand.com/realisations/nesti-admin/" target="_blank">
-				<img class="fas logo-svg" src="{{base_url('/assets/pictures/arrow.svg')}}" alt="">
+				<img class="fas logo-svg" src="{{base_url('/assets/pictures/arrow.svg')}}" alt="arrow icon">
 				<div>To Admin Website</div>
 			</a>
 		{% endif %}
