@@ -40,10 +40,10 @@ class SuggestionsController extends BaseController
 
        $resultsIngredient = [];
        foreach ($ingredients as $ingredient){
-           $resultIngredient = (object)[];
-           $resultIngredient->ingredientId=$ingredient->id_products;
-           $resultIngredient->name=$ingredient->product_name;
-           $resultIngredient->url=$ingredient->getPictureName();
+           $resultIngredient = (object)[]; // create object entity
+           $resultIngredient->ingredientId=$ingredient->id_products; // add key id
+           $resultIngredient->name=$ingredient->product_name; // add key name
+           $resultIngredient->url=$ingredient->getPictureName(); // add key url image
            $resultsIngredient[]=$resultIngredient;
        }
 
