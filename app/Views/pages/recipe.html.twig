@@ -89,7 +89,7 @@
 						<div class="recipe-step">
 							<div class="recipe-step-order">Step
 								{{paragraph.order_paragraph}}</div>
-							<div class="recipe-step-content">{{paragraph.content}}</div>
+							<div class="recipe-step-content">{{paragraph.content | raw}}</div>
 						</div>
 					{% endfor %}
 				</div>
