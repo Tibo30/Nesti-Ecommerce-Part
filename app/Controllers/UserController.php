@@ -10,6 +10,9 @@ use App\Entities\City;
 
 class UserController extends BaseController
 {
+    /**
+     * Create a user
+     */
     public function createUser()
     {
 

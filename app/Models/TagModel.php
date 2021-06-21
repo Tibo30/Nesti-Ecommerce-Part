@@ -40,6 +40,10 @@ class TagModel extends Model
         return $verdict;
     }
 
+    /**
+     * Get tags from a recipe according to its ID
+     * int $id_recipes
+     */
     public function tagsByRecipe(int $id_recipes){
         $query = $this->db->query('SELECT * FROM tag t JOIN tagged td ON td.id_tag=t.id_tag WHERE td.id_recipes="' . $id_recipes . '"');
         return $query->getResult();

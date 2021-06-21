@@ -10,6 +10,9 @@ class LoginController extends BaseController
 		return view('welcome_message');
 	}
 
+    /**
+     * Get to login page
+     */
 	public function login()
     {
 		
@@ -19,6 +22,9 @@ class LoginController extends BaseController
         return $this->twig->render("pages/login.html", $data);
     }
 
+    /**
+     * Get to register page
+     */
     public function register()
     {
 		

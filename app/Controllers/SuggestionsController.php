@@ -18,19 +18,21 @@ use App\Models\RecipeIngredientModel;
 
 class SuggestionsController extends BaseController
 {
-    
 
+    /**
+     * Get to suggestions page
+     */
     public function suggestions()
     {
         helper('form');
         $modelProduct = new ProductModel();
 
         $products = $modelProduct->findAll();
-        
-        $ingredients=[];
-        foreach($products as $product){
-            if ($product->isIngredient()){
-                $ingredients[]=$product;
+
+        $ingredients = [];
+        foreach ($products as $product) {
+            if ($product->isIngredient()) {
+                $ingredients[] = $product;
             }
         }
 
@@ -38,44 +40,41 @@ class SuggestionsController extends BaseController
             return $r1->product_name <=> $r2->product_name;
         });
 
-       $resultsIngredient = [];
-       foreach ($ingredients as $ingredient){
-           $resultIngredient = (object)[]; // create object entity
-           $resultIngredient->ingredientId=$ingredient->id_products; // add key id
-           $resultIngredient->name=$ingredient->product_name; // add key name
-           $resultIngredient->url=$ingredient->getPictureName(); // add key url image
-           $resultsIngredient[]=$resultIngredient;
-       }
+        $resultsIngredient = [];
+        foreach ($ingredients as $ingredient) {
+            $resultIngredient = (object)[]; // create object entity
+            $resultIngredient->ingredientId = $ingredient->id_products; // add key id
+            $resultIngredient->name = $ingredient->product_name; // add key name
+            $resultIngredient->url = $ingredient->getPictureName(); // add key url image
+            $resultsIngredient[] = $resultIngredient;
+        }
 
-       $model = new RecipeModel();
-       $recipes = $model->where("state","a")->findAll();
+        $model = new RecipeModel();
+        $recipes = $model->where("state", "a")->findAll();
 
-       $recipeIngredientModel = new RecipeIngredientModel();
+        $recipeIngredientModel = new RecipeIngredientModel();
 
-       $resultsRecipe = [];
-       foreach ($recipes as $recipe){
-           $resultRecipe = (object)[];
-           $resultRecipe->recipeId=$recipe->id_recipes;
-           
-           $listRecipesIng = $recipeIngredientModel->where('id_recipes',$recipe->id_recipes)->findAll(); // get all the recipe ingredients for a recipe. Return array of object
-           $listIngName=[];
-           foreach($listRecipesIng as $recipesIng){
-               $listIngName[]=$recipesIng->getProduct()->product_name;
-           }
-           $resultRecipe->ingredients=$listIngName;
-           $resultsRecipe[]=$resultRecipe;
-       }
+        $resultsRecipe = [];
+        foreach ($recipes as $recipe) {
+            $resultRecipe = (object)[];
+            $resultRecipe->recipeId = $recipe->id_recipes;
 
-
-
+            $listRecipesIng = $recipeIngredientModel->where('id_recipes', $recipe->id_recipes)->findAll(); // get all the recipe ingredients for a recipe. Return array of object
+            $listIngName = [];
+            foreach ($listRecipesIng as $recipesIng) {
+                $listIngName[] = $recipesIng->getProduct()->product_name;
+            }
+            $resultRecipe->ingredients = $listIngName;
+            $resultsRecipe[] = $resultRecipe;
+        }
 
         $data["loc"] = "Suggestions";
-        $data["ingredientsJSON"]=$resultsIngredient;
-        $data["recipesJSON"]=$resultsRecipe;
+        $data["ingredientsJSON"] = $resultsIngredient;
+        $data["recipesJSON"] = $resultsRecipe;
         return $this->twig->render("pages/suggestions.html", $data);
     }
 
-    
+
     /**
      * get validRecipes from suggestions
      * @return void
@@ -90,18 +89,14 @@ class SuggestionsController extends BaseController
 
         $validRecipes = json_decode($this->request->getPost('validRecipes')); // get the validRecipes
 
-        $recipes=[];
-        foreach($validRecipes as $validRecipe){
-            $recipes[]= $recipeModel->find($validRecipe->recipeId);
+        $recipes = [];
+        foreach ($validRecipes as $validRecipe) {
+            $recipes[] = $recipeModel->find($validRecipe->recipeId);
         }
 
         $data["loc"] = "Recipes";
         $data["recipes"] = $recipes;
         $data["tags"] = $tags;
         return $this->twig->render("pages/recipes.html", $data);
-
     }
-
-
-    
 }

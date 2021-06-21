@@ -36,6 +36,7 @@ class ArticleController extends BaseController
     
     /**
      * Get the article information
+     * int $idArticle
      */
     public function article($idArticle)
     {

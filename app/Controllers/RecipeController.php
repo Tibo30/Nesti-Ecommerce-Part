@@ -26,7 +26,7 @@ class RecipeController extends BaseController
         $model = new RecipeModel();
         $tagModel = new TagModel();
         $tags = $tagModel->findAll();
-        $recipes = $model->where("state","a")->findAll();
+        $recipes = $model->where("state", "a")->findAll();
 
         $data["loc"] = "Recipes";
         $data["recipes"] = $recipes;
@@ -36,6 +36,7 @@ class RecipeController extends BaseController
 
     /**
      * Get all the recipes according to a tag (selected in the home page)
+     * int $tag
      */
     public function recipesByTag($tag)
     {
@@ -47,14 +48,14 @@ class RecipeController extends BaseController
 
         $tags = $tagModel->findAll();
 
-        $recipesTagged = $taggedModel->where("id_tag",$tag)->findAll(); // get all the recipes for a tag. Return an array of object
-       
+        $recipesTagged = $taggedModel->where("id_tag", $tag)->findAll(); // get all the recipes for a tag. Return an array of object
+
         $recipes = [];
 
         foreach ($recipesTagged as $recipeTagged) {
             $recipe = $model->find($recipeTagged->id_recipes);
-            if($recipe->state=="a"){
-                $recipes[] = $recipe ; 
+            if ($recipe->state == "a") {
+                $recipes[] = $recipe;
             }
         }
 
@@ -69,7 +70,8 @@ class RecipeController extends BaseController
 
 
     /**
-     * Get the recipe information
+     * Get the recipe information according to its ID
+     * int $idRecipe
      */
     public function recipe($idRecipe)
     {
@@ -80,13 +82,13 @@ class RecipeController extends BaseController
         $paragraphModel = new ParagraphModel();
         $commentModel = new CommentModel();
         $recipe = $model->find($idRecipe); // get the recipe object
-        
 
-        $listRecipesIng = $recipeIngredientModel->where('id_recipes',$idRecipe)->findAll(); // get all the recipe ingredients for a recipe. Return array of object
-      
-        $listParagraphs = $paragraphModel->where('id_recipes',$idRecipe)->orderBy('order_paragraph','ASC')->findAll(); // get all the steps for a recipe. Return an array of object
-  
-        $listComments = $commentModel->where("id_recipes", $idRecipe)->where("state","a")->findAll(); // get all the accepted comments for a recipe
+
+        $listRecipesIng = $recipeIngredientModel->where('id_recipes', $idRecipe)->findAll(); // get all the recipe ingredients for a recipe. Return array of object
+
+        $listParagraphs = $paragraphModel->where('id_recipes', $idRecipe)->orderBy('order_paragraph', 'ASC')->findAll(); // get all the steps for a recipe. Return an array of object
+
+        $listComments = $commentModel->where("id_recipes", $idRecipe)->where("state", "a")->findAll(); // get all the accepted comments for a recipe
 
         $data["loc"] = "Recipe";
         $data["recipe"] = $recipe;
@@ -95,6 +97,4 @@ class RecipeController extends BaseController
         $data["comments"] = $listComments;
         return $this->twig->render("pages/recipe.html", $data);
     }
-
-    
 }

@@ -15,19 +15,33 @@ class UserModel extends Model
     protected $useTimestamps = false; // Utilisation du timestamps
     protected $skipValidation     = true;
 
-    public function isChief($idUser){
+    /**
+     * Check if a user is a chief according to its ID
+     * int $idUser
+     */
+    public function isChief($idUser)
+    {
         $query = $this->db->query('SELECT * FROM `chief` WHERE id_users="' . $idUser . '"');
         return $query->getResult();
     }
 
-    public function isAdmin($idUser){
+    /**
+     * Check if a user is an admin according to its ID
+     * int $idUser
+     */
+    public function isAdmin($idUser)
+    {
         $query = $this->db->query('SELECT * FROM `admin` WHERE id_users="' . $idUser . '"');
         return $query->getResult();
     }
 
-    public function isModerator($idUser){
+    /**
+     * Check if a user is a moderator according to its ID
+     * int $idUser
+     */
+    public function isModerator($idUser)
+    {
         $query = $this->db->query('SELECT * FROM `moderator` WHERE id_users="' . $idUser . '"');
         return $query->getResult();
     }
-
 }

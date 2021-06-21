@@ -11,6 +11,9 @@ use App\Models\UserModel;
 class Recipe extends Entity
 {
 
+    /**
+     * Get all the tags of the recipe
+     */
     public function getTags()
     {
         $tagModel = new TagModel();
@@ -18,6 +21,9 @@ class Recipe extends Entity
         return $tags;
     }
 
+    /**
+     * Get the recipe picture
+     */
     public function getPicture()
     {
 
@@ -30,6 +36,9 @@ class Recipe extends Entity
         return $picture;
     }
 
+    /**
+     * Get the grades of the recipe
+     */
     public function getGrades()
     {
         $gradeModel = new GradeModel();
@@ -37,6 +46,9 @@ class Recipe extends Entity
         return count($grades);
     }
 
+    /**
+     * Get the average grade
+     */
     public function getAverageGrade()
     {
         $gradeModel = new GradeModel();
@@ -69,7 +81,7 @@ class Recipe extends Entity
     }
 
      /**
-     * Get the value of chief
+     * Get the chief
      */
     public function getChief()
     {

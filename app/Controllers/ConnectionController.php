@@ -12,7 +12,9 @@ use App\Entities\UserLog;
 class ConnectionController extends BaseController
 {
 
-
+    /**
+     * Get to login or dashboard page
+     */
     public function index()
     {
         helper($this->helpers);
@@ -26,6 +28,9 @@ class ConnectionController extends BaseController
         }
     }
 
+    /**
+     * Check login informations
+     */
     public function checkLogin()
     {
         helper($this->helpers);
@@ -120,6 +125,9 @@ class ConnectionController extends BaseController
         }
     }
 
+    /**
+     * Disconnect user
+     */
     public function disconnect()
     {
         $dataSession = [

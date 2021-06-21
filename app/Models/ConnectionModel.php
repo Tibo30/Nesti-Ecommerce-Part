@@ -15,6 +15,10 @@ class ConnectionModel extends Model
     protected $useTimestamps = false; // Utilisation du timestamps
     protected $skipValidation  = true;
 
+    /**
+     * Get of the user exists according to its email or username
+     * String $emailUsername
+     */
     public function checkUser($emailUsername)
     {
         $builder = $this->db->table('users');

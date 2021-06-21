@@ -15,6 +15,10 @@ class ProductModel extends Model
     protected $useTimestamps = false; // Utilisation du timestamps
     protected $skipValidation  = true;
 
+    /**
+     * Get the recipe's ingredients according to its ID
+     * int $idRecipe
+     */
     public function getIngredients($idRecipe)
     {
         $builder = $this->db->table('recipe_ingredients');
@@ -28,7 +32,10 @@ class ProductModel extends Model
         return $query->getResult();
     }
 
-    
+    /**
+     * search a product according to its name
+     * String name
+     */
     public function searchProduct(String $name){
         $builder = $this->db->table('products');
         $builder->like("product_name", "%".$name."%");
@@ -36,6 +43,10 @@ class ProductModel extends Model
         return $query->getResult();
     }
 
+    /**
+     * Check if the product is an ingredient according to its ID
+     * int $idProduct
+     */
     public function isIngredient($idProduct){
         $query = $this->db->query('SELECT * FROM ingredients WHERE id_ingredients="' . $idProduct . '"');
         return $query->getResult();

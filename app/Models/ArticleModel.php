@@ -15,6 +15,10 @@ class ArticleModel extends Model
     protected $useTimestamps = false; // Utilisation du timestamps
     protected $skipValidation  = true;
 
+    /**
+     * Get last price of the article according to its ID
+     * int $idArticle
+     */
     public function getLastPrice($idArticle){
         $query = $this->db->query('SELECT price FROM article_price WHERE id_article="' . $idArticle . '" ORDER BY application_date DESC LIMIT 1');
         return $query->getResult();

@@ -10,6 +10,10 @@ use App\Models\CityModel;
 class User extends Entity
 {
 
+    /**
+     * Get the grade of a user for a recipe
+     * int $idRecipe
+     */
     public function getGrade($idRecipe)
     {
         $gradeModel = new GradeModel();
@@ -17,6 +21,9 @@ class User extends Entity
         return $grade;
     }
 
+    /**
+     * Get the user's city
+     */
     public function getCity()
     {
         $cityModel = new CityModel();

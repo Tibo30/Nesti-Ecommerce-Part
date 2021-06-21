@@ -15,6 +15,10 @@ class RecipeIngredientModel extends Model
     protected $useTimestamps = false; // Utilisation du timestamps
     protected $skipValidation  = true;
 
+    /**
+     * Get recipe ingredients according to its ID
+     * int $idRecipe
+     */
     public function getRecipeIngredients($idRecipe){
         $builder = $this->db->table('recipe_ingredients');
         $builder->select('recipe_ingredients.*');

@@ -9,6 +9,9 @@ class Pages extends BaseController
         return view('welcome_message');
     }
 
+    /**
+     * Get to home page
+     */
     public function home()
     {
         $data["base_dir"]=__DIR__;

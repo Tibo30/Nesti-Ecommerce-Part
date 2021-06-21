@@ -17,7 +17,10 @@ class ParagraphModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-   
+   /**
+    * Get paragraphs of a recipe
+    * int $idRecipe
+    */
     public function getParagraphs($idRecipe)
     {
         $builder = $this->db->table('paragraph');

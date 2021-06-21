@@ -17,6 +17,10 @@ class ApiController extends BaseController
         return view('api/api_help');
     }
 
+    /**
+     * Get all the recipes
+     * String $token
+     */
     public function recipes($token)
     {
         $tokenModel = new TokenModel();
@@ -32,6 +36,10 @@ class ApiController extends BaseController
         die;
     }
 
+    /**
+     * Get a category (tag) according to its ID
+     * String $token
+     */
     public function category($token, $cat)
     {
         $tokenModel = new TokenModel();
@@ -47,6 +55,10 @@ class ApiController extends BaseController
         die;
     }
 
+    /**
+     * Get all categories (tags)
+     * String $token
+     */
     public function categories($token)
     {
         $tokenModel = new TokenModel();
@@ -62,6 +74,10 @@ class ApiController extends BaseController
         die;
     }
 
+    /**
+     * Get a recipe according to its ID
+     * String $token, int $idRecipe
+     */
     public function recipe($token, $idRecipe)
     {
         $tokenModel = new TokenModel();
@@ -91,6 +107,10 @@ class ApiController extends BaseController
         die;
     }
 
+    /**
+     * Search recipes according to a string
+     * String $token, String $name
+     */
     public function searchRecipe($token, $name)
     {
         $tokenModel = new TokenModel();

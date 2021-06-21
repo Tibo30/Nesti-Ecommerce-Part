@@ -12,44 +12,55 @@ class TagsController extends BaseController
         helper('form');
         $model = new TagModel();
         $tags = $model->findAll();
-        //$this->renderTemplate("tag/all-tags",['tags'=>$tags]);
         return $this->twig->render("tag/all-tags.html", ['tags' => $tags]);
     }
 
-    // public function tags() {
-    //    $this->renderTemplate("tag/all-tags");
-    // }
-
+    /**
+     * Get tag according to its ID
+     * int $id
+     */
     public function readTag($id)
     {
         helper('form');
         $model = new TagModel();
         $tag = $model->find($id);
-        //where('id_tag', $id)
         return $this->twig->render("tag/one-tag.html", ['tag' => $tag]);
     }
 
+    /**
+     * Edit a tag
+     * int $id
+     */
     public function editTag($id)
     {
         helper('form');
         $session = session();
         $model = new TagModel();
         $tag = $model->find($id);
-        return $this->twig->render("tag/edit-tag.html",['tag' => $tag,'errors'=>$session->getFlashdata('errors'),'success'=> $session->getFlashdata('success')]);
+        return $this->twig->render("tag/edit-tag.html", ['tag' => $tag, 'errors' => $session->getFlashdata('errors'), 'success' => $session->getFlashdata('success')]);
     }
 
+    /**
+     * Create a tag
+     */
     public function createTag()
     {
         helper('form');
         return $this->twig->render("tag/create-tag.html");
     }
 
+    /**
+     * Search a tag
+     */
     public function searchTag()
     {
         helper('form');
         return $this->twig->render("tag/search-tag.html");
     }
 
+    /**
+     * Update a tag
+     */
     public function updateTag()
     {
         $session = session();
@@ -64,7 +75,7 @@ class TagsController extends BaseController
         // `$this->validate()`
         if ($this->validate($rules)) {
             // 3. On récupère les données        
-            $id=$this->request->getPost('tag_id');
+            $id = $this->request->getPost('tag_id');
             $name = $this->request->getPost('tag_name');
             // 4. On rempli un objet Entity        
             $tag = new Tag();
@@ -78,7 +89,7 @@ class TagsController extends BaseController
             $model = new TagModel();
             // 6. On sauvegarde 
             // si l'id est renseigné il fait un update, sinon il fait uninsert        
-            $s = $model->update($id,$tag);
+            $s = $model->update($id, $tag);
             // 7. On traite les erreurs éventuelles
             if ($s === false) {
                 // les données enregistrées dans flasData ne sont concervés
@@ -89,7 +100,7 @@ class TagsController extends BaseController
             }
         }
         // 8. on redirige ou on affiche une vue
-        return redirect()->to('/tag/'.$id.'/edit');
+        return redirect()->to('/tag/' . $id . '/edit');
     }
 
     public function createATag()
@@ -114,20 +125,20 @@ class TagsController extends BaseController
                 // `slugify()` est une fonction perso, définie dans Common.php        
             ]);
 
-            
+
             // 5. On fait appel au model        
             $model = new TagModel();
             // 6. On sauvegarde 
             // si l'id est renseigné il fait un update, sinon il fait un insert       
-          
+
             $s = $model->insert($tag);
-            
+
             // 7. On traite les erreurs éventuelles
             if ($s === false) {
                 // les données enregistrées dans flasData ne sont concervés
                 // que pour la prochaine page, puis elles seront détruites.            
                 $session->setFlashdata('errors', $model->errors());
-                dd( $session->getFlashdata('errors'));
+                dd($session->getFlashdata('errors'));
             } else {
                 $session->setFlashdata('success', true);
             }
@@ -143,25 +154,27 @@ class TagsController extends BaseController
     //     return redirect()->to('/tags');
     // }
 
-   /**
+    /**
      * Recu depuis une requete Ajax
      * @return void
      */
-    public function deleteTag() {
+    public function deleteTag()
+    {
         $data = [];
         $data['success'] = false;
 
-      
+
         if ($this->validate([
-                    'id_recipe' => 'required|numeric',
-                    'id_tag' => 'required|numeric'
-                ])) {
+            'id_recipe' => 'required|numeric',
+            'id_tag' => 'required|numeric'
+        ])) {
 
             $model = new TagModel();
 
             $success = $model->removeTag(
-                    $this->request->getPost('id_tag'),
-                    $this->request->getPost('id_recipe'));
+                $this->request->getPost('id_tag'),
+                $this->request->getPost('id_recipe')
+            );
 
             if ($success) {
                 // rafraichissement du token CSRF

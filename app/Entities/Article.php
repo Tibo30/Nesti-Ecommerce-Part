@@ -12,7 +12,9 @@ use App\Models\OrderLineModel;
 
 class Article extends Entity
 {
-
+/**
+ * Get the picture of the article
+ */
     public function getPicture()
     {
 
@@ -25,6 +27,9 @@ class Article extends Entity
         return $picture;
     }
 
+    /**
+     * Get the unit measure of the article
+     */
     public function getUnitMeasure()
     {
         $unitModel = new UnitMeasureModel();
@@ -32,6 +37,9 @@ class Article extends Entity
         return $unit;
     }
 
+    /**
+     * get the product of the article
+     */
     public function getProduct()
     {
         $ingModel = new ProductModel();
@@ -39,6 +47,9 @@ class Article extends Entity
         return $ing;
     }
 
+    /**
+     * Get the stock of the article
+     */
     public function getStock()
     {
         $lotModel = new LotModel();
@@ -57,6 +68,9 @@ class Article extends Entity
         return $stock;
     }
 
+    /**
+     * Get the name of the article
+     */
     public function getName()
     {
         $name = $this->quantity_per_unit . " " . $this->getUnitMeasure()->name . " of " . $this->getProduct()->product_name;
@@ -64,6 +78,9 @@ class Article extends Entity
         return $name;
     }
 
+    /**
+     * Get the last price of the article
+     */
     public function getLastPrice()
     {
 
