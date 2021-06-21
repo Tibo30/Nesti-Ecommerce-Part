@@ -33,7 +33,7 @@
 {% block script %}
 
 	<script>
-		const csrf = document.querySelector('input[name="csrf_nesti"]');
+		const csrf = document.querySelectorAll('input[name="csrf_nesti"]');
 
 var ingredientsJSON = {{ ingredientsJSON|json_encode|raw }};
 

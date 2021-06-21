@@ -175,7 +175,7 @@ return condition;
 }
 
 
-const csrf = document.querySelector('input[name="csrf_nesti"]');
+const csrf = document.querySelectorAll('input[name="csrf_nesti"]');
 
 formRegister = document.querySelector(".form-register-user"); // get the register form
 
@@ -204,7 +204,7 @@ document.querySelector("#errorUserPostcode").innerHTML = response.validation['po
 }
 // Refresh CSRF
 
-csrf.setAttribute('value', response.csrf_token);
+csrf.forEach(element =>element.setAttribute('value', response.csrf_token));
 }
 });
 
@@ -224,7 +224,7 @@ var myHeaders = new Headers();
 
 let formData = new FormData(obj);;
 
-formData.append(csrf.name, csrf.value);
+formData.append(csrf[0].name, csrf[0].value);
 
 
 var myInit = {

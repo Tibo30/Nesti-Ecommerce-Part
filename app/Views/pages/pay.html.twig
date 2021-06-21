@@ -85,7 +85,7 @@
 	<script>
 
 
-		const csrf = document.querySelector('input[name="csrf_nesti"]');
+		const csrf = document.querySelectorAll('input[name="csrf_nesti"]');
 
 getCart();
 
@@ -211,8 +211,7 @@ window.location.href = ROOT + "/home"; // will redirect to home page
 
 }
 // Refresh CSRF
-
-csrf.setAttribute('value', response.csrf_token);
+csrf.forEach(element =>element.setAttribute('value', response.csrf_token));
 }
 });
 }
@@ -232,7 +231,7 @@ let formData = new FormData(obj);
 
 formData.append('cart', localStorage.getItem("cart"));
 
-formData.append(csrf.name, csrf.value);
+formData.append(csrf[0].name, csrf[0].value);
 
 
 var myInit = {
