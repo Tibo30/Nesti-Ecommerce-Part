@@ -22,7 +22,7 @@ The user has access to all the recipes of Nesti, that can be sorted by categorie
 A Sweep & Keep module allows the user to selected ingredients and then offer a suggestion of recipes.
 </p>
 <p>
-The app is split in four parts : 
+The app is split in five parts : 
   
 * The HOME page :
   * Access to the recipe history,
@@ -36,6 +36,9 @@ The app is split in four parts :
   
 * The MARKET page:
   * Access to the article sold by Nesti.
+  
+* The E-COMMERCE part:
+  * The user can add articles to his basket and then order them.
   
  </p>
  
