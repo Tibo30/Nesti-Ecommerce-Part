@@ -49,6 +49,7 @@ The app is split in five parts :
  
  ## <b>Software and Tools</b>
 * IDE : Visual Studio Code,
+* Language : PHP,
 * Libraries :
   * CodeIgniter,
   * Twig.
