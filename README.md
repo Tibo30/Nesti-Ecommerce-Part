@@ -4,11 +4,6 @@
   <a href="https://jolivet.needemand.com/realisations/nesti-client/public/" rel="nofollow">Project link</a>
 </p>
 
-## <b>Screenshot</b>
-<p align="center">
-<img src="https://github.com/Tibo30/Nesti-Ecommerce-Part/blob/master/public/assets/pictures/Screenshot%202021-07-28%20at%2018-44-42%20-%20NESTI%20-.png">
-</p>
-
 ## <b>Context</b>
 <p>
 Nesti, a fictional company and a reference in the pastry world, wants to diversify and increase its activity. To do so, for a training programme, the company called on my service in order to develop several applications required for the growth of the company.
@@ -46,6 +41,13 @@ The app is split in five parts :
   * The user can add articles to his basket and then order them.
   
  </p>
+ 
+ 
+## <b>Screenshot</b>
+<p align="center">
+<img src="https://github.com/Tibo30/Nesti-Ecommerce-Part/blob/master/public/assets/pictures/Screenshot%202021-07-28%20at%2018-44-42%20-%20NESTI%20-.png">
+</p>
+
  
  ## <b>Software and Tools</b>
 * IDE : Visual Studio Code,
